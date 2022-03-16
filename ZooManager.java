@@ -13,11 +13,6 @@ import java.io.File;
 
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
-import java.awt.Image;
-
 public class ZooManager
 {
     //Object for zookeeper
