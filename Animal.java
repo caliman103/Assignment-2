@@ -1,6 +1,6 @@
 /*
 ClassName: Animal
-Author: Jamaine Drakes, Evan
+Author: Jamaine Drakes, Evan Leacock
 Purpose: The puspose of this class is to manage information about each animal in the Zoo
 Start Date: Mar 10, 2022
 Last Edit: Mar 11, 2022
