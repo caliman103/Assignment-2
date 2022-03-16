@@ -113,12 +113,12 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         hungerLabel = new JLabel("Hunger:");
         healthLabel= new JLabel("Health:");
         
-        animalCageID = new JLabel(ZooManager.zoo.getCages().get(0).getCageID() );
-        animalName = new JLabel(ZooManager.zoo.getCages().get(0).getName() );
-        animalSpecies = new JLabel(ZooManager.zoo.getCages().get(0).getSpecies() );
-        animalCategory = new JLabel(ZooManager.zoo.getCages().get(0).getCategory() );
-        animalHunger = new JLabel(String.valueOf(ZooManager.zoo.getCages().get(0).getHungerStatus() ) );
-        animalHealth = new JLabel(String.valueOf(ZooManager.zoo.getCages().get(0).getHealthStatus() ) );
+        animalCageID = new JLabel(ZooManager.getZoo().getCages().get(0).getCageID() );
+        animalName = new JLabel(ZooManager.getZoo().getCages().get(0).getName() );
+        animalSpecies = new JLabel(ZooManager.getZoo().getCages().get(0).getSpecies() );
+        animalCategory = new JLabel(ZooManager.getZoo().getCages().get(0).getCategory() );
+        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHungerStatus() ) );
+        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHealthStatus() ) );
 
         zoneImageJLabel = new JLabel();
 

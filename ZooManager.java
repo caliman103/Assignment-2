@@ -16,10 +16,10 @@ import java.util.Scanner;
 public class ZooManager
 {
     //Object for zookeeper
-    static ZooKeeper zooKeeper;
+    static private ZooKeeper zooKeeper;
 
     //Object for Zoo
-    static Zoo zoo;
+    static private Zoo zoo;
 
 
     //Oject used for file reading and updating zoo
@@ -192,11 +192,20 @@ public class ZooManager
         zooKeeper = new ZooKeeper();
 
         new Welcome();
+        
+    }// end ZooManager constructor
 
+    //========================================================================================//
+    //                                     ACCESSORS                                          //
+    //========================================================================================//
+    public static Zoo getZoo()
+    {
+        return zoo;
+    }
 
-
-
-        //new Welcome();
+    public static ZooKeeper getZooKeeper()
+    {
+        return zooKeeper;
     }
     
 

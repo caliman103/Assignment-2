@@ -117,16 +117,16 @@ public class MainTester extends JFrame implements ActionListener
     {
         if(e.getSource() == AnimalPanel.nextButton)
         {
-            if(counter < (ZooManager.zoo.getCages().size() - 1) )
+            if(counter < (ZooManager.getZoo().getCages().size() - 1) )
             {
                 counter++;
                 
-                AnimalPanel.animalCageID.setText(ZooManager.zoo.getCages().get(counter).getCageID() );
-                AnimalPanel.animalName.setText(ZooManager.zoo.getCages().get(counter).getName() );
-                AnimalPanel.animalSpecies.setText(ZooManager.zoo.getCages().get(counter).getSpecies() );
-                AnimalPanel.animalCategory.setText(ZooManager.zoo.getCages().get(counter).getCategory() );
-                AnimalPanel.animalHunger.setText(String.valueOf(ZooManager.zoo.getCages().get(counter).getHungerStatus() ) );
-                AnimalPanel.animalHealth.setText(String.valueOf(ZooManager.zoo.getCages().get(counter).getHealthStatus() ) );
+                AnimalPanel.animalCageID.setText(ZooManager.getZoo().getCages().get(counter).getCageID() );
+                AnimalPanel.animalName.setText(ZooManager.getZoo().getCages().get(counter).getName() );
+                AnimalPanel.animalSpecies.setText(ZooManager.getZoo().getCages().get(counter).getSpecies() );
+                AnimalPanel.animalCategory.setText(ZooManager.getZoo().getCages().get(counter).getCategory() );
+                AnimalPanel.animalHunger.setText(String.valueOf(ZooManager.getZoo().getCages().get(counter).getHungerStatus() ) );
+                AnimalPanel.animalHealth.setText(String.valueOf(ZooManager.getZoo().getCages().get(counter).getHealthStatus() ) );
             }
         }
         

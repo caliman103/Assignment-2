@@ -167,7 +167,7 @@ public class Welcome  extends JFrame implements ActionListener
         if(e.getSource() == confirmButton)
         {
             setUsername(nameTextField.getText() );
-            ZooManager.zooKeeper.setName(username);
+            ZooManager.getZooKeeper().setName(username);
             new MainTester();
             this.dispose();
             

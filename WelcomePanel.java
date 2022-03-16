@@ -42,7 +42,7 @@ public class WelcomePanel  extends JPanel //implements ActionListener
         titleLabel = new JLabel("ZOOKEEPER 2.0");
         titleLabel.setFont(new Font("Courier",Font.BOLD,22));
 
-        messageLabel = new JLabel("Wecome " + ZooManager.zooKeeper.getName() + "!");
+        messageLabel = new JLabel("Wecome " + ZooManager.getZooKeeper().getName() + "!");
         messageLabel.setFont(new Font("Sans Serif",Font.ITALIC,18));
 
         imageLabel = new JLabel();
