@@ -30,7 +30,6 @@ public class FoodTotalPanel extends JPanel
     //
 
     //==============LABELS==============//
-    JLabel foodLabel;
     JLabel typeLabel;
     JLabel amountLabel;
 
@@ -43,24 +42,31 @@ public class FoodTotalPanel extends JPanel
 
 
     //=============BUTTONS==============//
-    JButton addButton;
-    JButton printListButton;
-    JButton feedButton;
+    static JButton addButton;
+    static JButton printListButton;
+    static JButton feedButton;
 
 
     //============TEXT FIELDS===========//
     // Text Fields to enter the amount of food
-    JTextField hayTextField;
-    JTextField fruitTextField;
-    JTextField grainTextField;
-    JTextField fishTextField;
-    JTextField meatTextField;
+    static JTextField hayTextField;
+    static JTextField fruitTextField;
+    static JTextField grainTextField;
+    static JTextField fishTextField;
+    static JTextField meatTextField;
 
 
     //=============BORDERS==============//
     // Border for the food section
     TitledBorder foodBorder;
     TitledBorder totalsBorder;
+
+
+    //==============TABLES==============//
+    // Table for the totals
+    JTable foodTotalsTable;
+    String[] foodTotalsTableHeaders;
+    Integer[][] foodTotalsTableContent;
 
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
