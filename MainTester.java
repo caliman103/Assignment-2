@@ -31,7 +31,7 @@ public class MainTester extends JFrame implements ActionListener
     
 
     AnimalPanel animalPanel;
-    JPanel foodTotalsFiller = new JPanel();
+    FoodTotalPanel foodTotals = new FoodTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
     JPanel medicineTotalsFiller = new JPanel();
@@ -59,7 +59,7 @@ public class MainTester extends JFrame implements ActionListener
         this.setLayout(new BorderLayout());
         
        
-        foodTotalsFiller.setBackground(Color.BLACK);
+        foodTotals.setBackground(Color.BLACK);
         feedingReportsFiller.setBackground(Color.BLUE);
         medicineTotalsFiller.setBackground(Color.CYAN);
         healingReportsFiller.setBackground(Color.GREEN);
@@ -76,7 +76,7 @@ public class MainTester extends JFrame implements ActionListener
         //                                  ADDING COMPONENTS                                     //
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
-        centerPanel.add(foodTotalsFiller);
+        centerPanel.add(foodTotals);
         centerPanel.add(medicineTotalsFiller);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
