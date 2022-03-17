@@ -3,7 +3,7 @@ ClassName: Main.java
 Author: Jamaine Drakes
 Purpose: 
 Start Date: Mar 13, 2022
-Last Edit: Mar 13, 2022
+Last Edit: Mar 17, 2022
 */
 
 //========================================================================================//
@@ -31,7 +31,7 @@ public class MainTester extends JFrame implements ActionListener
     
 
     AnimalPanel animalPanel;
-    JPanel foodTotalsFiller = new JPanel();
+    FoodTotalPanel foodTotalPanel = new FoodTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
     JPanel medicineTotalsFiller = new JPanel();
@@ -52,14 +52,15 @@ public class MainTester extends JFrame implements ActionListener
         
         counter = 0;
         
+        medicineTotalsFiller.setPreferredSize(new Dimension(500,450));
        
         //setSize(150,400 );
-        this.setTitle("Animal Screen");
+        this.setTitle("Main Screen");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         
        
-        foodTotalsFiller.setBackground(Color.BLACK);
+        //foodTotalPanel.setBackground(Color.BLACK);
         feedingReportsFiller.setBackground(Color.BLUE);
         medicineTotalsFiller.setBackground(Color.CYAN);
         healingReportsFiller.setBackground(Color.GREEN);
@@ -76,7 +77,7 @@ public class MainTester extends JFrame implements ActionListener
         //                                  ADDING COMPONENTS                                     //
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
-        centerPanel.add(foodTotalsFiller);
+        centerPanel.add(foodTotalPanel);
         centerPanel.add(medicineTotalsFiller);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );

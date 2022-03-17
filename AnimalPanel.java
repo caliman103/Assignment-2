@@ -3,7 +3,7 @@ ClassName: AnimalPanel.java
 Author: Jamaine Drakes
 Purpose: 
 Start Date: Mar 13, 2022
-Last Edit: Mar 13, 2022
+Last Edit: Mar 17, 2022
 */
 
 //========================================================================================//
@@ -70,12 +70,6 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     
     ArrayList<JLabel> labelsForStyling = new ArrayList<JLabel>();
 
-    
-
-    
-
-
-    
 
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
@@ -201,7 +195,7 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     //========================================================================================//
     //                                    OTHER METHODS                                       //
     //========================================================================================//
-    public void styleComponents()
+    private void styleComponents()
     {
         titleLabel.setFont(new Font("Sans Serif",Font.BOLD,20));
 
