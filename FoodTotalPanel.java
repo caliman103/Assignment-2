@@ -2,7 +2,7 @@
 ClassName: FoodTotalPanel
 Author: Jamaine Drakes
 Purpose: 
-Start Date: Mar 17, 2022
+Start Date: Mar 16, 2022
 Last Edit: Mar 17, 2022
 */
 
@@ -15,7 +15,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 
-public class FoodTotalPanel  extends JPanel implements ActionListener
+
+
+public class FoodTotalPanel extends JPanel
 {
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
@@ -92,15 +94,17 @@ public class FoodTotalPanel  extends JPanel implements ActionListener
         //========================================================================================//
         //                                     INSTIATION                                        //
         //========================================================================================//
-        //Layout Managers
-        westPanelLayout = new GroupLayout(westPanel);
-        eastPanelLayout = new GroupLayout(eastPanel);
+        
         //Panels
         topPanel = new JPanel();
         westPanel = new JPanel();
         centerPanel = new JPanel();
         eastPanel = new JPanel();
         botPanel = new JPanel();
+
+        //Layout Managers
+        westPanelLayout = new GroupLayout(westPanel);
+        eastPanelLayout = new GroupLayout(eastPanel);
 
         //Labels
         titleLabel = new JLabel("Food Totals");
@@ -247,18 +251,73 @@ public class FoodTotalPanel  extends JPanel implements ActionListener
         //Top Panel
         topPanel.setLayout(new FlowLayout() );
 
+
         //West Panel
         westPanel.setLayout(westPanelLayout); 
-        //westPanel.setPreferredSize(new Dimension(200,300));
+        westPanelLayout.setAutoCreateGaps(true);
+        westPanelLayout.setAutoCreateContainerGaps(true);
+
         for(int i = 0; i < textFieldsToStyle.size(); i++)
         {
-            textFieldsToStyle.get(i).setPreferredSize( new Dimension(100,10));
+            textFieldsToStyle.get(i).setPreferredSize( new Dimension(150,20));
            
         }//end for
+
+        westPanelLayout.setHorizontalGroup(
+            westPanelLayout.createSequentialGroup()
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)  //Column 1
+                    .addComponent(typeLabel)
+                    .addComponent(hayLabel)
+                    .addComponent(fruitLabel)
+                    .addComponent(grainLabel)
+                    .addComponent(fishLabel)
+                    .addComponent(meatLabel) )
+
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)  //Column 2
+                    .addComponent(amountLabel)
+                    .addComponent(hayTextField)
+                    .addComponent(fruitTextField)
+                    .addComponent(grainTextField)
+                    .addComponent(fishTextField)
+                    .addComponent(meatTextField) )
+
+        ); //end westPanel orizontal group
+
+        westPanelLayout.setVerticalGroup(
+            westPanelLayout.createSequentialGroup()
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                    .addComponent(typeLabel)
+                    .addComponent(amountLabel) )
+
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                    .addComponent(hayLabel)
+                    .addComponent(hayTextField) )
+
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                    .addComponent(fruitLabel)
+                    .addComponent(fruitTextField) )
+
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                    .addComponent(grainLabel)
+                    .addComponent(grainTextField) )
+
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                    .addComponent(fishLabel)
+                    .addComponent(fishTextField) )
+
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                    .addComponent(meatLabel)
+                    .addComponent(meatTextField) )
+        );//end westPanel vertival group
+
+       
         
 
         //Center Panel
         centerPanel.setLayout(new FlowLayout() );
+        
+        addFoodButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        addFoodButton.setAlignmentY(JButton.CENTER_ALIGNMENT);
 
 
         //East Panel
