@@ -12,6 +12,7 @@ Last Edit: Mar 16, 2022
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.util.ArrayList;
 
 
 public class FoodTotalPanel extends JPanel
@@ -22,51 +23,54 @@ public class FoodTotalPanel extends JPanel
 
     //==============PANELS==============//
     // Panels for the borderLayout of FoodTotalPanel 
-    JPanel westPanel;
-    JPanel eastPanel;
-    JPanel centerPanel;
-    JPanel southPanel;
+    private JPanel westPanel;
+    private JPanel eastPanel;
+    private JPanel centerPanel;
+    private JPanel southPanel;
 
     //
 
     //==============LABELS==============//
-    JLabel typeLabel;
-    JLabel amountLabel;
+    private JLabel typeLabel;
+    private JLabel amountLabel;
 
     // Labels for the food types
-    JLabel hayLabel;
-    JLabel fruitLabel;
-    JLabel grainlabel;
-    JLabel fishLabel;
-    JLabel meatLabel;
+    private JLabel hayLabel;
+    private JLabel fruitLabel;
+    private JLabel grainlabel;
+    private JLabel fishLabel;
+    private JLabel meatLabel;
 
 
     //=============BUTTONS==============//
-    static JButton addButton;
-    static JButton printListButton;
-    static JButton feedButton;
+    private JButton addButton;
+    private JButton printListButton;
+    private JButton feedButton;
 
 
     //============TEXT FIELDS===========//
     // Text Fields to enter the amount of food
-    static JTextField hayTextField;
-    static JTextField fruitTextField;
-    static JTextField grainTextField;
-    static JTextField fishTextField;
-    static JTextField meatTextField;
+    private JTextField hayTextField;
+    private JTextField fruitTextField;
+    private JTextField grainTextField;
+    private JTextField fishTextField;
+    private JTextField meatTextField;
 
 
     //=============BORDERS==============//
     // Border for the food section
-    TitledBorder foodBorder;
-    TitledBorder totalsBorder;
+    private TitledBorder foodBorder;
+    private TitledBorder totalsBorder;
 
 
     //==============TABLES==============//
     // Table for the totals
-    JTable foodTotalsTable;
-    String[] foodTotalsTableHeaders;
-    Integer[][] foodTotalsTableContent;
+    private JTable foodTotalsTable;
+    private String[] foodTotalsTableHeaders;
+    private Integer[][] foodTotalsTableContent;
+
+
+    //============ARRAYLISTS============//
 
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
