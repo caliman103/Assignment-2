@@ -1,6 +1,6 @@
 /*
 ClassName: ZooManager
-Author: Jamaine Drakes & Evan Leacock
+Author: Jamaine Drakes & Evan
 Purpose: To test smth
 Start Date: Mar 12, 2022
 Last Edit: Mar 12, 2022
@@ -200,7 +200,7 @@ public class ZooManager
     //========================================================================================//
     public static Zoo getZoo()
     {
-        return zoo;
+        return zoo; 
     }
 
     public static ZooKeeper getZooKeeper()
