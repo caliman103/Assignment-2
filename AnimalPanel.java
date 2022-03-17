@@ -208,7 +208,7 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         for(int i = 0; i < labelsForStyling.size(); i++)
         {
             labelsForStyling.get(i).setFont(new Font("Sans Serif",Font.BOLD,16) );
-        }
+        }//end for
 
         nextButton.setFocusable(false);
     }//end styleComponents 
