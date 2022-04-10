@@ -16,8 +16,8 @@ public class AnimalFeeder
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
-    ArrayList<Meal> feedingList;
-    ArrayList<Animal> cages;
+    private ArrayList<Meal> feedingList;
+    private ArrayList<Animal> cages;
 
 
     //========================================================================================//
