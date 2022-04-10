@@ -15,6 +15,11 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import src.AnimalPanel;
+import src.FoodTotalPanel;
+import src.WelcomePanel;
+import src.ZooManager;
+
 
 public class MainTester extends JFrame implements ActionListener
 {

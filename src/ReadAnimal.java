@@ -1,4 +1,3 @@
-
 /*
 ClassName: ReadAnimal
 Author: Jamaine Drakes
