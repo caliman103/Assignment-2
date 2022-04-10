@@ -1,5 +1,5 @@
 /*
-ClassName: OverFeedingException
+ClassName: OverdosingException
 Author: Jamaine Drakes, Evan Leacock
 Purpose: 
 Start Date: Mar 11, 2022
@@ -10,17 +10,17 @@ Last Edit: Mar 11, 2022
 //                                     LIBRARIES                                          //
 //========================================================================================//
 
-public class OverFeedingException extends Exception
+public class OverdosingException extends Exception
 {
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
-
+ 
 
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public OverFeedingException()
+    public OverdosingException()
     {
         super();
     }// OverdosingException
@@ -39,10 +39,10 @@ public class OverFeedingException extends Exception
     //========================================================================================//
     //                                    OTHER METHODS                                       //
     //========================================================================================//
-    public String toString()// What will be put in this string?
+    public String toString()
     {
         return("");
     }// toString
 
 
-}// OverFeedingException
+}// OverdosingException

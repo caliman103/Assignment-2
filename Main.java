@@ -16,6 +16,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.plaf.InsetsUIResource;
 
+import src.AnimalPanel;
+import src.ZooManager;
+
 
 public class Main extends JFrame implements ActionListener
 {

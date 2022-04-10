@@ -12,7 +12,6 @@ Last Edit: Mar 17, 2022
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.plaf.DimensionUIResource;
 
 import java.util.ArrayList;
 
@@ -27,48 +26,47 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     //int index = 0;
 
     //Panels
-    JPanel top;
-    JPanel center;
-    JPanel bot;
+    private JPanel  top;
+    private JPanel center;
+    private JPanel bot;
     
     //Labels
-    JLabel titleLabel;
+    private JLabel titleLabel;
 
-    JLabel cageIDLabel;
-    JLabel nameLabel;
-    JLabel speciesLabel;
-    JLabel categoryLabel;
-    JLabel hungerLabel;
-    JLabel healthLabel;
+    private JLabel cageIDLabel;
+    private JLabel nameLabel;
+    private JLabel speciesLabel;
+    private JLabel categoryLabel;
+    private JLabel hungerLabel;
+    private JLabel healthLabel;
 
-    static JLabel animalCageID;
-    static JLabel animalName;
-    static JLabel animalSpecies;
-    static JLabel animalCategory;
-    static JLabel animalHunger;
-    static JLabel animalHealth;
+    private JLabel animalCageID;
+    private JLabel animalName;
+    private JLabel animalSpecies;
+    private JLabel animalCategory;
+    private JLabel animalHunger;
+    private JLabel animalHealth;
    
+    private JLabel zoneImageJLabel;
 
-    JLabel zoneImageJLabel;
 
-
-    
+    String test;
     
     //Button
-   static JButton nextButton;
+    JButton nextButton;
 
 
     //ImagesIcon
-    ImageIcon africanSavanna;
-    ImageIcon amazonianJungle;
-    ImageIcon eurasianWilds;
-    ImageIcon frozenTundra;
+    private ImageIcon africanSavanna;
+    private ImageIcon amazonianJungle;
+    private  ImageIcon eurasianWilds;
+    private ImageIcon frozenTundra;
 
     //Arraylists
-     //This Arraylist of Images (Could be used to randomly choose an image for the zone)
-    ArrayList<ImageIcon> images = new ArrayList<ImageIcon>();
+    //This Arraylist of Images (Could be used to randomly choose an image for the zone)
+    private ArrayList<ImageIcon> zoneImages = new ArrayList<ImageIcon>();
     
-    ArrayList<JLabel> labelsForStyling = new ArrayList<JLabel>();
+    private ArrayList<JLabel> labelsForStyling = new ArrayList<JLabel>();
 
 
     //========================================================================================//
@@ -111,13 +109,35 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         animalName = new JLabel(ZooManager.getZoo().getCages().get(0).getName() );
         animalSpecies = new JLabel(ZooManager.getZoo().getCages().get(0).getSpecies() );
         animalCategory = new JLabel(ZooManager.getZoo().getCages().get(0).getCategory() );
-        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHungerStatus() ) );
-        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHealthStatus() ) );
+        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHungerStatus() ) + "/5"); 
+        if(ZooManager.getZoo().getCages().get(0).getHungerStatus() <= 2)
+        {
+            animalHunger.setForeground(Color.RED);
+        }//endif
+        else
+        {
+            animalHunger.setForeground(Color.BLACK);
+        }
+        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHealthStatus() ) + "/10" );
+        if(ZooManager.getZoo().getCages().get(0).getHealthStatus() <= 3)
+        {
+            animalHunger.setForeground(Color.RED);
+        }//endif
+        else
+        {
+            animalHealth.setForeground(Color.BLACK);
+        }
 
         zoneImageJLabel = new JLabel();
 
         //Button
         nextButton = new JButton("Next");
+
+        //ImageIcons
+        africanSavanna  = new ImageIcon("../Images/zoneA.png");
+        amazonianJungle = new ImageIcon("../Images/zoneB.png");
+        eurasianWilds = new ImageIcon("../Images/zoneC.png");
+        frozenTundra = new ImageIcon("../Images/zoneD.png");
         
         //Adding labels  which will have to same styling (check styleComponents method)
         labelsForStyling.add(cageIDLabel);
@@ -133,6 +153,11 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         labelsForStyling.add(animalHunger);
         labelsForStyling.add(animalHealth);
         
+        //Adding image icons to zoneImages array list
+        zoneImages.add(africanSavanna);
+        zoneImages.add(amazonianJungle);
+        zoneImages.add(eurasianWilds);
+        zoneImages.add(frozenTundra);
         
         //method to style the components before adding them to the panel
         styleComponents();
@@ -161,9 +186,11 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         center.add(healthLabel);
         center.add(animalHealth);
         
-        
+       
         //Bottom Panel
-        bot.add(Box.createRigidArea(new Dimension(0,40) ) );
+        bot.add(Box.createRigidArea(new Dimension(10,10) ) );
+        bot.add(zoneImageJLabel );
+        bot.add(Box.createRigidArea(new Dimension(90,50) ) );
         bot.add(nextButton);
 
         this.add("North",top);
@@ -191,10 +218,24 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         
     }// actionPerformed
 
-
     //========================================================================================//
     //                                    OTHER METHODS                                       //
     //========================================================================================//
+    public JLabel getZoneIMageLabel()
+    {
+        return zoneImageJLabel;
+    }
+
+    public JButton getNextButton()
+    {
+        return nextButton;
+    }
+
+    public ArrayList<JLabel> getLabelList()
+    {
+        return labelsForStyling;
+    }
+
     private void styleComponents()
     {
         titleLabel.setFont(new Font("Sans Serif",Font.BOLD,20));
@@ -205,7 +246,48 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         }//end for
 
         nextButton.setFocusable(false);
+
+        for(int i = 0; i < zoneImages.size(); i++)
+        {
+            ImageIcon tempImage = new ImageIcon();
+            tempImage = zoneImages.get(i);
+            //Change size of logo to display on frame
+            Image alteredLogo = tempImage.getImage(); //get the imageicon as an image  to scale it
+            Image newLogo =  alteredLogo.getScaledInstance(60, 60, Image.SCALE_SMOOTH); //transform it
+            tempImage = new ImageIcon(newLogo); //convert back to imageIcon
+            zoneImages.set(i, tempImage);
+        }//end for
+
+        char letter = ZooManager.getZoo().getCages().get(0).getCageID().charAt(0);
+        zoneImageJLabel.setIcon(selectZoneImage(letter) );
+        
     }//end styleComponents 
+
+
+    public ImageIcon selectZoneImage(char zoneLetter)
+    {
+        ImageIcon selectedImage = new ImageIcon();
+        switch (zoneLetter )
+        {
+            case 'A':
+                selectedImage = zoneImages.get(0);
+                break;
+
+           case 'B':
+                selectedImage = zoneImages.get(1);
+                break;
+
+            case 'C':
+                selectedImage =  zoneImages.get(2);
+                break;    
+
+            case 'D':
+                selectedImage = zoneImages.get(3);
+                break;
+
+        }//end switch
+        return selectedImage;
+    }
 
     /*
     // This method will center the frame on the screen

@@ -1,4 +1,3 @@
-
 /*
 ClassName: ReadAnimal
 Author: Jamaine Drakes
@@ -12,7 +11,7 @@ Last Edit: Mar 11, 2022
 //========================================================================================//
 import java.io.File;
 import java.util.Scanner;
-public class ReadAnimal
+public class ReadAnimal 
 {
     public static void main(String[] args) throws Exception
     {

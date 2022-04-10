@@ -47,7 +47,7 @@ public class WelcomePanel  extends JPanel //implements ActionListener
 
         imageLabel = new JLabel();
 
-        logo = new ImageIcon("../Images/logo.png");
+        logo = new ImageIcon("../Images/Logo.png");
         Image alteredLogo = logo.getImage(); //get the imageicon as an image  to scale it
         Image newLogo =  alteredLogo.getScaledInstance(60, 60, Image.SCALE_SMOOTH); //transform it
         logo = new ImageIcon(newLogo); //convertit back to imageIcon
