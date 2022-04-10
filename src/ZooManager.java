@@ -256,16 +256,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     {
         if(e.getSource() == foodTotalsTextFields.get(0) )
         {
-           for(int i = 0; i < foodTotalsTextFields.size(); i++)
-           {
-                
-                foodTotalsTextFields.get(1).setEditable(false);
-                foodTotalsTextFields.get(2).setEditable(false);
-                foodTotalsTextFields.get(3).setEditable(false);
-                foodTotalsTextFields.get(4).setEditable(false);
-                
-                
-           }//end for
+           
         }//and hay textfleid
     }//end focusGained
 
@@ -273,9 +264,12 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     {
         if(e.getSource() == foodTotalsTextFields.get(0) )
         {
-           if(foodTotalsTextFields.get(0).getText().equals("0"))
+           if(Integer.valueOf( foodTotalsTextFields.get(0).getText() ) > 0 )
            {
-                disableFoodTextFields();
+                foodTotalsTextFields.get(1).setEditable(false);
+                foodTotalsTextFields.get(2).setEditable(false);
+                foodTotalsTextFields.get(3).setEditable(false);
+                foodTotalsTextFields.get(4).setEditable(false);
            }
         }//and hay textfleid
         
