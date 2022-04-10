@@ -10,6 +10,7 @@ Last Edit: Mar 16, 2022
 //                                     LIBRARIES                                          //
 //========================================================================================//
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
  
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class ZooManager extends JFrame implements ActionListener
+public class ZooManager extends JFrame implements ActionListener, FocusListener
 {
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
@@ -29,13 +30,18 @@ public class ZooManager extends JFrame implements ActionListener
     
 
     AnimalPanel animalPanel;
-    FoodTotalPanel foodTotalPanel = new FoodTotalPanel();
+    FoodTotalPanel foodTotals = new FoodTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
     JPanel medicineTotalsFiller = new JPanel();
     JPanel healingReportsFiller = new JPanel();
 
     
+    //C0mponents from FoodTotals
+    ArrayList<JButton> foodTotalsButtons = foodTotals.getButtonList();
+    ArrayList<JTable> foodTotalTable = foodTotals.getTableList();
+    ArrayList<JTextField> foodTotalsTextFields = foodTotals.getTextFieldList();
+
     //=================Images=====================//
     ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
 
@@ -139,7 +145,7 @@ public class ZooManager extends JFrame implements ActionListener
         //                                  ADDING COMPONENTS                                     //
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
-        centerPanel.add(foodTotalPanel);
+        centerPanel.add(foodTotals);
         centerPanel.add(medicineTotalsFiller);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
@@ -157,13 +163,28 @@ public class ZooManager extends JFrame implements ActionListener
 
 
 
-
+        
         //========================================================================================//
         //                                ADDING ACTION LISTENERS                                 //
         //========================================================================================//
         animalPanel.getNextButton().addActionListener(this);
-        //buttonList.get(0).addActionListener(this);
+        for(int i = 0; i < foodTotalsButtons.size(); i++)
+        {
+            foodTotalsButtons.get(i).addActionListener(this);
+        }
         
+
+        //========================================================================================//
+        //                                ADDING Focus LISTENERS                                  //
+        //========================================================================================//
+        for(int i = 0; i < foodTotalsTextFields.size(); i++)
+        {
+            foodTotalsTextFields.get(i).addFocusListener(this);
+        }
+
+        //foodTotalsTextFields.get(0).setFocusable(false);
+        disableFoodTextFields();
+
         maximiseFrame(this);
         
         
@@ -210,20 +231,88 @@ public class ZooManager extends JFrame implements ActionListener
 
                 char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
                 animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
-            }
+
+                enebleAllTextFields();
+                disableFoodTextFields();
+            }//end if
 
 
         }//end next button action
         
+
+
+        if(e.getSource() == foodTotalsButtons.get(0) )  //next button from foodtotal panel
+        {
+            //foodTotalTable.get(0).setValueAt(2, 0, 0);
+
+        }
     }// actionPerformed
 
 
     //========================================================================================//
+    //                                Focus Listsner METHODS                                  //
+    //========================================================================================//
+    public void focusGained(FocusEvent e)
+    {
+        if(e.getSource() == foodTotalsTextFields.get(0) )
+        {
+           for(int i = 0; i < foodTotalsTextFields.size(); i++)
+           {
+                
+                foodTotalsTextFields.get(1).setEditable(false);
+                foodTotalsTextFields.get(2).setEditable(false);
+                foodTotalsTextFields.get(3).setEditable(false);
+                foodTotalsTextFields.get(4).setEditable(false);
+                
+                
+           }//end for
+        }//and hay textfleid
+    }//end focusGained
+
+    public void focusLost(FocusEvent e)
+    {
+        if(e.getSource() == foodTotalsTextFields.get(0) )
+        {
+           if(foodTotalsTextFields.get(0).getText().equals("0"))
+           {
+                disableFoodTextFields();
+           }
+        }//and hay textfleid
+        
+    }//end FocusLost
+
+    //========================================================================================//
     //                                    OTHER METHODS                                       //
     //========================================================================================//
+    private void disableFoodTextFields()
+    {
+        switch (getZoo().getCages().get(index).getCategory() )
+        {
+            case "Herbivore":
+                foodTotalsTextFields.get(3).setEditable(false);
+                foodTotalsTextFields.get(4).setEditable(false);
+                break;
+            
+            case "Carnivore":
+                foodTotalsTextFields.get(0).setEditable(false);
+                foodTotalsTextFields.get(1).setEditable(false);
+                foodTotalsTextFields.get(2).setEditable(false);
+                break;
+            default:
+                foodTotalsTextFields.get(2).setEditable(false);
+                foodTotalsTextFields.get(4).setEditable(false);
+                break;
+        }//end switch
+    }//end enableFoodTextFelds
 
+    private void enebleAllTextFields()
+    {
+        for(int i = 0; i < foodTotalsTextFields.size(); i++)
+        {
+            foodTotalsTextFields.get(i).setEditable(true);;
+        }
+    }
 
-    
      //This function will maximise the frame
     private static void maximiseFrame(JFrame fr)
     {

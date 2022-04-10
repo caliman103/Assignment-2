@@ -3,18 +3,19 @@ ClassName: FoodTotalPanel
 Author: Jamaine Drakes
 Purpose: 
 Start Date: Mar 16, 2022
-Last Edit: Mar 17, 2022
+Last Edit: Mar 16, 2022
 */
 
 //========================================================================================//
 //                                     LIBRARIES                                          //
 //========================================================================================//
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.PanelUI;
+import javax.swing.table.AbstractTableModel;
+
 import java.util.ArrayList;
-
-
 
 
 public class FoodTotalPanel extends JPanel
@@ -22,93 +23,74 @@ public class FoodTotalPanel extends JPanel
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
-    //Layout Managers
-    GroupLayout westPanelLayout;
-    GroupLayout eastPanelLayout;
-    
-    //Panels
-    JPanel topPanel;
-    JPanel westPanel;
-    JPanel centerPanel;
-    JPanel eastPanel;
-    JPanel botPanel;
 
-    //Labels
-    JLabel titleLabel;
-    
-    JLabel typeLabel;
-    JLabel amountLabel;
-    
-    JLabel hayLabel;
-    JLabel fruitLabel;
-    JLabel grainLabel;
-    JLabel fishLabel;
-    JLabel meatLabel;
-    
-    JLabel zoneALabel;
-    JLabel zoneBLabel;
-    JLabel zoneCLabel;
-    JLabel zoneDLabel;
-    static JLabel zoneAHay;
-    static JLabel zoneBHay;
-    static JLabel zoneCHay;
-    static JLabel zoneDHay;
-    static JLabel zoneAFruit;
-    static JLabel zoneBFruit;
-    static JLabel zoneCFruit;
-    static JLabel zoneDFruit;
-    static JLabel zoneAGrain;
-    static JLabel zoneBGrain;
-    static JLabel zoneCGrain;
-    static JLabel zoneDGrain;
-    static JLabel zoneAFish;
-    static JLabel zoneBFish;
-    static JLabel zoneCFish;
-    static JLabel zoneDFish;
-    static JLabel zoneAMeat;
-    static JLabel zoneBMeat;
-    static JLabel zoneCMeat;
-    static JLabel zoneDMeat;
+    //==============PANELS==============//
+    // Panels for the borderLayout of FoodTotalPanel 
+    private JPanel westPanel;
+    private JPanel eastPanel;
+    private JPanel centerPanel;
+    private JPanel southPanel;
 
-    //Text Fields
-    static JTextField hayTextField;
-    static JTextField fruitTextField;
-    static JTextField grainTextField;
-    static JTextField fishTextField;
-    static JTextField meatTextField;
+    //
 
-    //Buttons
-    static JButton addFoodButton;
-    static JButton feeddButton;
-    static JButton printListButton;
+    //==============LABELS==============//
+    private JLabel typeLabel;
+    private JLabel amountLabel;
 
-    //ArrayList
-    ArrayList<JTextField> textFieldsToStyle;
+    // Labels for the food types
+    private JLabel hayLabel;
+    private JLabel fruitLabel;
+    private JLabel grainLabel;
+    private JLabel fishLabel;
+    private JLabel meatLabel;
+
+
+    //=============BUTTONS==============//
+    private JButton addButton;
+    private JButton printListButton;
+    private JButton feedButton;
+
+
+    //============TEXT FIELDS===========//
+    // Text Fields to enter the amount of food
+    private JTextField hayTextField;
+    private JTextField fruitTextField;
+    private JTextField grainTextField;
+    private JTextField fishTextField;
+    private JTextField meatTextField;
+
+
+    //=============BORDERS==============//
+    // Border for the food section
+    private TitledBorder foodBorder;
+    private TitledBorder totalsBorder;
+
+
+    //==============TABLES==============//
+    // Table for the totals
+    private JTable foodTotalsTable;
+    private String[] foodTotalsTableHeaders;
+    private Integer[][] foodTotalsTableContent;
+
+
+    //============ARRAYLISTS============//
+    private ArrayList<JButton> buttonList;
+    private ArrayList<JTextField> textFieldList;
+    private ArrayList<JTable> tableList;
+
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
     public FoodTotalPanel()
     {
-          setLayout(new BorderLayout());
-          this.setPreferredSize(new Dimension(500,450));
-        
-        //========================================================================================//
-        //                                     INSTIATION                                        //
-        //========================================================================================//
-        
-        //Panels
-        topPanel = new JPanel();
+        setLayout(new BorderLayout());
+        setVisible(true);
+
+        //Initializing components
         westPanel = new JPanel();
-        centerPanel = new JPanel();
-        eastPanel = new JPanel();
-        botPanel = new JPanel();
-
-        //Layout Managers
-        westPanelLayout = new GroupLayout(westPanel);
-        eastPanelLayout = new GroupLayout(eastPanel);
-
-        //Labels
-        titleLabel = new JLabel("Food Totals");
+        eastPanel = new JPanel(new FlowLayout());
+        centerPanel = new JPanel(new FlowLayout());
+        southPanel = new JPanel(new FlowLayout());
 
         typeLabel = new JLabel("Type");
         amountLabel = new JLabel("Amount");
@@ -119,312 +101,145 @@ public class FoodTotalPanel extends JPanel
         fishLabel = new JLabel("Fish");
         meatLabel = new JLabel("Meat");
 
-        zoneALabel = new JLabel("A");
-        zoneBLabel = new JLabel("B");
-        zoneCLabel = new JLabel("C");
-        zoneDLabel = new JLabel("D");
-        zoneAHay = new JLabel("0");
-        zoneBHay = new JLabel("0");
-        zoneCHay = new JLabel("0");
-        zoneDHay = new JLabel("0");
-        zoneAFruit = new JLabel("0");
-        zoneBFruit = new JLabel("0");
-        zoneCFruit = new JLabel("0");
-        zoneDFruit = new JLabel("0");
-        zoneAGrain = new JLabel("0");
-        zoneBGrain = new JLabel("0");
-        zoneCGrain = new JLabel("0");
-        zoneDGrain = new JLabel("0");
-        zoneAFish = new JLabel("0");
-        zoneBFish = new JLabel("0");
-        zoneCFish = new JLabel("0");
-        zoneDFish = new JLabel("0");
-        zoneAMeat = new JLabel("0");
-        zoneBMeat = new JLabel("0");
-        zoneCMeat = new JLabel("0");
-        zoneDMeat = new JLabel("0");
+        hayTextField = new JTextField("0");
+        fruitTextField = new JTextField("0");
+        grainTextField = new JTextField("0");
+        fishTextField = new JTextField("0");
+        meatTextField = new JTextField("0");
 
-        //Text Fields
-        hayTextField = new JTextField();
-        fruitTextField = new JTextField();
-        grainTextField = new JTextField();
-        fishTextField = new JTextField();
-        meatTextField = new JTextField();
-        
-        //Buttons
-        addFoodButton = new JButton("Add");
-        feeddButton = new JButton("Feed");
+        addButton = new JButton("Add->");
         printListButton = new JButton("Print List");
+        feedButton = new JButton("Feed");
 
-        textFieldsToStyle = new ArrayList<JTextField>();
+        foodBorder = BorderFactory.createTitledBorder("Food");
+        totalsBorder = BorderFactory.createTitledBorder("Totals");
 
-        textFieldsToStyle.add(hayTextField);
-        textFieldsToStyle.add(fruitTextField);
-        textFieldsToStyle.add(grainTextField);
-        textFieldsToStyle.add(fishTextField);
-        textFieldsToStyle.add(meatTextField);
+        this.setBorder(BorderFactory.createLineBorder(Color.gray));
 
-        //Method to style components before adding them
-        styleComponents();
+        GroupLayout layout = new GroupLayout(westPanel);
+        westPanel.setLayout(layout);
+        westPanel.setBorder(foodBorder);
+
+        eastPanel.setBorder(totalsBorder);
+
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        foodTotalsTableHeaders = new String[] {"A","B","C","D"};
+        foodTotalsTableContent = new Integer[][] {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
+
+        foodTotalsTable = new JTable(foodTotalsTableContent, foodTotalsTableHeaders)
+        {
+            public boolean isCellEditable(int row, int column)
+            {  
+                return false;  
+            }// isCellEditable
+        };
+
+        //foodTotalsTable.setValueAt(value, row, column);
+
+        buttonList = new ArrayList<JButton>();
+        textFieldList = new ArrayList<JTextField>();
+        tableList = new ArrayList<JTable>();
+        
         //========================================================================================//
         //                                  ADDING COMPONENTS                                     //
         //========================================================================================//
-        //Top Panel
-        topPanel.add(titleLabel);
 
-        //WestPanel
-        westPanel.add(typeLabel);
-        westPanel.add(amountLabel);
-        westPanel.add(hayLabel);
-        westPanel.add(hayTextField);
-        westPanel.add(fruitLabel);
-        westPanel.add(fruitTextField);
-        westPanel.add(grainLabel);
-        westPanel.add(grainTextField);
-        westPanel.add(fishLabel);
-        westPanel.add(fishTextField);
-        westPanel.add(meatLabel);
-        westPanel.add(meatTextField);
-
-        //Center Panel
-        centerPanel.add(addFoodButton);
-
-        //EastPanel
-        eastPanel.add(zoneALabel);
-        eastPanel.add(zoneBLabel);
-        eastPanel.add(zoneCLabel);
-        eastPanel.add(zoneDLabel);
-        eastPanel.add(zoneAHay);
-        eastPanel.add(zoneBHay);
-        eastPanel.add(zoneCHay);
-        eastPanel.add(zoneDHay);
-        eastPanel.add(zoneAFruit);
-        eastPanel.add(zoneBFruit);
-        eastPanel.add(zoneCFruit);
-        eastPanel.add(zoneDFruit);
-        eastPanel.add(zoneAGrain);
-        eastPanel.add(zoneBGrain);
-        eastPanel.add(zoneCGrain);
-        eastPanel.add(zoneDGrain);
-        eastPanel.add(zoneAFish);
-        eastPanel.add(zoneBFish);
-        eastPanel.add(zoneCFish);
-        eastPanel.add(zoneDFish);
-        eastPanel.add(zoneAMeat);
-        eastPanel.add(zoneBMeat);
-        eastPanel.add(zoneCMeat);
-        eastPanel.add(zoneDMeat);
-
-        //Bot Panel
-        botPanel.add(printListButton);
-        botPanel.add(feeddButton);
-
-        this.add("North",topPanel);
-        this.add("West",westPanel);
-        this.add("Center",centerPanel);
-        this.add("East",eastPanel);
-        this.add("South",botPanel);
-
-        //========================================================================================//
-        //                                ADDING ACTION LISTENERS                                 //
-        //========================================================================================//
-        
-
-        setVisible(true);
-
-    }// end FoodTotalPanel
-
-    //========================================================================================//
-    //                                ACTION PERFORMED METHOD                                 //
-    //========================================================================================//
-    public void actionPerformed(ActionEvent e)
-    {
-        // Event Handlers
-        
-    }// actionPerformed
-
-
-    //========================================================================================//
-    //                                    OTHER METHODS                                       //
-    //========================================================================================//
-    private void styleComponents()
-    {
-        //Top Panel
-        topPanel.setLayout(new FlowLayout() );
-
-
-        //West Panel
-        westPanel.setLayout(westPanelLayout); 
-        westPanelLayout.setAutoCreateGaps(true);
-        westPanelLayout.setAutoCreateContainerGaps(true);
-
-        for(int i = 0; i < textFieldsToStyle.size(); i++)
-        {
-            textFieldsToStyle.get(i).setPreferredSize( new Dimension(150,20));
-           
-        }//end for
-
-        westPanelLayout.setHorizontalGroup(
-            westPanelLayout.createSequentialGroup()
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)  //Column 1
+        layout.setHorizontalGroup(
+            layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(typeLabel)
                     .addComponent(hayLabel)
                     .addComponent(fruitLabel)
                     .addComponent(grainLabel)
                     .addComponent(fishLabel)
-                    .addComponent(meatLabel) )
-
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)  //Column 2
+                    .addComponent(meatLabel))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(amountLabel)
                     .addComponent(hayTextField)
                     .addComponent(fruitTextField)
                     .addComponent(grainTextField)
                     .addComponent(fishTextField)
-                    .addComponent(meatTextField) )
+                    .addComponent(meatTextField))
+        );
 
-        ); //end westPanel orizontal group
-
-        
-        westPanelLayout.setVerticalGroup(
-            westPanelLayout.createSequentialGroup()
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+        layout.setVerticalGroup(
+            layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(typeLabel)
-                    .addComponent(amountLabel) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  2
+                    .addComponent(amountLabel))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(hayLabel)
-                    .addComponent(hayTextField) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  3
+                    .addComponent(hayTextField))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(fruitLabel)
-                    .addComponent(fruitTextField) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  4
+                    .addComponent(fruitTextField))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(grainLabel)
-                    .addComponent(grainTextField) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  5
+                    .addComponent(grainTextField))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(fishLabel)
-                    .addComponent(fishTextField) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  6
+                    .addComponent(fishTextField))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(meatLabel)
-                    .addComponent(meatTextField) )
-        );//end westPanel vertival group
+                    .addComponent(meatTextField))
+        );
 
+        JScrollPane scrollPane = new JScrollPane(foodTotalsTable);
+        scrollPane.setSize(scrollPane.getWidth(), 100);
+        eastPanel.add(scrollPane);
+
+        centerPanel.add(addButton);
+
+        southPanel.add(printListButton);
+        southPanel.add(feedButton);
+               
+        this.add("West", westPanel);
+        this.add("East", eastPanel);
+        this.add("Center", centerPanel);
+        this.add("South", southPanel);
+
+
+        buttonList.add(addButton);
+        buttonList.add(printListButton);
+        buttonList.add(feedButton);
+
+        textFieldList.add(hayTextField);
+        textFieldList.add(fruitTextField);
+        textFieldList.add(grainTextField);
+        textFieldList.add(fishTextField);
+        textFieldList.add(meatTextField);
+
+        tableList.add(foodTotalsTable);
     
-        
-
-        //Center Panel
-        centerPanel.setLayout(new FlowLayout() );
-        
-        addFoodButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-        addFoodButton.setAlignmentY(JButton.CENTER_ALIGNMENT);
-
-
-        //East Panel
-        eastPanel.setPreferredSize(new Dimension(200,300));
-        eastPanel.setLayout(eastPanelLayout);
-
-        eastPanelLayout.setAutoCreateGaps(true);
-        eastPanelLayout.setAutoCreateContainerGaps(true);
-
-        eastPanelLayout.setHorizontalGroup(
-            eastPanelLayout.createSequentialGroup()
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)  //Column 1
-                    .addComponent(zoneALabel)
-                    .addComponent(zoneAHay)
-                    .addComponent(zoneAFruit)
-                    .addComponent(zoneAGrain)
-                    .addComponent(zoneAFish) 
-                    .addComponent(zoneAMeat) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING) //Column 2
-                    .addComponent(zoneBLabel)
-                    .addComponent(zoneBHay)
-                    .addComponent(zoneBFruit)
-                    .addComponent(zoneBGrain)
-                    .addComponent(zoneBFish) 
-                    .addComponent(zoneBMeat) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING) //Column 3
-                    .addComponent(zoneCLabel)
-                    .addComponent(zoneCHay)
-                    .addComponent(zoneCFruit)
-                    .addComponent(zoneCGrain)
-                    .addComponent(zoneCFish) 
-                    .addComponent(zoneCMeat) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING) //Column 4
-                    .addComponent(zoneDLabel)
-                    .addComponent(zoneDHay)
-                    .addComponent(zoneDFruit)
-                    .addComponent(zoneDGrain)
-                    .addComponent(zoneDFish) 
-                    .addComponent(zoneDMeat) )
-        ); //end horizontalgroup
-
-        eastPanelLayout.setVerticalGroup(
-            eastPanelLayout.createSequentialGroup()
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
-                        .addComponent(zoneALabel)
-                        .addComponent(zoneBLabel)
-                        .addComponent(zoneCLabel) 
-                        .addComponent(zoneDLabel) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 2
-                    .addComponent(zoneAHay)
-                    .addComponent(zoneBHay)
-                    .addComponent(zoneCHay)
-                    .addComponent(zoneDHay) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)                    
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 3
-                    .addComponent(zoneAFruit)
-                    .addComponent(zoneBFruit)
-                    .addComponent(zoneCFruit)
-                    .addComponent(zoneDFruit) )
-        
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 4
-                    .addComponent(zoneAGrain)
-                    .addComponent(zoneBGrain)
-                    .addComponent(zoneCGrain)
-                    .addComponent(zoneDGrain) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 5
-                    .addComponent(zoneAFish)
-                    .addComponent(zoneBFish)
-                    .addComponent(zoneCFish)
-                    .addComponent(zoneDFish) )
-
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 6
-                    .addComponent(zoneAMeat)
-                    .addComponent(zoneBMeat)
-                    .addComponent(zoneCMeat)
-                    .addComponent(zoneDMeat) )
-        );  //end vertical group
-        
+        //========================================================================================//
+        //                                ADDING ACTION LISTENERS                                 //
+        //========================================================================================//
+    
+    
+    }// FoodTotalPanel
 
 
-        botPanel.setLayout(new FlowLayout());
+    //========================================================================================//
+    //                                    OTHER METHODS                                       //
+    //========================================================================================//
 
-    }//end Style components
+    public ArrayList<JButton> getButtonList()
+    {
+        return buttonList;
+    }// getButtonList
 
+    public ArrayList<JTextField> getTextFieldList()
+    {
+        return textFieldList;
+    }// getTextFieldList
 
+    public ArrayList<JTable> getTableList()
+    {
+        return tableList;
+    } //getJTable
+    
     
 
-}// end FoodTotalPanel
+}// FoodTotalPanel
