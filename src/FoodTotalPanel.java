@@ -379,7 +379,7 @@ public class FoodTotalPanel extends JPanel
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
                         .addComponent(zoneALabel)
                         .addComponent(zoneBLabel)
-                        .addComponent(zoneCLabel)
+                        .addComponent(zoneCLabel) 
                         .addComponent(zoneDLabel) )
 
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

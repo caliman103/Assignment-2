@@ -162,7 +162,7 @@ public class ZooManager extends JFrame implements ActionListener
         //                                ADDING ACTION LISTENERS                                 //
         //========================================================================================//
         animalPanel.getNextButton().addActionListener(this);
-
+        //buttonList.get(0).addActionListener(this);
         
         maximiseFrame(this);
         

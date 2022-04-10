@@ -40,14 +40,13 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     private JLabel hungerLabel;
     private JLabel healthLabel;
 
-    JLabel animalCageID;
-    JLabel animalName;
-    JLabel animalSpecies;
-    JLabel animalCategory;
-    JLabel animalHunger;
-    JLabel animalHealth;
+    private JLabel animalCageID;
+    private JLabel animalName;
+    private JLabel animalSpecies;
+    private JLabel animalCategory;
+    private JLabel animalHunger;
+    private JLabel animalHealth;
    
-
     private JLabel zoneImageJLabel;
 
 
