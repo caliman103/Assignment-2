@@ -51,8 +51,8 @@ public class Welcome  extends JFrame implements ActionListener
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public Welcome()
-    {
+    public Welcome() 
+    { 
         //========================================================================================//
         //                                    SETTING UP GUI                                      //
         //========================================================================================//
@@ -153,7 +153,7 @@ public class Welcome  extends JFrame implements ActionListener
     //========================================================================================//
     //                                ACTION PERFORMED METHOD                                 //
     //========================================================================================//
-    public void actionPerformed(ActionEvent e)
+    public void actionPerformed(ActionEvent e) 
     {
         //cancelButton (User wants to quit application)
         if(e.getSource() == cancelButton)
@@ -164,11 +164,11 @@ public class Welcome  extends JFrame implements ActionListener
 
 
         //confirmButton (User has entered a name wishes to start application)
-        if(e.getSource() == confirmButton)
+        if(e.getSource() == confirmButton)  
         {
             setUsername(nameTextField.getText() );
             ZooManager.getZooKeeper().setName(username);
-            new MainTester();
+            new ZooManager();
             this.dispose();
             
         }// end confirm button
@@ -182,6 +182,8 @@ public class Welcome  extends JFrame implements ActionListener
     //Method for Styling and Displaying Components on the Frame 
     public void displayMessage()
     {
+        this.setIconImage(logo.getImage());
+
         //apptitle Label
         apptitle.setText("ZooKeeper 2.0");
         apptitle.setFont(new Font("Courier",Font.ITALIC,120));

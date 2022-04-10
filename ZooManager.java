@@ -1,6 +1,6 @@
 /*
 ClassName: ZooManager
-Author: Jamaine Drakes & Evan
+Author: Jamaine Drakes & Evan Leacock
 Purpose: To test smth
 Start Date: Mar 12, 2022
 Last Edit: Mar 16, 2022
@@ -10,59 +10,47 @@ Last Edit: Mar 16, 2022
 //                                     LIBRARIES                                          //
 //========================================================================================//
 import java.io.File;
-
 import java.util.Scanner;
 
-public class ZooManager
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class ZooManager extends JFrame implements ActionListener
 {
+    //========================================================================================//
+    //                                    DATA MEMBERS                                        //
+    //========================================================================================//   
+    //Panels
+    JPanel westPanel = new JPanel();
+    JPanel centerPanel = new JPanel();
+    JPanel eastPanel = new JPanel();
+    
+
+    AnimalPanel animalPanel;
+    FoodTotalPanel foodTotalPanel = new FoodTotalPanel();
+    JPanel feedingReportsFiller = new JPanel();
+    WelcomePanel welcomePanel = new WelcomePanel();
+    JPanel medicineTotalsFiller = new JPanel();
+    JPanel healingReportsFiller = new JPanel();
+
+    
+    //=================Images=====================//
+    ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
+
+
+    int index;
+
+
     //Object for zookeeper
     static private ZooKeeper zooKeeper;
 
     //Object for Zoo
     static private Zoo zoo;
 
-
-    //Oject used for file reading and updating zoo
-    private File animalFile = new File("Animals.txt");
-    private Scanner animalFileReader = new Scanner(animalFile);
-    private Animal animalToAdd;
-
-    //This variable will hold the animal species and remove any "-"" 
-    private String animalSpecies = "";
-
     public static void main(String[] args) throws Exception
     {
-
-        new ZooManager();
-        
-        //========================================================================================//
-        //                                 VARIABLES AND OBJECTS                                  //
-        //========================================================================================//
-        /*
-
-       //Logo of for ZooKeeper 2.0
-        ImageIcon logo = new ImageIcon("../Images/logo.png");
-        Image alteredLogo = logo.getImage(); //get the imageicon as an image  to scale it
-        Image newLogo =  alteredLogo.getScaledInstance(60, 60, Image.SCALE_SMOOTH); //transform it
-        logo = new ImageIcon(newLogo); //convertit back to imageIcon
-
-        String[] options = {"Yes I am!! ", "No, I would like to quit"};
-
-       int start = JOptionPane.showOptionDialog(null,
-                                                "Welcome to Your Zoo Program!!\n Are you ready to start", 
-                                                "Welcome", 
-                                                JOptionPane.YES_NO_OPTION, 
-                                                JOptionPane.INFORMATION_MESSAGE,
-                                                logo,
-                                                options, 
-                                                0);
-
-        if(start == 1)
-        {
-            System.exit(0);
-        }
-
-    
         //========================================================================================//
         //                                    ORGANISING ZOO                                      //
         //========================================================================================//
@@ -103,97 +91,159 @@ public class ZooManager
         //System.out.println(zoo.showAnimals());
 
         animalFileReader.close();
-       // System.out.println("Name of keeper: " + zooKeeper.getName() );
+        // System.out.println("Name of keeper: " + zooKeeper.getName() );
 
 
-
-        //=========================================================================================//
-        //                                         ZOOKEEPER                                       //
-        //=========================================================================================//
-         zooKeeper = new ZooKeeper();
-
-         String keeperName;
-         //Get the name of the zookeeper from the user, using an input dialogbox
-        // keeperName = JOptionPane.showInputDialog("Before we begin, please enter your name.", "John Doe");
-         
-         //Try catch doesnt work
-         try 
-         {
-            //Get the name of the zookeeper from the user, using an input dialogbox
-            keeperName = JOptionPane.showInputDialog("Before we begin, please enter your name.", "John Doe");
-
-            //Set the name of the zookeeper to what the usr entered
-            zooKeeper.setName(keeperName );
-            
- 
-         }
-          catch (NullPointerException e) 
-          {
-             keeperName = JOptionPane.showInputDialog("Please enter your name in the text box below","John Doe");
-             
-             //TODO: handle exception
-          }
- 
-         //Set the name of the zookeeper to what the usr entered
-         zooKeeper.setName(keeperName );
-          
-         
-
-         System.out.println("Name of keeper: " + keeperName);
-
-         new MainTester();
-
-         */
-
-    }// end main
-
-
-    public ZooManager() throws Exception
-    {
-        
-         //========================================================================================//
-        //                                    ORGANISING ZOO                                      //
-        //========================================================================================//
-        //Instatting Zoo object
-        zoo = new Zoo();
-            
-        //========================================================================================//
-        //                           READING FROM FILE AND UPDATING ZOO                           //
-        //========================================================================================//
-        while(animalFileReader.hasNextLine() )
-        {
-            animalToAdd = new Animal();
-
-            //Getting animal information from the file
-            animalToAdd.setCageID(animalFileReader.next() );
-            animalToAdd.setName( animalFileReader.next() );
-            animalSpecies = animalFileReader.next();              //This piece will remove any 
-            String newSpecies = animalSpecies.replace("-", " ");  //"-" from the animal spcies
-            animalToAdd.setSpecies(newSpecies);
-            animalToAdd.setAge(animalFileReader.nextInt());
-            animalToAdd.setHungerStatus(animalFileReader.nextInt() );
-            animalToAdd.setHealthStatus(animalFileReader.nextInt() );
-            animalToAdd.setCategory(animalFileReader.next());
-
-            //Adding animal to file after all of its information has been gathered
-            zoo.addAnimal(animalToAdd);
-        }//end while
-
-        //Remember to change show Animals back to void and not string
-        //System.out.println(zoo.showAnimals());
-
-        animalFileReader.close();
-       // System.out.println("Name of keeper: " + zooKeeper.getName() );
-        
 
         //=========================================================================================//
         //                                         ZOOKEEPER                                       //
         //=========================================================================================//
         zooKeeper = new ZooKeeper();
 
-        new Welcome();
+
+         new Welcome();
+
+    }// main
+
+
+    public ZooManager() 
+    {
+        animalPanel = new AnimalPanel();
         
-    }// end ZooManager constructor
+        index = 0;
+        
+        medicineTotalsFiller.setPreferredSize(new Dimension(500,450));
+       
+        //setSize(150,400 );
+        this.setTitle("Main Screen");
+        this.setIconImage(zooLogo.getImage());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        
+       
+        //foodTotalPanel.setBackground(Color.BLACK);
+        feedingReportsFiller.setBackground(Color.BLUE);
+        medicineTotalsFiller.setBackground(Color.CYAN);
+        healingReportsFiller.setBackground(Color.GREEN);
+        
+        westPanel.setPreferredSize(new Dimension(320,100) );
+        //welcomePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE,6));
+
+        //animalPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE,6));
+
+        eastPanel.setPreferredSize(new Dimension(300,100));
+        
+        
+        //========================================================================================//
+        //                                  ADDING COMPONENTS                                     //
+        //========================================================================================//
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
+        centerPanel.add(foodTotalPanel);
+        centerPanel.add(medicineTotalsFiller);
+        
+        westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
+        westPanel.add(animalPanel);
+        westPanel.add(welcomePanel);
+
+        eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS) );
+        eastPanel.add(feedingReportsFiller);
+        eastPanel.add(healingReportsFiller);
+        
+        this.add("West",westPanel);
+        this.add("Center",centerPanel);
+        this.add("East",eastPanel);
+       
+
+
+
+
+        //========================================================================================//
+        //                                ADDING ACTION LISTENERS                                 //
+        //========================================================================================//
+        animalPanel.getNextButton().addActionListener(this);
+
+        
+        maximiseFrame(this);
+        
+        
+        //centerFrame(this);
+        //this.pack();
+        setVisible(true);
+        
+
+    }// end Main constructor
+
+    //========================================================================================//
+    //                                ACTION PERFORMED METHOD                                 //
+    //========================================================================================//
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == animalPanel.getNextButton() )
+        {
+            if(index < (ZooManager.getZoo().getCages().size() - 1) )
+            {
+                index++;
+                
+                animalPanel.getLabelList().get(6).setText(getZoo().getCages().get(index).getCageID() );
+                animalPanel.getLabelList().get(7).setText(getZoo().getCages().get(index).getName() );
+                animalPanel.getLabelList().get(8).setText(getZoo().getCages().get(index).getSpecies() );
+                animalPanel.getLabelList().get(9).setText(getZoo().getCages().get(index).getCategory() );
+                animalPanel.getLabelList().get(10).setText(String.valueOf(getZoo().getCages().get(index).getHungerStatus() ) );
+                animalPanel.getLabelList().get(11).setText(String.valueOf(getZoo().getCages().get(index).getHealthStatus() ) );
+            
+                char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
+                animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
+            }
+
+
+        }//end next button action
+        
+    }// actionPerformed
+
+
+    //========================================================================================//
+    //                                    OTHER METHODS                                       //
+    //========================================================================================//
+
+
+    
+     //This function will maximise the frame
+    private static void maximiseFrame(JFrame fr)
+    {
+
+        //Get the size of the screen
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+
+        //Determine the size of the screen
+        int w = dimension.width;
+        int h = dimension.height-40;
+
+        //Make the frame the same size as the screen
+        fr.setSize(w,h);
+
+        //Ensure the window is in the top-left hand corner
+        fr.setLocation(0,0);
+    }//end maximiseFrame
+     
+     
+     // This method will center the frame on the screen
+     private static void centerFrame(JFrame fr)
+     {
+         // Get the size of the screen
+         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+ 
+         // Determine the new location of the window
+         int w = fr.getSize().width;
+         int h = fr.getSize().height;
+         int x = (dim.width - w) / 2;
+         int y = (dim.height - h) / 2;
+         // Move the window
+         fr.setLocation(x, y);
+ 
+     }// end centerFrame
+     
+        
+   
 
     //========================================================================================//
     //                                     ACCESSORS                                          //

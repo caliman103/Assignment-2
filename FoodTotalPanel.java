@@ -25,6 +25,7 @@ public class FoodTotalPanel extends JPanel
     //Layout Managers
     GroupLayout westPanelLayout;
     GroupLayout eastPanelLayout;
+    
     //Panels
     JPanel topPanel;
     JPanel westPanel;
@@ -283,34 +284,40 @@ public class FoodTotalPanel extends JPanel
 
         ); //end westPanel orizontal group
 
+        
         westPanelLayout.setVerticalGroup(
             westPanelLayout.createSequentialGroup()
                 .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
                     .addComponent(typeLabel)
                     .addComponent(amountLabel) )
 
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  2
                     .addComponent(hayLabel)
                     .addComponent(hayTextField) )
 
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  3
                     .addComponent(fruitLabel)
                     .addComponent(fruitTextField) )
 
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  4
                     .addComponent(grainLabel)
                     .addComponent(grainTextField) )
 
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  5
                     .addComponent(fishLabel)
                     .addComponent(fishTextField) )
 
-                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(westPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  6
                     .addComponent(meatLabel)
                     .addComponent(meatTextField) )
         );//end westPanel vertival group
 
-       
+    
         
 
         //Center Panel
@@ -321,12 +328,15 @@ public class FoodTotalPanel extends JPanel
 
 
         //East Panel
+        eastPanel.setPreferredSize(new Dimension(200,300));
         eastPanel.setLayout(eastPanelLayout);
+
         eastPanelLayout.setAutoCreateGaps(true);
         eastPanelLayout.setAutoCreateContainerGaps(true);
 
         eastPanelLayout.setHorizontalGroup(
             eastPanelLayout.createSequentialGroup()
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)  //Column 1
                     .addComponent(zoneALabel)
                     .addComponent(zoneAHay)
@@ -335,6 +345,7 @@ public class FoodTotalPanel extends JPanel
                     .addComponent(zoneAFish) 
                     .addComponent(zoneAMeat) )
 
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING) //Column 2
                     .addComponent(zoneBLabel)
                     .addComponent(zoneBHay)
@@ -343,6 +354,7 @@ public class FoodTotalPanel extends JPanel
                     .addComponent(zoneBFish) 
                     .addComponent(zoneBMeat) )
 
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING) //Column 3
                     .addComponent(zoneCLabel)
                     .addComponent(zoneCHay)
@@ -351,6 +363,7 @@ public class FoodTotalPanel extends JPanel
                     .addComponent(zoneCFish) 
                     .addComponent(zoneCMeat) )
 
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING) //Column 4
                     .addComponent(zoneDLabel)
                     .addComponent(zoneDHay)
@@ -362,37 +375,43 @@ public class FoodTotalPanel extends JPanel
 
         eastPanelLayout.setVerticalGroup(
             eastPanelLayout.createSequentialGroup()
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row  1
                         .addComponent(zoneALabel)
                         .addComponent(zoneBLabel)
                         .addComponent(zoneCLabel)
                         .addComponent(zoneDLabel) )
 
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 2
                     .addComponent(zoneAHay)
                     .addComponent(zoneBHay)
                     .addComponent(zoneCHay)
                     .addComponent(zoneDHay) )
 
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)                    
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 3
                     .addComponent(zoneAFruit)
                     .addComponent(zoneBFruit)
                     .addComponent(zoneCFruit)
                     .addComponent(zoneDFruit) )
         
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 4
                     .addComponent(zoneAGrain)
                     .addComponent(zoneBGrain)
                     .addComponent(zoneCGrain)
                     .addComponent(zoneDGrain) )
 
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 5
                     .addComponent(zoneAFish)
                     .addComponent(zoneBFish)
                     .addComponent(zoneCFish)
                     .addComponent(zoneDFish) )
 
-                    .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 6
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(eastPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //Row 6
                     .addComponent(zoneAMeat)
                     .addComponent(zoneBMeat)
                     .addComponent(zoneCMeat)
