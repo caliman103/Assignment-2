@@ -1,5 +1,5 @@
 /*
-ClassName: FoodTotalPanel
+ClassName: MedicineTotalPanel
 Author: Jamaine Drakes
 Purpose: 
 Start Date: Mar 16, 2022
@@ -18,14 +18,14 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 
-public class FoodTotalPanel extends JPanel
+public class MedicineTotalPanel extends JPanel
 {
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
 
     //==============PANELS==============//
-    // Panels for the borderLayout of FoodTotalPanel 
+    // Panels for the borderLayout of MedicineTotalPanel 
     private JPanel westPanel;
     private JPanel eastPanel;
     private JPanel centerPanel;
@@ -38,26 +38,22 @@ public class FoodTotalPanel extends JPanel
     private JLabel amountLabel;
 
     // Labels for the food types
-    private JLabel hayLabel;
-    private JLabel fruitLabel;
-    private JLabel grainLabel;
-    private JLabel fishLabel;
-    private JLabel meatLabel;
+    private JLabel herbicineLabel;
+    private JLabel omnicineLabel;
+    private JLabel carnicineLabel;
 
 
     //=============BUTTONS==============//
     private JButton addButton;
     private JButton printListButton;
-    private JButton feedButton;
+    private JButton healButton;
 
 
     //============TEXT FIELDS===========//
     // Text Fields to enter the amount of food
-    private JTextField hayTextField;
-    private JTextField fruitTextField;
-    private JTextField grainTextField;
-    private JTextField fishTextField;
-    private JTextField meatTextField;
+    private JTextField herbicineTextField;
+    private JTextField omnicineTextField;
+    private JTextField carnicineTextField;
 
 
     //=============BORDERS==============//
@@ -81,7 +77,7 @@ public class FoodTotalPanel extends JPanel
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public FoodTotalPanel()
+    public MedicineTotalPanel()
     {
         setLayout(new BorderLayout());
         setVisible(true);
@@ -95,21 +91,17 @@ public class FoodTotalPanel extends JPanel
         typeLabel = new JLabel("Type");
         amountLabel = new JLabel("Amount");
 
-        hayLabel = new JLabel("Hay");
-        fruitLabel = new JLabel("Fruit");
-        grainLabel = new JLabel("Grain");
-        fishLabel = new JLabel("Fish");
-        meatLabel = new JLabel("Meat");
+        herbicineLabel = new JLabel("Herbicine");
+        omnicineLabel = new JLabel("Omnicine");
+        carnicineLabel = new JLabel("Carnicine");
 
-        hayTextField = new JTextField("0");
-        fruitTextField = new JTextField("0");
-        grainTextField = new JTextField("0");
-        fishTextField = new JTextField("0");
-        meatTextField = new JTextField("0");
+        herbicineTextField = new JTextField("0");
+        omnicineTextField = new JTextField("0");
+        carnicineTextField = new JTextField("0");
 
         addButton = new JButton("Add->");
         printListButton = new JButton("Print List");
-        feedButton = new JButton("Feed");
+        healButton = new JButton("Heal");
 
         foodBorder = BorderFactory.createTitledBorder("Food");
         totalsBorder = BorderFactory.createTitledBorder("Totals");
@@ -126,7 +118,7 @@ public class FoodTotalPanel extends JPanel
         layout.setAutoCreateContainerGaps(true);
 
         foodTotalsTableHeaders = new String[] {"A","B","C","D"};
-        foodTotalsTableContent = new Integer[][] {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
+        foodTotalsTableContent = new Integer[][] {{0,0,0,0},{0,0,0,0},{0,0,0,0}};
 
         foodTotalsTable = new JTable(foodTotalsTableContent, foodTotalsTableHeaders)
         {
@@ -150,18 +142,14 @@ public class FoodTotalPanel extends JPanel
             layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(typeLabel)
-                    .addComponent(hayLabel)
-                    .addComponent(fruitLabel)
-                    .addComponent(grainLabel)
-                    .addComponent(fishLabel)
-                    .addComponent(meatLabel))
+                    .addComponent(herbicineLabel)
+                    .addComponent(omnicineLabel)
+                    .addComponent(carnicineLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(amountLabel)
-                    .addComponent(hayTextField)
-                    .addComponent(fruitTextField)
-                    .addComponent(grainTextField)
-                    .addComponent(fishTextField)
-                    .addComponent(meatTextField))
+                    .addComponent(herbicineTextField)
+                    .addComponent(omnicineTextField)
+                    .addComponent(carnicineTextField))
         );
 
         layout.setVerticalGroup(
@@ -170,20 +158,14 @@ public class FoodTotalPanel extends JPanel
                     .addComponent(typeLabel)
                     .addComponent(amountLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(hayLabel)
-                    .addComponent(hayTextField))
+                    .addComponent(herbicineLabel)
+                    .addComponent(herbicineTextField))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(fruitLabel)
-                    .addComponent(fruitTextField))
+                    .addComponent(omnicineLabel)
+                    .addComponent(omnicineTextField))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(grainLabel)
-                    .addComponent(grainTextField))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(fishLabel)
-                    .addComponent(fishTextField))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(meatLabel)
-                    .addComponent(meatTextField))
+                    .addComponent(carnicineLabel)
+                    .addComponent(carnicineTextField))
         );
 
         JScrollPane scrollPane = new JScrollPane(foodTotalsTable);
@@ -193,7 +175,7 @@ public class FoodTotalPanel extends JPanel
         centerPanel.add(addButton);
 
         southPanel.add(printListButton);
-        southPanel.add(feedButton);
+        southPanel.add(healButton);
                
         this.add("West", westPanel);
         this.add("East", eastPanel);
@@ -203,13 +185,11 @@ public class FoodTotalPanel extends JPanel
 
         buttonList.add(addButton);
         buttonList.add(printListButton);
-        buttonList.add(feedButton);
+        buttonList.add(healButton);
 
-        textFieldList.add(hayTextField);
-        textFieldList.add(fruitTextField);
-        textFieldList.add(grainTextField);
-        textFieldList.add(fishTextField);
-        textFieldList.add(meatTextField);
+        textFieldList.add(herbicineTextField);
+        textFieldList.add(omnicineTextField);
+        textFieldList.add(carnicineTextField);
 
         tableList.add(foodTotalsTable);
     
@@ -218,7 +198,7 @@ public class FoodTotalPanel extends JPanel
         //========================================================================================//
     
     
-    }// FoodTotalPanel
+    }// MedicineTotalPanel
 
 
     //========================================================================================//
@@ -242,4 +222,4 @@ public class FoodTotalPanel extends JPanel
     
     
 
-}// FoodTotalPanel
+}// MedicineTotalPanel

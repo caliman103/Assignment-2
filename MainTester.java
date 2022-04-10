@@ -14,7 +14,7 @@ import java.awt.event.*;
 
 
 import javax.swing.*;
-
+import java.util.ArrayList;
 
 public class MainTester extends JFrame implements ActionListener
 {
@@ -32,6 +32,7 @@ public class MainTester extends JFrame implements ActionListener
 
     AnimalPanel animalPanel;
     FoodTotalPanel foodTotals = new FoodTotalPanel();
+    MedicineTotalPanel medTotals = new MedicineTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
     JPanel medicineTotalsFiller = new JPanel();
@@ -77,7 +78,8 @@ public class MainTester extends JFrame implements ActionListener
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
         centerPanel.add(foodTotals);
-        centerPanel.add(medicineTotalsFiller);
+        centerPanel.add(medTotals);
+        //centerPanel.add(medicineTotalsFiller);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
         westPanel.add(animalPanel);
@@ -86,6 +88,8 @@ public class MainTester extends JFrame implements ActionListener
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS) );
         eastPanel.add(feedingReportsFiller);
         eastPanel.add(healingReportsFiller);
+
+        centerPanel.setPreferredSize(new Dimension(150, 150));
         
         this.add("West",westPanel);
         this.add("Center",centerPanel);
@@ -99,6 +103,8 @@ public class MainTester extends JFrame implements ActionListener
         //                                ADDING ACTION LISTENERS                                 //
         //========================================================================================//
         AnimalPanel.nextButton.addActionListener(this);
+        ArrayList<JButton> foodTotalsButtons = foodTotals.getButtonList();
+        foodTotalsButtons.get(0).addActionListener(this);
 
         
         maximiseFrame(this);
@@ -128,6 +134,11 @@ public class MainTester extends JFrame implements ActionListener
                 AnimalPanel.animalHunger.setText(String.valueOf(ZooManager.getZoo().getCages().get(counter).getHungerStatus() ) );
                 AnimalPanel.animalHealth.setText(String.valueOf(ZooManager.getZoo().getCages().get(counter).getHealthStatus() ) );
             }
+        }
+
+        if(e.getSource() == foodTotals.getButtonList().get(0))
+        {
+            foodTotals.getTableList().get(0).setValueAt(2, 0, 0);
         }
         
     }// actionPerformed
