@@ -51,7 +51,7 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     private JLabel zoneImageJLabel;
 
 
-    
+    String test;
     
     //Button
     JButton nextButton;
@@ -110,8 +110,24 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         animalName = new JLabel(ZooManager.getZoo().getCages().get(0).getName() );
         animalSpecies = new JLabel(ZooManager.getZoo().getCages().get(0).getSpecies() );
         animalCategory = new JLabel(ZooManager.getZoo().getCages().get(0).getCategory() );
-        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHungerStatus() ) );
-        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHealthStatus() ) );
+        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHungerStatus() ) + "/5"); 
+        if(ZooManager.getZoo().getCages().get(0).getHungerStatus() <= 2)
+        {
+            animalHunger.setForeground(Color.RED);
+        }//endif
+        else
+        {
+            animalHunger.setForeground(Color.BLACK);
+        }
+        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHealthStatus() ) + "/10" );
+        if(ZooManager.getZoo().getCages().get(0).getHealthStatus() <= 3)
+        {
+            animalHunger.setForeground(Color.RED);
+        }//endif
+        else
+        {
+            animalHealth.setForeground(Color.BLACK);
+        }
 
         zoneImageJLabel = new JLabel();
 

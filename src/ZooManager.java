@@ -41,6 +41,7 @@ public class ZooManager extends JFrame implements ActionListener
 
 
     int index;
+   
 
 
     //Object for zookeeper
@@ -188,9 +189,25 @@ public class ZooManager extends JFrame implements ActionListener
                 animalPanel.getLabelList().get(7).setText(getZoo().getCages().get(index).getName() );
                 animalPanel.getLabelList().get(8).setText(getZoo().getCages().get(index).getSpecies() );
                 animalPanel.getLabelList().get(9).setText(getZoo().getCages().get(index).getCategory() );
-                animalPanel.getLabelList().get(10).setText(String.valueOf(getZoo().getCages().get(index).getHungerStatus() ) );
-                animalPanel.getLabelList().get(11).setText(String.valueOf(getZoo().getCages().get(index).getHealthStatus() ) );
-            
+                animalPanel.getLabelList().get(10).setText(String.valueOf(getZoo().getCages().get(index).getHungerStatus() ) + "/5" );
+                if(ZooManager.getZoo().getCages().get(index).getHungerStatus() <= 2)
+                {
+                    animalPanel.getLabelList().get(10).setForeground(Color.RED);
+                }//endif
+                else
+                {
+                    animalPanel.getLabelList().get(10).setForeground(Color.BLACK);
+                }
+                animalPanel.getLabelList().get(11).setText(String.valueOf(getZoo().getCages().get(index).getHealthStatus() ) +"/10"  );
+                if(ZooManager.getZoo().getCages().get(index).getHealthStatus() <= 3)
+                {
+                    animalPanel.getLabelList().get(11).setForeground(Color.RED);
+                }//endif
+                else
+                {
+                    animalPanel.getLabelList().get(11).setForeground(Color.BLACK);
+                }
+
                 char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
                 animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
             }
