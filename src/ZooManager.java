@@ -53,7 +53,10 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
     private int index;
     private int editedFoodTextField;
-    private int editedMedTextFields; 
+    private int editedMedTextField; 
+    private boolean isfed;
+    private boolean isHealed;
+    
 
 
     //Object for zookeeper
@@ -135,6 +138,10 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         
         index = animalPanel.getIndex();
         editedFoodTextField = -1;
+        editedMedTextField = -1;
+
+        isfed = false;
+        isHealed= true;
 
         medicineTotals.setPreferredSize(new Dimension(500,450));
        
@@ -213,10 +220,16 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
         
         disableFoodTextFields();
+        disableMedTextFields();
 
         for(int i = 0; i < foodTotalsButtons.size(); i++)
         {
             foodTotalsButtons.get(i).setEnabled(false);
+        }
+
+        for(int i = 0; i < medicineTotalsButtons.size(); i++)
+        {
+            medicineTotalsButtons.get(i).setEnabled(false);
         }
         animalPanel.getNextButton().setEnabled(false);
 
@@ -263,16 +276,31 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
                 animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
 
-                eneblFoodTextFields();
+                enableFoodTextFields(); 
+                enableMedtextFields();
+
+                disableMedTextFields();
                 disableFoodTextFields();
+
+                editedFoodTextField = -1;
+                editedMedTextField = -1;
+                
+                isfed = false;
+                isHealed = false;
                 
                 //Disble add and next button until condition are satisfied to make then enabled agaib
                 foodTotalsButtons.get(0).setEnabled(false);
+                medicineTotalsButtons.get(0).setEnabled(false);
                 animalPanel.getNextButton().setEnabled(false);
 
                 for(int i = 0; i < foodTotalsTextFields.size(); i++)
                 {
                     foodTotalsTextFields.get(i).setText("0");
+                }
+
+                for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                {
+                    medicineTotalsTextFields.get(i).setText("0");
                 }
 
                 index++;
@@ -285,7 +313,6 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
         if(e.getSource() == foodTotalsButtons.get(0) )  //add button from foodtotal panel
         {
-
             Meal animalMeal = new Meal();
             switch (getZoo().getCages().get(index).getCageID().charAt(0) )
             {
@@ -611,6 +638,9 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             }//end switch
             
             //============== Checking conditions to see which buttons to enable =================//
+            isfed = true;
+
+            
             if(index == getZoo().getCages().size() -1)
             {
                 foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
@@ -619,10 +649,15 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             else
             {
                 foodTotalsButtons.get(0).setEnabled(false);
-                animalPanel.getNextButton().setEnabled(true);
+                
             }//end else
+            if(isfed == true && isHealed == true)
+            {
+                animalPanel.getNextButton().setEnabled(true);
+            }
 
             editedFoodTextField = -1;
+            
         } //end add button
     }// actionPerformed
 
@@ -637,6 +672,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
     public void focusLost(FocusEvent e)
     {
+        //=====================Food Text fields==================//
         if(e.getSource() == foodTotalsTextFields.get(0) )
         {
             try
@@ -658,6 +694,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
                 foodTotalsTextFields.get(0).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
             }
         }//and hay textfleid
 
@@ -682,6 +719,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
                 foodTotalsTextFields.get(1).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
             }
           
         }//end fruit textfleid
@@ -707,6 +745,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
                 foodTotalsTextFields.get(2).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
             }
         }//end grain textfleid
 
@@ -731,11 +770,11 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
                 foodTotalsTextFields.get(3).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
             }
            
         }//end fish textfleid
         
-
         if(e.getSource() == foodTotalsTextFields.get(4) )
         {
             try
@@ -757,9 +796,88 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
                 foodTotalsTextFields.get(4).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false); 
             }
            
         }//and meat textfleid
+
+        //=====================Medicine Text Fields ====================//
+        if(e.getSource() == medicineTotalsTextFields.get(0))
+        {
+            
+            try
+            {
+                if(Integer.valueOf(medicineTotalsTextFields.get(0).getText() ) > 0 )
+                {
+                    for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                    {
+                        if(i != 0)
+                        {
+                            medicineTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedMedTextField = 0;
+                    medicineTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                medicineTotalsTextFields.get(0).setText("0");
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end herbicine text field
+
+        if(e.getSource() == medicineTotalsTextFields.get(1))
+        {
+            try
+            {
+                if(Integer.valueOf(medicineTotalsTextFields.get(1).getText() ) > 0 )
+                {
+                    for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                    {
+                        if(i != 2)
+                        {
+                            medicineTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedMedTextField = 2;
+                    medicineTotalsButtons.get(0).setEnabled(true);
+                }//end if
+
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                medicineTotalsTextFields.get(2).setText("0");
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end carnicine text field
+
+        if(e.getSource() == medicineTotalsTextFields.get(2))
+        {
+            try
+            {
+                if(Integer.valueOf(medicineTotalsTextFields.get(2).getText() ) > 0 )
+                {
+                    for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                    {
+                        if(i != 0)
+                        {
+                            medicineTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedMedTextField = 1;
+                    medicineTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                medicineTotalsTextFields.get(1).setText("0");
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end herbicine text field
     }//end FocusLost
 
     //========================================================================================//
@@ -784,13 +902,43 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 foodTotalsTextFields.get(4).setEditable(false);
                 break;
         }//end switch
-    }//end enableFoodTextFelds
+    }//end disaableFoodTextFelds
 
-    private void eneblFoodTextFields()
+    private void disableMedTextFields()
+    {
+        switch (getZoo().getCages().get(index).getCategory() )
+        {
+            case "Herbivore":
+                medicineTotalsTextFields.get(1).setEnabled(false);
+                medicineTotalsTextFields.get(2).setEnabled(false);
+                break;
+
+            case "Omnivore":
+                medicineTotalsTextFields.get(0).setEnabled(false);
+                medicineTotalsTextFields.get(2).setEnabled(false);
+                break;
+
+            case "Carnivore":
+                medicineTotalsTextFields.get(0).setEnabled(false);
+                medicineTotalsTextFields.get(1).setEnabled(false);
+                break;
+        }//end switch
+
+    }//end disable med textfields
+
+    private void enableFoodTextFields()
     {
         for(int i = 0; i < foodTotalsTextFields.size(); i++)
         {
-            foodTotalsTextFields.get(i).setEditable(true);;
+            foodTotalsTextFields.get(i).setEditable(true);
+        }
+    }
+
+    private void enableMedtextFields()
+    {
+        for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+        {
+            medicineTotalsTextFields.get(i).setEditable(true);
         }
     }
 
