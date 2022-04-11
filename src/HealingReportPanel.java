@@ -1,6 +1,6 @@
 /*
-ClassName: FeedingReportPanel.java
-Author: Jamaine Drakes & Evan Leacock
+ClassName: HealingReportPanel.java
+Author: Jamaine Drakes
 Purpose: 
 Start Date: Apr 11, 2022
 Last Edit: Apr 11, 2022
@@ -14,7 +14,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class FeedingReportPanel extends JPanel 
+public class HealingReportPanel extends JPanel 
 {
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
@@ -27,36 +27,35 @@ public class FeedingReportPanel extends JPanel
     private JButton printReportButton;
 
     //Object for animal Feeder
-    AnimalFeeder animalFeeder;
+    AnimalHealer animalHealer;
 
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public FeedingReportPanel()
+    public HealingReportPanel()
     {
         this.setLayout(new BorderLayout() );
 
-        animalFeeder = new AnimalFeeder(ZooManager.getZoo().getCages() );
-        titleLabel = new JLabel("Feeding Report");
+        animalHealer = new AnimalHealer(ZooManager.getZoo().getCages() );
+        titleLabel = new JLabel("Healing Report");
         textArea = new JTextArea();
 
         printReportButton = new JButton();
-        
-        
-        
-        
+
         //========================================================================================//
         //                                  ADDING COMPONENTS                                     //
         //========================================================================================//
+
         scrollPane = new JScrollPane(textArea);
+
+        
 
         this.add("North",titleLabel);
           
         this.add("Center",scrollPane);
          
-
         this.add("South",printReportButton);
-         
+
 
 
         //========================================================================================//
@@ -65,7 +64,7 @@ public class FeedingReportPanel extends JPanel
 
 
 
-    }// end FeedingReportPanel
+    }// end HealingReportPanel
 
     //========================================================================================//
     //                                ACTION PERFORMED METHOD                                 //
@@ -83,14 +82,14 @@ public class FeedingReportPanel extends JPanel
     public void appendReport()
     {
         textArea.setText("Date\n");
-        textArea.append("Animals Fed: " + animalFeeder.getFeedingList().size() + "\n");
-        textArea.append("OK: " + (animalFeeder.getFeedingList().size() - animalFeeder.getDeadAnimals().size()) + "\n");
-        textArea.append("Deaths: " + animalFeeder.getDeadAnimals().size() + "\n");
+        textArea.append("Animals Fed: " + animalHealer.getHealingList().size() + "\n");
+        textArea.append("OK: " + (animalHealer.getHealingList().size() - animalHealer.getHealingList().size()) + "\n");
+        textArea.append("Deaths: " + animalHealer.getDeadAnimals().size() + "\n");
         textArea.append("Overfed: \n");
 
-        for (int i = 0; i < animalFeeder.getDeadAnimals().size(); i++) 
+        for (int i = 0; i < animalHealer.getDeadAnimals().size(); i++) 
         {
-            textArea.append(animalFeeder.getCages().get(animalFeeder.getDeadAnimals().get(i)).getCageID() + " - " + animalFeeder.getCages().get(animalFeeder.getDeadAnimals().get(i)).getName() + ", " + animalFeeder.getCages().get(animalFeeder.getDeadAnimals().get(i)).getSpecies() + "\n");
+            textArea.append(animalHealer.getCages().get(animalHealer.getDeadAnimals().get(i)).getCageID() + " - " + animalHealer.getCages().get(animalHealer.getDeadAnimals().get(i)).getName() + ", " + animalHealer.getCages().get(animalHealer.getDeadAnimals().get(i)).getSpecies() + "\n");
         }
 
     }//end appendReport
@@ -112,4 +111,4 @@ public class FeedingReportPanel extends JPanel
 
     }// end centerFrame
 
-}// end FeedingReportPanel
+}// end HealingReportPanel

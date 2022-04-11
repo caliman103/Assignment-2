@@ -49,6 +49,11 @@ public class AnimalHealer
         return cages;
     } //end getHealingList
 
+    public ArrayList<Integer> getDeadAnimals()
+    {
+        return deadAnimals;
+    }
+
     //========================================================================================//
     //                                      MUTATORS                                          //
     //========================================================================================//
