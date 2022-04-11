@@ -17,8 +17,8 @@ public class Animal
     //========================================================================================//
     
 
-    boolean overFed;
-    boolean overDosed;
+    private boolean overFed;
+    private boolean overDosed;
 
     //Jamaine changed them change them back if you want
     private final int MAX_HUNGER = 5;
@@ -102,6 +102,16 @@ public class Animal
         return healthStatus;
     }// getHealthStatus
 
+    public boolean getOverFed()
+    {
+        return overFed;
+    }
+
+    public boolean getOverDosed()
+    {
+        return overDosed;
+    }
+
     //========================================================================================//
     //                                      MUTATORS                                          //
     //========================================================================================//
@@ -156,13 +166,16 @@ public class Animal
     //eat food method
     public void eatFood(int amountOfFood)
     {
-        setHungerStatus(hungerStatus + amountOfFood);
-
-        if(hungerStatus > MAX_HUNGER)
+        if(healthStatus != 0)
         {
-            overFed = true;
-            setHealthStatus(0);
-            setHungerStatus(0);
+            setHungerStatus(hungerStatus + amountOfFood);
+
+            if(hungerStatus > MAX_HUNGER)
+            {
+                overFed = true;
+                setHealthStatus(0);
+                setHungerStatus(0);
+            }
         }
     }// eatFood
 
@@ -170,13 +183,16 @@ public class Animal
     //take medecine method
     public void takeMedicine(int amountOfMedicine)
     {
-        setHealthStatus(hungerStatus + amountOfMedicine);
-
-        if(healthStatus > MAX_HEALTH)
+        if(healthStatus != 0)
         {
-            overDosed = true;
-            setHealthStatus(0);
-            setHungerStatus(0);
+            setHealthStatus(hungerStatus + amountOfMedicine);
+
+            if(healthStatus > MAX_HEALTH)
+            {
+                overDosed = true;
+                setHealthStatus(0);
+                setHungerStatus(0);
+            }
         }
     }// takeMedicine
 
