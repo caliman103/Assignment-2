@@ -1,6 +1,11 @@
 Date
 Animals Healed: 9
-OK: 8
-Deaths: 1
+OK: 3
+Deaths: 6
 Overdosed: 
+A-1 - Gary, Giraffe
 A-12 - Zoe, Zebra
+B-1 - Oliver, Ocelot
+A-19 - Henry, Hyena
+D-6 - Mikail, Musk Ox
+C-23 - Fedora, Red Fox
