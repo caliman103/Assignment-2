@@ -25,7 +25,9 @@ public class Prescription
     //========================================================================================//
     public Prescription()
     {
-        
+        cageID = "";
+        medType = "";
+        unitsOfMed = 0;
     }// Prescription
 
 
@@ -53,17 +55,17 @@ public class Prescription
     //========================================================================================//
     public void setCageID(String id)
     {
-        
+        cageID = id;
     }// setCageID
 
     public void setMedType(String type)
     {
-        
+        medType = type;
     }// setmedType
 
     public void setUnitsOfMed(int amt)
     {
-        
+        unitsOfMed = amt;
     }// setunitsOfMed
 
 
