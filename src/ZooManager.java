@@ -647,7 +647,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
-                foodTotalsButtons.get(0).setRolloverEnabled(false);
+                
+                foodTotalsButtons.get(2).setEnabled(true);
             }
             else
             {
@@ -661,6 +662,40 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             editedFoodTextField = -1;
             
         } //end foodTotals add button
+
+        if(e.getSource() == foodTotalsButtons.get(1))// printList button from foodtotal panel
+        {
+            try 
+            {
+                animalFeeder.printFeedingList();
+            }
+            catch (Exception f) 
+            {
+
+            }
+            
+        }
+
+        if(e.getSource() == foodTotalsButtons.get(2))
+        {
+            boolean works = false;
+            while(!works)
+            {
+                try
+                {
+                    animalFeeder.simFeeding();
+                    works = true;
+                }
+                catch(OverFeedingException f)
+                {
+                    System.out.print(f.toString() + " " + works + "\n");
+                }
+                catch(Exception f)
+                {
+
+                }
+            }
+        }
 
         if(e.getSource() == medicineTotalsButtons.get(0))
         {
