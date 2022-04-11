@@ -41,7 +41,7 @@ public class OverdosingException extends Exception
     //========================================================================================//
     public String toString()
     {
-        return("Animal overfed and died.");
+        return("Animal overdosed and died.");
     }// toString
 
 
