@@ -16,36 +16,45 @@ public class AnimalFeeder
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
-    ArrayList<Meal> feedingList;
-    ArrayList<Animal> cages;
+    private ArrayList<Meal> feedingList;
+    private ArrayList<Animal> cages;
 
 
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public AnimalFeeder(ArrayList<Animal> cages)
+    public AnimalFeeder(ArrayList<Animal> newCages)
     {
-        
+        cages = newCages;
     }// AnimalFeeder
 
 
     //========================================================================================//
     //                                     ACCESSORS                                          //
     //========================================================================================//
+    public ArrayList<Meal> getFeedingList()
+    {
+        return feedingList;
+    } //end getFeedingList
 
+    public ArrayList<Animal> getCages()
+    {
+        return cages;
+    } //end getFeedingList
 
     //========================================================================================//
     //                                      MUTATORS                                          //
     //========================================================================================//
-    public void addMeal()
+    public void addMeal(Meal newMeal)
     {
-        
+        feedingList.add(newMeal);
     }// addMeal
-
 
     //========================================================================================//
     //                                    OTHER METHODS                                       //
     //========================================================================================//
+    
+    
     public void printFeedingList()
     {
         

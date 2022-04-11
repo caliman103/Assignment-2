@@ -51,9 +51,9 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
 
 
-    int index;
-    int editedFoodTextField;
-    int editedMedTextFields; 
+    private int index;
+    private int editedFoodTextField;
+    private int editedMedTextFields; 
 
 
     //Object for zookeeper
@@ -61,6 +61,14 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
     //Object for Zoo
     static private Zoo zoo;
+
+    //Object for animalhealer and animalfeeder
+    static private AnimalFeeder  animalFeeder;
+
+    
+
+    
+    
 
     public static void main(String[] args) throws Exception
     {
@@ -121,9 +129,11 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
     public ZooManager() 
     {
+        animalFeeder = new AnimalFeeder(getZoo().getCages());
+
         animalPanel = new AnimalPanel();
         
-        index = 0;
+        index = animalPanel.getIndex();
         editedFoodTextField = -1;
 
         medicineTotals.setPreferredSize(new Dimension(500,450));
@@ -203,8 +213,11 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
         
         disableFoodTextFields();
-        foodTotalsButtons.get(0).setEnabled(false);
-        foodTotalsButtons.get(1).setEnabled(false);
+
+        for(int i = 0; i < foodTotalsButtons.size(); i++)
+        {
+            foodTotalsButtons.get(i).setEnabled(false);
+        }
         animalPanel.getNextButton().setEnabled(false);
 
 
@@ -225,25 +238,20 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     {
         if(e.getSource() == animalPanel.getNextButton() )
         {
-            if(index < (ZooManager.getZoo().getCages().size() - 1) )
+            while(getZoo().getCages().get(index).getHungerStatus() == 5 || getZoo().getCages().get(index).getHealthStatus() == 10 )
             {
                 index++;
-                
+            }//end while
+
+            if(index < (ZooManager.getZoo().getCages().size() - 1) )
+            {
                 animalPanel.getLabelList().get(6).setText(getZoo().getCages().get(index).getCageID() );
                 animalPanel.getLabelList().get(7).setText(getZoo().getCages().get(index).getName() );
                 animalPanel.getLabelList().get(8).setText(getZoo().getCages().get(index).getSpecies() );
                 animalPanel.getLabelList().get(9).setText(getZoo().getCages().get(index).getCategory() );
                 animalPanel.getLabelList().get(10).setText(String.valueOf(getZoo().getCages().get(index).getHungerStatus() ) + "/5" );
-                if(ZooManager.getZoo().getCages().get(index).getHungerStatus() <= 2)
-                {
-                    animalPanel.getLabelList().get(10).setForeground(Color.RED);
-                }//endif
-                else
-                {
-                    animalPanel.getLabelList().get(10).setForeground(Color.BLACK);
-                }
                 animalPanel.getLabelList().get(11).setText(String.valueOf(getZoo().getCages().get(index).getHealthStatus() ) +"/10"  );
-                if(ZooManager.getZoo().getCages().get(index).getHealthStatus() <= 3)
+                if(ZooManager.getZoo().getCages().get(index).getHealthStatus() < 8)
                 {
                     animalPanel.getLabelList().get(11).setForeground(Color.RED);
                 }//endif
@@ -255,7 +263,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
                 animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
 
-                enebleAllTextFields();
+                eneblFoodTextFields();
                 disableFoodTextFields();
                 
                 //Disble add and next button until condition are satisfied to make then enabled agaib
@@ -266,8 +274,10 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 {
                     foodTotalsTextFields.get(i).setText("0");
                 }
-            }//end if
 
+                index++;
+            }//end if
+            
 
         }//end next button action
         
@@ -275,183 +285,347 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
         if(e.getSource() == foodTotalsButtons.get(0) )  //add button from foodtotal panel
         {
-            if(editedFoodTextField != -1)
+
+            Meal animalMeal = new Meal();
+            switch (getZoo().getCages().get(index).getCageID().charAt(0) )
             {
-                //foodTotalTable.get(0).setValueAt(2, 0, 0);
-                switch (getZoo().getCages().get(index).getCageID().charAt(0) )
-                {
-                    case 'A':
-                        switch (editedFoodTextField)
-                        {
-                            case 0:
-                                int hayAddAmountA = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
-                                int hayCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(0, 0);
-                                int hayTotalA = hayAddAmountA + hayCurrentAmountA;
-                                foodTotalTable.get(0).setValueAt(hayTotalA,0, 0);
-                                break;
+                case 'A':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountA = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(0, 0);
+                            int hayTotalA = hayAddAmountA + hayCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(hayTotalA,0, 0);
 
-                            case 1:
-                                int fruitAddAmountA = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
-                                int fruitCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(1, 0);
-                                int fruitTotalA = fruitAddAmountA + fruitCurrentAmountA;
-                                foodTotalTable.get(0).setValueAt(fruitTotalA,1, 0);
-                                break;
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountA);
 
-                            case 2:
-                                int grainAddAmountA = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
-                                int grainCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(2, 0);
-                                int grainTotalA = grainAddAmountA + grainCurrentAmountA;
-                                foodTotalTable.get(0).setValueAt(grainTotalA,2, 0);
-                                break;
+                            //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
 
-                            case 3:
-                                int fishAddAmountA = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
-                                int fishCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(3, 0);
-                                int fishTotalA = fishAddAmountA + fishCurrentAmountA;
-                                foodTotalTable.get(0).setValueAt(fishTotalA,3, 0);
-                                break;
+                        case 1:
+                            int fruitAddAmountA = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(1, 0);
+                            int fruitTotalA = fruitAddAmountA + fruitCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(fruitTotalA,1, 0);
 
-                            case 4:
-                                int meatAddAmountA = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
-                                int meatCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(4, 0);
-                                int meatTotalA = meatAddAmountA + meatCurrentAmountA;
-                                foodTotalTable.get(0).setValueAt(meatTotalA,4, 0);
-                                break;
-                            }//end switch for zone A
-                        break;
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountA);
 
-                    case 'B':
-                        switch (editedFoodTextField)
-                        {
-                            case 0:
-                                int hayAddAmountB = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
-                                int hayCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(0, 1);
-                                int hayTotalB = hayAddAmountB + hayCurrentAmountB;
-                                foodTotalTable.get(0).setValueAt(hayTotalB,0, 1);
-                                break;
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
 
-                            case 1:
-                                int fruitAddAmountB = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
-                                int fruitCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(1, 1);
-                                int fruitTotalB = fruitAddAmountB + fruitCurrentAmountB;
-                                foodTotalTable.get(0).setValueAt(fruitTotalB,1, 1);
-                                break;
+                        case 2:
+                            int grainAddAmountA = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(2, 0);
+                            int grainTotalA = grainAddAmountA + grainCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(grainTotalA,2, 0);
 
-                            case 2:
-                                int grainAddAmountB = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
-                                int grainCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(2, 1);
-                                int grainTotalB = grainAddAmountB + grainCurrentAmountB;
-                                foodTotalTable.get(0).setValueAt(grainTotalB,2, 1);
-                                break;
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountA);
 
-                            case 3:
-                                int fishAddAmountB = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
-                                int fishCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(3, 1);
-                                int fishTotalB = fishAddAmountB + fishCurrentAmountB;
-                                foodTotalTable.get(0).setValueAt(fishTotalB,3, 1);
-                                break;
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
 
-                            case 4:
-                                int meatAddAmountB = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
-                                int meatCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(4, 1);
-                                int meatTotalB = meatAddAmountB + meatCurrentAmountB;
-                                foodTotalTable.get(0).setValueAt(meatTotalB,4, 1);
-                                break;
-                        }//end switch for zone B
-                        break;
+                        case 3:
+                            int fishAddAmountA = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(3, 0);
+                            int fishTotalA = fishAddAmountA + fishCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(fishTotalA,3, 0);
 
-                    case 'C':
-                        switch (editedFoodTextField)
-                        {
-                            case 0:
-                                int hayAddAmountC = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
-                                int hayCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(0, 2);
-                                int hayTotalC = hayAddAmountC + hayCurrentAmountC;
-                                foodTotalTable.get(0).setValueAt(hayTotalC,0, 2);
-                                break;
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountA);
 
-                            case 1:
-                                int fruitAddAmountC = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
-                                int fruitCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(1, 2);
-                                int fruitTotalC = fruitAddAmountC + fruitCurrentAmountC;
-                                foodTotalTable.get(0).setValueAt(fruitTotalC,1, 2);
-                                break;
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
 
-                            case 2:
-                                int grainAddAmountC = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
-                                int grainCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(2, 2);
-                                int grainTotalC = grainAddAmountC + grainCurrentAmountC;
-                                foodTotalTable.get(0).setValueAt(grainTotalC,2, 2);
-                                break;
+                        case 4:
+                            int meatAddAmountA = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(4, 0);
+                            int meatTotalA = meatAddAmountA + meatCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(meatTotalA,4, 0);
 
-                            case 3:
-                                int fishAddAmountC = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
-                                int fishCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(3, 2);
-                                int fishTotalC = fishAddAmountC + fishCurrentAmountC;
-                                foodTotalTable.get(0).setValueAt(fishTotalC,3, 2);
-                                break;
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountA);
 
-                            case 4:
-                                int meatAddAmountC = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
-                                int meatCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(4, 2);
-                                int meatTotalC = meatAddAmountC + meatCurrentAmountC;
-                                foodTotalTable.get(0).setValueAt(meatTotalC,4, 2);
-                                break;
-                        }//end switch for zone C
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                        }//end switch for zone A
                     break;
 
-                    case 'D':
-                        switch (editedFoodTextField)
-                        {
-                            case 0:
-                                int hayAddAmountD = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
-                                int hayCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(0, 3);
-                                int hayTotalD = hayAddAmountD + hayCurrentAmountD;
-                                foodTotalTable.get(0).setValueAt(hayTotalD,0, 3);
-                                break;
+                case 'B':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountB = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(0, 1);
+                            int hayTotalB = hayAddAmountB + hayCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(hayTotalB,0, 1);
 
-                            case 1:
-                                int fruitAddAmountD = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
-                                int fruitCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(1, 3);
-                                int fruitTotalD = fruitAddAmountD + fruitCurrentAmountD;
-                                foodTotalTable.get(0).setValueAt(fruitTotalD,1, 3);
-                                break;
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountB);
 
-                            case 2:
-                                int grainAddAmountD = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
-                                int grainCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(2, 3);
-                                int grainTotalD = grainAddAmountD + grainCurrentAmountD;
-                                foodTotalTable.get(0).setValueAt(grainTotalD,2, 3);
-                                break;
+                            //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
 
-                            case 3:
-                                int fishAddAmountD = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
-                                int fishCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(3, 3);
-                                int fishTotalD = fishAddAmountD + fishCurrentAmountD;
-                                foodTotalTable.get(0).setValueAt(fishTotalD,3, 3);
-                                break;
+                        case 1:
+                            int fruitAddAmountB = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(1, 1);
+                            int fruitTotalB = fruitAddAmountB + fruitCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(fruitTotalB,1, 1);
+                            
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountB);
 
-                            case 4:
-                                int meatAddAmountD = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
-                                int meatCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(4, 3);
-                                int meatTotalD = meatAddAmountD + meatCurrentAmountD;
-                                foodTotalTable.get(0).setValueAt(meatTotalD,4, 3);
-                                break;
-                        }//end switch for zone D
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountB = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(2, 1);
+                            int grainTotalB = grainAddAmountB + grainCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(grainTotalB,2, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountB = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(3, 1);
+                            int fishTotalB = fishAddAmountB + fishCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(fishTotalB,3, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountB = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(4, 1);
+                            int meatTotalB = meatAddAmountB + meatCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(meatTotalB,4, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                    }//end switch for zone B
                     break;
-                }//end switch
+
+                case 'C':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountC = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(0, 2);
+                            int hayTotalC = hayAddAmountC + hayCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(hayTotalC,0, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 1:
+                            int fruitAddAmountC = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(1, 2);
+                            int fruitTotalC = fruitAddAmountC + fruitCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(fruitTotalC,1, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountC = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(2, 2);
+                            int grainTotalC = grainAddAmountC + grainCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(grainTotalC,2, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountC = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(3, 2);
+                            int fishTotalC = fishAddAmountC + fishCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(fishTotalC,3, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountC = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(4, 2);
+                            int meatTotalC = meatAddAmountC + meatCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(meatTotalC,4, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                    }//end switch for zone C
+                break;
+
+                case 'D':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountD = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(0, 3);
+                            int hayTotalD = hayAddAmountD + hayCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(hayTotalD,0, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 1:
+                            int fruitAddAmountD = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(1, 3);
+                            int fruitTotalD = fruitAddAmountD + fruitCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(fruitTotalD,1, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountD = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(2, 3);
+                            int grainTotalD = grainAddAmountD + grainCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(grainTotalD,2, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountD = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(3, 3);
+                            int fishTotalD = fishAddAmountD + fishCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(fishTotalD,3, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountD = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(4, 3);
+                            int meatTotalD = meatAddAmountD + meatCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(meatTotalD,4, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                    }//end switch for zone D
+                break;
+            }//end switch
+            
+            //============== Checking conditions to see which buttons to enable =================//
+            if(index == getZoo().getCages().size() -1)
+            {
+                foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
+            }
+
+            if(index == getZoo().getCages().size()-1)
+            {
+                animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
             }//end if
             else
             {
-                JOptionPane.showMessageDialog(null, "Please enter an amount of food in one of the textfields", "WARNING", JOptionPane.WARNING_MESSAGE);;
-            }
+                animalPanel.getNextButton().setEnabled(true);
+            }//end else
 
-            if(index == getZoo().getCages().size() -1)
-            {
-                foodTotalsButtons.get(1).setEnabled(true);
-            }
-
-            animalPanel.getNextButton().setEnabled(true);
+            editedFoodTextField = -1;
         } //end add button
     }// actionPerformed
 
@@ -615,7 +789,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         }//end switch
     }//end enableFoodTextFelds
 
-    private void enebleAllTextFields()
+    private void eneblFoodTextFields()
     {
         for(int i = 0; i < foodTotalsTextFields.size(); i++)
         {

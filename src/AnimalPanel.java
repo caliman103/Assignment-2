@@ -50,7 +50,7 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     private JLabel zoneImageJLabel;
 
 
-    String test;
+    private int index;
     
     //Button
     JButton nextButton;
@@ -74,7 +74,8 @@ public class AnimalPanel  extends JPanel //implements ActionListener
     //========================================================================================//
     public AnimalPanel()
     {
-        
+        index = 0;
+
         this.setLayout(new BorderLayout() );
         this.setPreferredSize(new Dimension(250,450));
 
@@ -105,21 +106,18 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         hungerLabel = new JLabel("Hunger:");
         healthLabel= new JLabel("Health:");
         
-        animalCageID = new JLabel(ZooManager.getZoo().getCages().get(0).getCageID() );
-        animalName = new JLabel(ZooManager.getZoo().getCages().get(0).getName() );
-        animalSpecies = new JLabel(ZooManager.getZoo().getCages().get(0).getSpecies() );
-        animalCategory = new JLabel(ZooManager.getZoo().getCages().get(0).getCategory() );
-        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHungerStatus() ) + "/5"); 
-        if(ZooManager.getZoo().getCages().get(0).getHungerStatus() <= 2)
+        while(ZooManager.getZoo().getCages().get(index).getHungerStatus() == 5 || ZooManager.getZoo().getCages().get(index).getHealthStatus() == 10 )
         {
-            animalHunger.setForeground(Color.RED);
-        }//endif
-        else
-        {
-            animalHunger.setForeground(Color.BLACK);
-        }
-        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(0).getHealthStatus() ) + "/10" );
-        if(ZooManager.getZoo().getCages().get(0).getHealthStatus() <= 3)
+            index++;
+        }//end while
+
+        animalCageID = new JLabel(ZooManager.getZoo().getCages().get(index).getCageID() );
+        animalName = new JLabel(ZooManager.getZoo().getCages().get(index).getName() );
+        animalSpecies = new JLabel(ZooManager.getZoo().getCages().get(index).getSpecies() );
+        animalCategory = new JLabel(ZooManager.getZoo().getCages().get(index).getCategory() );
+        animalHunger = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(index).getHungerStatus() ) + "/5"); 
+        animalHealth = new JLabel(String.valueOf(ZooManager.getZoo().getCages().get(index).getHealthStatus() ) + "/10" );
+        if(ZooManager.getZoo().getCages().get(index).getHealthStatus() < 8)
         {
             animalHunger.setForeground(Color.RED);
         }//endif
@@ -236,6 +234,10 @@ public class AnimalPanel  extends JPanel //implements ActionListener
         return labelsForStyling;
     }
 
+    public int getIndex()
+    {
+        return index;
+    }//end returnIndex
     private void styleComponents()
     {
         titleLabel.setFont(new Font("Sans Serif",Font.BOLD,20));

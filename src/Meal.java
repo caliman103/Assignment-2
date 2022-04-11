@@ -45,7 +45,7 @@ public class Meal
     public int getFoodAmt()
     {
         return foodAmt;
-    }// getFoodAmt
+    }// getFoodAmt 
 
 
     //========================================================================================//
