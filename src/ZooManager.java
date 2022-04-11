@@ -66,7 +66,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     static private Zoo zoo;
 
     //Object for animalhealer and animalfeeder
-    static private AnimalFeeder  animalFeeder;
+    static private AnimalFeeder animalFeeder;
+    static private AnimalHealer animalHealer;
 
     
 
@@ -133,6 +134,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     public ZooManager() 
     {
         animalFeeder = new AnimalFeeder(getZoo().getCages());
+        animalHealer = new AnimalHealer(getZoo().getCages());
 
         animalPanel = new AnimalPanel();
         
@@ -666,9 +668,26 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             Prescription animalPrescription = new Prescription();
             switch (getZoo().getCages().get(index).getCageID().charAt(0) )
             {
+                case 'A':
+                    switch (editedMedTextField)
+                    {
+                        case 0:
+                            int herbAddAmountA = Integer.valueOf(medicineTotalsTextFields.get(0).getText()); 
+                            int herbCurrentAmountA = (Integer) medicineTotalTable.get(0).getValueAt(0, 0);
+                            int herbTotalA = herbAddAmountA + herbCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(herbTotalA,0, 0);
 
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(herbAddAmountA);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+
+                    }//end switch for zone A
             }//end switch
-        }
 
     }// actionPerformed
 
