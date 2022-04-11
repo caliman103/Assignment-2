@@ -138,7 +138,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
         animalPanel = new AnimalPanel();
         
-        index = animalPanel.getIndex();
+        index = animalPanel.getIndex() +1;
         editedFoodTextField = -1;
         editedMedTextField = -1;
 
@@ -253,13 +253,15 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     {
         if(e.getSource() == animalPanel.getNextButton() )
         {
-            while(getZoo().getCages().get(index).getHungerStatus() == 5 || getZoo().getCages().get(index).getHealthStatus() == 10 )
+            while(getZoo().getCages().get(index).getHungerStatus() == 5 && getZoo().getCages().get(index).getHealthStatus() == 10 )
             {
                 index++;
             }//end while
 
             if(index < (ZooManager.getZoo().getCages().size() - 1) )
             {
+                
+
                 animalPanel.getLabelList().get(6).setText(getZoo().getCages().get(index).getCageID() );
                 animalPanel.getLabelList().get(7).setText(getZoo().getCages().get(index).getName() );
                 animalPanel.getLabelList().get(8).setText(getZoo().getCages().get(index).getSpecies() );
@@ -290,7 +292,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 isfed = false;
                 isHealed = false;
                 
-                //Disble add and next button until condition are satisfied to make then enabled agaib
+                //Disble add and next button until condition are satisfied to make then enabled again
                 foodTotalsButtons.get(0).setEnabled(false);
                 medicineTotalsButtons.get(0).setEnabled(false);
                 animalPanel.getNextButton().setEnabled(false);
@@ -304,8 +306,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 {
                     medicineTotalsTextFields.get(i).setText("0");
                 }
-
                 index++;
+                
             }//end if
             
 
@@ -686,7 +688,186 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                             animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
                             break;
 
+                        case 1:
+                            int omniAddAmountA = Integer.valueOf(medicineTotalsTextFields.get(1).getText()); 
+                            int omniCurrentAmountA = (Integer) medicineTotalTable.get(0).getValueAt(1, 0);
+                            int omniTotalA = omniAddAmountA + omniCurrentAmountA;
+                            medicineTotalTable.get(0).setValueAt(omniTotalA,1, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(omniAddAmountA);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+
+                        case 2:
+                            int carniAddAmountA = Integer.valueOf(medicineTotalsTextFields.get(2).getText()); 
+                            int carniCurrentAmountA = (Integer) medicineTotalTable.get(0).getValueAt(2, 0);
+                            int carniTotalA = carniAddAmountA + carniCurrentAmountA;
+                            medicineTotalTable.get(0).setValueAt(carniTotalA,2, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(carniAddAmountA);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
                     }//end switch for zone A
+                    break;
+                case 'B':
+                    switch (editedMedTextField)
+                    {
+                        case 0:
+                            int herbAddAmountB = Integer.valueOf(medicineTotalsTextFields.get(0).getText()); 
+                            int herbCurrentAmountB = (Integer) medicineTotalTable.get(0).getValueAt(0, 1);
+                            int herbTotalB = herbAddAmountB + herbCurrentAmountB;
+                            medicineTotalTable.get(0).setValueAt(herbTotalB,0, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(herbAddAmountB);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+
+                        case 1:
+                            int omniAddAmountB = Integer.valueOf(medicineTotalsTextFields.get(1).getText()); 
+                            int omniCurrentAmountB = (Integer) medicineTotalTable.get(0).getValueAt(1, 1);
+                            int omniTotalB = omniAddAmountB + omniCurrentAmountB;
+                            medicineTotalTable.get(0).setValueAt(omniTotalB,1, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(omniAddAmountB);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+
+                        case 2:
+                            int carniAddAmountB = Integer.valueOf(medicineTotalsTextFields.get(2).getText()); 
+                            int carniCurrentAmountB = (Integer) medicineTotalTable.get(0).getValueAt(1, 2);
+                            int carniTotalB = carniAddAmountB + carniCurrentAmountB;
+                            medicineTotalTable.get(0).setValueAt(carniTotalB,1, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(carniAddAmountB);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+                    }//end switch for zone B
+                    break;
+
+                    case 'C':
+                        switch (editedMedTextField)
+                        {
+                            case 0:
+                                int herbAddAmountC = Integer.valueOf(medicineTotalsTextFields.get(0).getText()); 
+                                int herbCurrentAmountC = (Integer) medicineTotalTable.get(0).getValueAt(0, 2);
+                                int herbTotalC = herbAddAmountC + herbCurrentAmountC;
+                                medicineTotalTable.get(0).setValueAt(herbTotalC,0, 2);
+
+                                //====================Set Meal Information ===================//
+                                animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                                animalPrescription.setMedType("Herbicine");
+                                animalPrescription.setUnitsOfMed(herbAddAmountC);
+
+                                //==================Add meal to animal Feeder=================//
+                                animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                                break;
+
+                            case 1:
+                                int omniAddAmountC = Integer.valueOf(medicineTotalsTextFields.get(1).getText()); 
+                                int omniCurrentAmountC = (Integer) medicineTotalTable.get(0).getValueAt(1, 2);
+                                int omniTotalC = omniAddAmountC + omniCurrentAmountC;
+                                medicineTotalTable.get(0).setValueAt(omniTotalC,1, 2);
+
+                                //====================Set Meal Information ===================//
+                                animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                                animalPrescription.setMedType("Herbicine");
+                                animalPrescription.setUnitsOfMed(omniAddAmountC);
+
+                                //==================Add meal to animal Feeder=================//
+                                animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                                break;
+
+                            case 2:
+                                int carniAddAmountC = Integer.valueOf(medicineTotalsTextFields.get(2).getText()); 
+                                int carniCurrentAmountC = (Integer) medicineTotalTable.get(0).getValueAt(2, 2);
+                                int carniTotalC = carniAddAmountC + carniCurrentAmountC;
+                                medicineTotalTable.get(0).setValueAt(carniTotalC,2, 2);
+
+                                //====================Set Meal Information ===================//
+                                animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                                animalPrescription.setMedType("Herbicine");
+                                animalPrescription.setUnitsOfMed(carniAddAmountC);
+
+                                //==================Add meal to animal Feeder=================//
+                                animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                                break;
+                        }//end switch for zone C
+                        break;
+
+                        case 'D':
+                            switch (editedMedTextField)
+                            {
+                                case 0:
+                                    int herbAddAmountD = Integer.valueOf(medicineTotalsTextFields.get(0).getText()); 
+                                    int herbCurrentAmountD = (Integer) medicineTotalTable.get(0).getValueAt(0, 3);
+                                    int herbTotalD = herbAddAmountD + herbCurrentAmountD;
+                                    medicineTotalTable.get(0).setValueAt(herbTotalD,0, 3);
+
+                                    //====================Set Meal Information ===================//
+                                    animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                                    animalPrescription.setMedType("Herbicine");
+                                    animalPrescription.setUnitsOfMed(herbAddAmountD);
+
+                                    //==================Add meal to animal Feeder=================//
+                                    animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                                    break;
+
+                                case 1:
+                                    int omniAddAmountD = Integer.valueOf(medicineTotalsTextFields.get(1).getText()); 
+                                    int omniCurrentAmountD = (Integer) medicineTotalTable.get(0).getValueAt(1, 3);
+                                    int omniTotalD = omniAddAmountD + omniCurrentAmountD;
+                                    medicineTotalTable.get(0).setValueAt(omniTotalD,1, 3);
+
+                                    //====================Set Meal Information ===================//
+                                    animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                                    animalPrescription.setMedType("Herbicine");
+                                    animalPrescription.setUnitsOfMed(omniAddAmountD);
+
+                                    //==================Add meal to animal Feeder=================//
+                                    animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                                    break;
+
+                                case 2:
+                                    int carniAddAmountD = Integer.valueOf(medicineTotalsTextFields.get(2).getText()); 
+                                    int carniCurrentAmountD = (Integer) medicineTotalTable.get(0).getValueAt(2, 3);
+                                    int carniTotalD = carniAddAmountD + carniCurrentAmountD;
+                                    medicineTotalTable.get(0).setValueAt(carniTotalD,2, 3);
+
+                                    //====================Set Meal Information ===================//
+                                    animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                                    animalPrescription.setMedType("Herbicine");
+                                    animalPrescription.setUnitsOfMed(carniAddAmountD);
+
+                                    //==================Add meal to animal Feeder=================//
+                                    animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                                    break;
+                            }//end switch for zone C
+                        break;
             }//end switch
         }//end if
     }// actionPerformed
