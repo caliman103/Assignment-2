@@ -25,7 +25,9 @@ public class Meal
     //========================================================================================//
     public Meal()
     {
-        
+        cageID = "";
+        foodType = "";
+        foodAmt = 0;
     }// Meal
 
 
@@ -45,7 +47,7 @@ public class Meal
     public int getFoodAmt()
     {
         return foodAmt;
-    }// getFoodAmt 
+    }// getFoodAmt
 
 
     //========================================================================================//
@@ -53,17 +55,17 @@ public class Meal
     //========================================================================================//
     public void setCageID(String id)
     {
-        
+        cageID = id;
     }// setCageID
 
     public void setFoodType(String type)
     {
-        
+        foodType = type;
     }// setFoodType
 
     public void setFoodAmt(int amt)
     {
-        
+        foodAmt = amt;
     }// setFoodAmt
 
 

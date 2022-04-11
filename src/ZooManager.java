@@ -659,7 +659,17 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
             editedFoodTextField = -1;
             
-        } //end add button
+        } //end foodTotals add button
+
+        if(e.getSource() == medicineTotalsButtons.get(0))
+        {
+            Prescription animalPrescription = new Prescription();
+            switch (getZoo().getCages().get(index).getCageID().charAt(0) )
+            {
+
+            }//end switch
+        }
+
     }// actionPerformed
 
 
