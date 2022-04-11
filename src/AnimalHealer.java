@@ -245,7 +245,7 @@ public class AnimalHealer
             }// end for
         }//end for
 
-        fileWriter.write("\nFood Summary\n");
+        fileWriter.write("\nMedicine Summary\n");
 
         if(herbicineAmt != 0)
         {
