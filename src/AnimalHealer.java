@@ -305,7 +305,6 @@ public class AnimalHealer
                 if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && ((cages.get(j).getHealthStatus()) > 0) &&(!cages.get(j).getHealed()))
                 {
                     cages.get(j).takeMedicine(healingList.get(i).getUnitsOfMed());
-                    System.out.println(healingList.get(i).getUnitsOfMed());
 
                     if(cages.get(j).getOverDosed())
                     {

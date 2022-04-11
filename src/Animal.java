@@ -199,7 +199,7 @@ public class Animal
     {
         if(healthStatus != 0)
         {
-            setHealthStatus(hungerStatus + amountOfMedicine);
+            setHealthStatus(healthStatus + amountOfMedicine);
 
             if(healthStatus > MAX_HEALTH)
             {
