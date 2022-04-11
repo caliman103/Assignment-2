@@ -616,10 +616,9 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
             }
-
-            
             else
             {
+                foodTotalsButtons.get(0).setEnabled(false);
                 animalPanel.getNextButton().setEnabled(true);
             }//end else
 
