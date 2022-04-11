@@ -139,7 +139,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         editedMedTextField = -1;
 
         isfed = false;
-        isHealed= true;
+        isHealed= false;
 
         medicineTotals.setPreferredSize(new Dimension(500,450));
        
@@ -647,12 +647,11 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
+                foodTotalsButtons.get(0).setRolloverEnabled(false);
             }
             else
             {
                 foodTotalsButtons.get(0).setEnabled(false);
-                
-                animalPanel.getNextButton().setEnabled(true);
             }//end else
             if(isfed == true && isHealed == true)
             {
@@ -867,6 +866,23 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                             }//end switch for zone C
                         break;
             }//end switch
+            isHealed = true;
+
+            if(index == getZoo().getCages().size() -1)
+            {
+                medicineTotalsButtons.get(1).setEnabled(true); //endable printlist button
+                animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+            else
+            {
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }//end else
+
+            if(isfed == true && isHealed == true)
+            {
+                animalPanel.getNextButton().setEnabled(true);
+            }
         }//end if
     }// actionPerformed
 
