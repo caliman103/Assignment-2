@@ -31,7 +31,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
     AnimalPanel animalPanel;
     FoodTotalPanel foodTotals = new FoodTotalPanel();
-    JPanel feedingReportsFiller = new JPanel();
+    FeedingReportPanel reportPanel = new FeedingReportPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
     MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
     JPanel healingReportsFiller = new JPanel();
@@ -151,7 +151,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         
        
         //foodTotalPanel.setBackground(Color.BLACK);
-        feedingReportsFiller.setBackground(Color.BLUE);
+        //feedingReportsFiller.setBackground(Color.BLUE);
         
         healingReportsFiller.setBackground(Color.GREEN);
         
@@ -175,7 +175,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         westPanel.add(welcomePanel);
 
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS) );
-        eastPanel.add(feedingReportsFiller);
+        eastPanel.add(reportPanel);
         eastPanel.add(healingReportsFiller);
         
         this.add("West",westPanel);
@@ -648,7 +648,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
                 
-                foodTotalsButtons.get(2).setEnabled(true);
+                foodTotalsButtons.get(2).setEnabled(true); //enable feed button
             }
             else
             {
@@ -676,7 +676,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             
         }
 
-        if(e.getSource() == foodTotalsButtons.get(2))
+        if(e.getSource() == foodTotalsButtons.get(2)) //feed button form foodtotal panel
         {
             boolean works = false;
             while(!works)
@@ -905,9 +905,9 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
             if(index == getZoo().getCages().size() -1)
             {
-                medicineTotalsButtons.get(1).setEnabled(true); //endable printlist button
+                medicineTotalsButtons.get(1).setEnabled(true); //enable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
-                medicineTotalsButtons.get(0).setEnabled(false);
+                medicineTotalsButtons.get(2).setEnabled(true); //enable feed button
             }
             else
             {

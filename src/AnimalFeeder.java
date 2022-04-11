@@ -49,6 +49,11 @@ public class AnimalFeeder
         return cages;
     } //end getFeedingList
 
+    public ArrayList<Integer> getDeadAnimals()
+    {
+        return deadAnimals;
+    }
+
     //========================================================================================//
     //                                      MUTATORS                                          //
     //========================================================================================//
