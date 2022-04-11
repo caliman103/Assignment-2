@@ -10,6 +10,7 @@ Last Edit: Mar 16, 2022
 //                                     LIBRARIES                                          //
 //========================================================================================//
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
  
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class ZooManager extends JFrame implements ActionListener
+public class ZooManager extends JFrame implements ActionListener, FocusListener
 {
     //========================================================================================//
     //                                    DATA MEMBERS                                        //
@@ -29,20 +30,33 @@ public class ZooManager extends JFrame implements ActionListener
     
 
     AnimalPanel animalPanel;
-    FoodTotalPanel foodTotalPanel = new FoodTotalPanel();
-    MedicineTotalPanel medicineTotalPanel = new MedicineTotalPanel();
+    FoodTotalPanel foodTotals = new FoodTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
-    JPanel medicineTotalsFiller = new JPanel();
+    MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
     JPanel healingReportsFiller = new JPanel();
 
     
+    //C0mponents from FoodTotals
+    ArrayList<JButton> foodTotalsButtons = foodTotals.getButtonList();
+    ArrayList<JTable> foodTotalTable = foodTotals.getTableList();
+    ArrayList<JTextField> foodTotalsTextFields = foodTotals.getTextFieldList();
+
+    //Components from medicine Totals
+    ArrayList<JButton> medicineTotalsButtons = medicineTotals.getButtonList();
+    ArrayList<JTable> medicineTotalTable = medicineTotals.getTableList();
+    ArrayList<JTextField> medicineTotalsTextFields = medicineTotals.getTextFieldList();
+
     //=================Images=====================//
     ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
 
 
-    int index;
-   
+    private int index;
+    private int editedFoodTextField;
+    private int editedMedTextField; 
+    private boolean isfed;
+    private boolean isHealed;
+    
 
 
     //Object for zookeeper
@@ -50,6 +64,15 @@ public class ZooManager extends JFrame implements ActionListener
 
     //Object for Zoo
     static private Zoo zoo;
+
+    //Object for animalhealer and animalfeeder
+    static private AnimalFeeder animalFeeder;
+    static private AnimalHealer animalHealer;
+
+    
+
+    
+    
 
     public static void main(String[] args) throws Exception
     {
@@ -110,11 +133,19 @@ public class ZooManager extends JFrame implements ActionListener
 
     public ZooManager() 
     {
+        animalFeeder = new AnimalFeeder(getZoo().getCages());
+        animalHealer = new AnimalHealer(getZoo().getCages());
+
         animalPanel = new AnimalPanel();
         
-        index = 0;
-        
-        medicineTotalsFiller.setPreferredSize(new Dimension(500,450));
+        index = animalPanel.getIndex();
+        editedFoodTextField = -1;
+        editedMedTextField = -1;
+
+        isfed = false;
+        isHealed= true;
+
+        medicineTotals.setPreferredSize(new Dimension(500,450));
        
         //setSize(150,400 );
         this.setTitle("Main Screen");
@@ -125,7 +156,7 @@ public class ZooManager extends JFrame implements ActionListener
        
         //foodTotalPanel.setBackground(Color.BLACK);
         feedingReportsFiller.setBackground(Color.BLUE);
-        medicineTotalsFiller.setBackground(Color.CYAN);
+        
         healingReportsFiller.setBackground(Color.GREEN);
         
         westPanel.setPreferredSize(new Dimension(320,100) );
@@ -140,8 +171,8 @@ public class ZooManager extends JFrame implements ActionListener
         //                                  ADDING COMPONENTS                                     //
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
-        centerPanel.add(foodTotalPanel);
-        centerPanel.add(medicineTotalPanel);
+        centerPanel.add(foodTotals);
+        centerPanel.add(medicineTotals);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
         westPanel.add(animalPanel);
@@ -158,13 +189,53 @@ public class ZooManager extends JFrame implements ActionListener
 
 
 
-
+        
         //========================================================================================//
         //                                ADDING ACTION LISTENERS                                 //
         //========================================================================================//
         animalPanel.getNextButton().addActionListener(this);
-        //buttonList.get(0).addActionListener(this);
+        for(int i = 0; i < foodTotalsButtons.size(); i++)
+        {
+            foodTotalsButtons.get(i).addActionListener(this);
+        }
+
+        for(int i = 0; i < medicineTotalsButtons.size(); i++)
+        {
+            medicineTotalsButtons.get(i).addActionListener(this);
+        }
         
+
+        //========================================================================================//
+        //                                ADDING Focus LISTENERS                                  //
+        //========================================================================================//
+        for(int i = 0; i < foodTotalsTextFields.size(); i++)
+        {
+            foodTotalsTextFields.get(i).addFocusListener(this);
+            
+        }
+
+        for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+        {
+            medicineTotalsTextFields.get(i).addFocusListener(this);
+            
+        }
+
+        
+        disableFoodTextFields();
+        disableMedTextFields();
+
+        for(int i = 0; i < foodTotalsButtons.size(); i++)
+        {
+            foodTotalsButtons.get(i).setEnabled(false);
+        }
+
+        for(int i = 0; i < medicineTotalsButtons.size(); i++)
+        {
+            medicineTotalsButtons.get(i).setEnabled(false);
+        }
+        animalPanel.getNextButton().setEnabled(false);
+
+
         maximiseFrame(this);
         
         
@@ -182,25 +253,20 @@ public class ZooManager extends JFrame implements ActionListener
     {
         if(e.getSource() == animalPanel.getNextButton() )
         {
-            if(index < (ZooManager.getZoo().getCages().size() - 1) )
+            while(getZoo().getCages().get(index).getHungerStatus() == 5 || getZoo().getCages().get(index).getHealthStatus() == 10 )
             {
                 index++;
-                
+            }//end while
+
+            if(index < (ZooManager.getZoo().getCages().size() - 1) )
+            {
                 animalPanel.getLabelList().get(6).setText(getZoo().getCages().get(index).getCageID() );
                 animalPanel.getLabelList().get(7).setText(getZoo().getCages().get(index).getName() );
                 animalPanel.getLabelList().get(8).setText(getZoo().getCages().get(index).getSpecies() );
                 animalPanel.getLabelList().get(9).setText(getZoo().getCages().get(index).getCategory() );
                 animalPanel.getLabelList().get(10).setText(String.valueOf(getZoo().getCages().get(index).getHungerStatus() ) + "/5" );
-                if(ZooManager.getZoo().getCages().get(index).getHungerStatus() <= 2)
-                {
-                    animalPanel.getLabelList().get(10).setForeground(Color.RED);
-                }//endif
-                else
-                {
-                    animalPanel.getLabelList().get(10).setForeground(Color.BLACK);
-                }
                 animalPanel.getLabelList().get(11).setText(String.valueOf(getZoo().getCages().get(index).getHealthStatus() ) +"/10"  );
-                if(ZooManager.getZoo().getCages().get(index).getHealthStatus() <= 3)
+                if(ZooManager.getZoo().getCages().get(index).getHealthStatus() < 8)
                 {
                     animalPanel.getLabelList().get(11).setForeground(Color.RED);
                 }//endif
@@ -211,20 +277,701 @@ public class ZooManager extends JFrame implements ActionListener
 
                 char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
                 animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
-            }
 
+                enableFoodTextFields(); 
+                enableMedtextFields();
+
+                disableMedTextFields();
+                disableFoodTextFields();
+
+                editedFoodTextField = -1;
+                editedMedTextField = -1;
+                
+                isfed = false;
+                isHealed = false;
+                
+                //Disble add and next button until condition are satisfied to make then enabled agaib
+                foodTotalsButtons.get(0).setEnabled(false);
+                medicineTotalsButtons.get(0).setEnabled(false);
+                animalPanel.getNextButton().setEnabled(false);
+
+                for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                {
+                    foodTotalsTextFields.get(i).setText("0");
+                }
+
+                for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                {
+                    medicineTotalsTextFields.get(i).setText("0");
+                }
+
+                index++;
+            }//end if
+            
 
         }//end next button action
         
+
+
+        if(e.getSource() == foodTotalsButtons.get(0) )  //add button from foodtotal panel
+        {
+            Meal animalMeal = new Meal();
+            switch (getZoo().getCages().get(index).getCageID().charAt(0) )
+            {
+                case 'A':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountA = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(0, 0);
+                            int hayTotalA = hayAddAmountA + hayCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(hayTotalA,0, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountA);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+
+                        case 1:
+                            int fruitAddAmountA = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(1, 0);
+                            int fruitTotalA = fruitAddAmountA + fruitCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(fruitTotalA,1, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountA);
+
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountA = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(2, 0);
+                            int grainTotalA = grainAddAmountA + grainCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(grainTotalA,2, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountA);
+
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountA = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(3, 0);
+                            int fishTotalA = fishAddAmountA + fishCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(fishTotalA,3, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountA);
+
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountA = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(4, 0);
+                            int meatTotalA = meatAddAmountA + meatCurrentAmountA;
+                            foodTotalTable.get(0).setValueAt(meatTotalA,4, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountA);
+
+                                //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                        }//end switch for zone A
+                    break;
+
+                case 'B':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountB = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(0, 1);
+                            int hayTotalB = hayAddAmountB + hayCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(hayTotalB,0, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountB);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 1:
+                            int fruitAddAmountB = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(1, 1);
+                            int fruitTotalB = fruitAddAmountB + fruitCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(fruitTotalB,1, 1);
+                            
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountB = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(2, 1);
+                            int grainTotalB = grainAddAmountB + grainCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(grainTotalB,2, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountB = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(3, 1);
+                            int fishTotalB = fishAddAmountB + fishCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(fishTotalB,3, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountB = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(4, 1);
+                            int meatTotalB = meatAddAmountB + meatCurrentAmountB;
+                            foodTotalTable.get(0).setValueAt(meatTotalB,4, 1);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountB);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                    }//end switch for zone B
+                    break;
+
+                case 'C':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountC = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(0, 2);
+                            int hayTotalC = hayAddAmountC + hayCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(hayTotalC,0, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 1:
+                            int fruitAddAmountC = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(1, 2);
+                            int fruitTotalC = fruitAddAmountC + fruitCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(fruitTotalC,1, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountC = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(2, 2);
+                            int grainTotalC = grainAddAmountC + grainCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(grainTotalC,2, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountC = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(3, 2);
+                            int fishTotalC = fishAddAmountC + fishCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(fishTotalC,3, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountC = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(4, 2);
+                            int meatTotalC = meatAddAmountC + meatCurrentAmountC;
+                            foodTotalTable.get(0).setValueAt(meatTotalC,4, 2);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountC);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                    }//end switch for zone C
+                break;
+
+                case 'D':
+                    switch (editedFoodTextField)
+                    {
+                        case 0:
+                            int hayAddAmountD = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                            int hayCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(0, 3);
+                            int hayTotalD = hayAddAmountD + hayCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(hayTotalD,0, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Hay");
+                            animalMeal.setFoodAmt(hayAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 1:
+                            int fruitAddAmountD = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                            int fruitCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(1, 3);
+                            int fruitTotalD = fruitAddAmountD + fruitCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(fruitTotalD,1, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fruit");
+                            animalMeal.setFoodAmt(fruitAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 2:
+                            int grainAddAmountD = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                            int grainCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(2, 3);
+                            int grainTotalD = grainAddAmountD + grainCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(grainTotalD,2, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Grain");
+                            animalMeal.setFoodAmt(grainAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 3:
+                            int fishAddAmountD = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                            int fishCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(3, 3);
+                            int fishTotalD = fishAddAmountD + fishCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(fishTotalD,3, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Fish");
+                            animalMeal.setFoodAmt(fishAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+
+                        case 4:
+                            int meatAddAmountD = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                            int meatCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(4, 3);
+                            int meatTotalD = meatAddAmountD + meatCurrentAmountD;
+                            foodTotalTable.get(0).setValueAt(meatTotalD,4, 3);
+
+                            //====================Set Meal Information ===================//
+                            animalMeal.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalMeal.setFoodType("Meat");
+                            animalMeal.setFoodAmt(meatAddAmountD);
+
+                            //==================Add mean to animal Feeder=================//
+                            animalFeeder.addMeal(animalMeal);
+                            break;
+                    }//end switch for zone D
+                break;
+            }//end switch
+            
+            //============== Checking conditions to see which buttons to enable =================//
+            isfed = true;
+
+            
+            if(index == getZoo().getCages().size() -1)
+            {
+                foodTotalsButtons.get(1).setEnabled(true); //endable printlist button
+                animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
+            }
+            else
+            {
+                foodTotalsButtons.get(0).setEnabled(false);
+                
+                animalPanel.getNextButton().setEnabled(true);
+            }//end else
+            if(isfed == true && isHealed == true)
+            {
+                animalPanel.getNextButton().setEnabled(true);
+            }
+
+            editedFoodTextField = -1;
+            
+        } //end foodTotals add button
+
+        if(e.getSource() == medicineTotalsButtons.get(0))
+        {
+            Prescription animalPrescription = new Prescription();
+            switch (getZoo().getCages().get(index).getCageID().charAt(0) )
+            {
+                case 'A':
+                    switch (editedMedTextField)
+                    {
+                        case 0:
+                            int herbAddAmountA = Integer.valueOf(medicineTotalsTextFields.get(0).getText()); 
+                            int herbCurrentAmountA = (Integer) medicineTotalTable.get(0).getValueAt(0, 0);
+                            int herbTotalA = herbAddAmountA + herbCurrentAmountA;
+                            medicineTotalTable.get(0).setValueAt(herbTotalA,0, 0);
+
+                            //====================Set Meal Information ===================//
+                            animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
+                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setUnitsOfMed(herbAddAmountA);
+
+                            //==================Add meal to animal Feeder=================//
+                            animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
+                            break;
+
+                    }//end switch for zone A
+            }//end switch
+        }//end if
     }// actionPerformed
 
 
     //========================================================================================//
+    //                                Focus Listsner METHODS                                  //
+    //========================================================================================//
+    public void focusGained(FocusEvent e)
+    {
+        
+    }//end focusGained
+
+    public void focusLost(FocusEvent e)
+    {
+        //=====================Food Text fields==================//
+        if(e.getSource() == foodTotalsTextFields.get(0) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(0).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 0)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 0;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(0).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
+            }
+        }//and hay textfleid
+
+        if(e.getSource() == foodTotalsTextFields.get(1) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(1).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 1)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 1;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(1).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
+            }
+          
+        }//end fruit textfleid
+
+        if(e.getSource() == foodTotalsTextFields.get(2) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(2).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 2)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 2;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(2).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end grain textfleid
+
+        if(e.getSource() == foodTotalsTextFields.get(3) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(3).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 3)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 3;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(3).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false);
+            }
+           
+        }//end fish textfleid
+        
+        if(e.getSource() == foodTotalsTextFields.get(4) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(4).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 4)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 4;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(4).setText("0");
+                foodTotalsButtons.get(0).setEnabled(false); 
+            }
+           
+        }//and meat textfleid
+
+        //=====================Medicine Text Fields ====================//
+        if(e.getSource() == medicineTotalsTextFields.get(0))
+        {
+            
+            try
+            {
+                if(Integer.valueOf(medicineTotalsTextFields.get(0).getText() ) > 0 )
+                {
+                    for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                    {
+                        if(i != 0)
+                        {
+                            medicineTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedMedTextField = 0;
+                    medicineTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                medicineTotalsTextFields.get(0).setText("0");
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end herbicine text field
+
+        if(e.getSource() == medicineTotalsTextFields.get(1))
+        {
+            try
+            {
+                if(Integer.valueOf(medicineTotalsTextFields.get(1).getText() ) > 0 )
+                {
+                    for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                    {
+                        if(i != 2)
+                        {
+                            medicineTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedMedTextField = 2;
+                    medicineTotalsButtons.get(0).setEnabled(true);
+                }//end if
+
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                medicineTotalsTextFields.get(2).setText("0");
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end carnicine text field
+
+        if(e.getSource() == medicineTotalsTextFields.get(2))
+        {
+            try
+            {
+                if(Integer.valueOf(medicineTotalsTextFields.get(2).getText() ) > 0 )
+                {
+                    for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+                    {
+                        if(i != 0)
+                        {
+                            medicineTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedMedTextField = 1;
+                    medicineTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                medicineTotalsTextFields.get(1).setText("0");
+                medicineTotalsButtons.get(0).setEnabled(false);
+            }
+        }//end herbicine text field
+    }//end FocusLost
+
+    //========================================================================================//
     //                                    OTHER METHODS                                       //
     //========================================================================================//
+    private void disableFoodTextFields()
+    {
+        switch (getZoo().getCages().get(index).getCategory() )
+        {
+            case "Herbivore":
+                foodTotalsTextFields.get(3).setEditable(false);
+                foodTotalsTextFields.get(4).setEditable(false);
+                break;
+            
+            case "Carnivore":
+                foodTotalsTextFields.get(0).setEditable(false);
+                foodTotalsTextFields.get(1).setEditable(false);
+                foodTotalsTextFields.get(2).setEditable(false);
+                break;
+            default:
+                foodTotalsTextFields.get(2).setEditable(false);
+                foodTotalsTextFields.get(4).setEditable(false);
+                break;
+        }//end switch
+    }//end disaableFoodTextFelds
 
+    private void disableMedTextFields()
+    {
+        switch (getZoo().getCages().get(index).getCategory() )
+        {
+            case "Herbivore":
+                medicineTotalsTextFields.get(1).setEnabled(false);
+                medicineTotalsTextFields.get(2).setEnabled(false);
+                break;
 
-    
+            case "Omnivore":
+                medicineTotalsTextFields.get(0).setEnabled(false);
+                medicineTotalsTextFields.get(2).setEnabled(false);
+                break;
+
+            case "Carnivore":
+                medicineTotalsTextFields.get(0).setEnabled(false);
+                medicineTotalsTextFields.get(1).setEnabled(false);
+                break;
+        }//end switch
+
+    }//end disable med textfields
+
+    private void enableFoodTextFields()
+    {
+        for(int i = 0; i < foodTotalsTextFields.size(); i++)
+        {
+            foodTotalsTextFields.get(i).setEditable(true);
+        }
+    }
+
+    private void enableMedtextFields()
+    {
+        for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+        {
+            medicineTotalsTextFields.get(i).setEditable(true);
+        }
+    }
+
      //This function will maximise the frame
     private static void maximiseFrame(JFrame fr)
     {

@@ -16,7 +16,7 @@ public class Prescription
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
     private String cageID;
-    private String medType;
+    private String medType; 
     private int unitsOfMed;
 
 

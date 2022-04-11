@@ -395,7 +395,6 @@ public class AnimalFeeder
 
 /*
 boolean works = false;
-
 while(!works)
 {
     try
