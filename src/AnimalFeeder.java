@@ -25,6 +25,8 @@ public class AnimalFeeder
     //========================================================================================//
     public AnimalFeeder(ArrayList<Animal> newCages)
     {
+        feedingList = new ArrayList<Meal>();
+        cages = new ArrayList<Animal>();
         cages = newCages;
     }// AnimalFeeder
 
