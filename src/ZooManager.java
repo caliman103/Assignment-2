@@ -675,7 +675,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                             int herbAddAmountA = Integer.valueOf(medicineTotalsTextFields.get(0).getText()); 
                             int herbCurrentAmountA = (Integer) medicineTotalTable.get(0).getValueAt(0, 0);
                             int herbTotalA = herbAddAmountA + herbCurrentAmountA;
-                            foodTotalTable.get(0).setValueAt(herbTotalA,0, 0);
+                            medicineTotalTable.get(0).setValueAt(herbTotalA,0, 0);
 
                             //====================Set Meal Information ===================//
                             animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
