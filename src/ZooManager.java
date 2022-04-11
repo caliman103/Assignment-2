@@ -31,13 +31,13 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
     private AnimalPanel animalPanel;
     private FoodTotalPanel foodTotals = new FoodTotalPanel();
-    private FeedingReportPanel foodReport = new FeedingReportPanel();
+    private FeedingReportPanel foodReport;
     private WelcomePanel welcomePanel = new WelcomePanel();
     private MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
     private HealingReportPanel healingReport = new HealingReportPanel();
 
     
-    //C0mponents from FoodTotals
+    //Components from FoodTotals
     private ArrayList<JButton> foodTotalsButtons = foodTotals.getButtonList();
     private ArrayList<JTable> foodTotalTable = foodTotals.getTableList();
     private ArrayList<JTextField> foodTotalsTextFields = foodTotals.getTextFieldList();
@@ -141,6 +141,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         isfed = false;
         isHealed= false;
 
+        foodReport = new FeedingReportPanel(animalFeeder);
+
         medicineTotals.setPreferredSize(new Dimension(500,450));
        
         //setSize(150,400 );
@@ -200,6 +202,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             medicineTotalsButtons.get(i).addActionListener(this);
         }
         
+        foodReport.getFoodReportButton().addActionListener(this);
+        healingReport.getHealReportButton().addActionListener(this);
 
         //========================================================================================//
         //                                ADDING Focus LISTENERS                                  //
@@ -676,7 +680,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             
         }
 
-        if(e.getSource() == foodTotalsButtons.get(2)) //feed button form foodtotal panel
+        if(e.getSource() == foodTotalsButtons.get(2)) //feed button from foodtotal panel
         {
             boolean works = false;
             while(!works)
@@ -685,6 +689,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 {
                     animalFeeder.simFeeding();
                     works = true;
+                    foodReport.appendReport();
                 }
                 catch(OverFeedingException f)
                 {
@@ -697,7 +702,19 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             }
         }
 
-        if(e.getSource() == medicineTotalsButtons.get(0))
+        if(e.getSource() == foodReport.getFoodReportButton() )
+        {
+            try
+            {
+                animalFeeder.printFeedingList();
+            }
+            catch(Exception f)
+            {
+
+            }
+        }
+
+        if(e.getSource() == medicineTotalsButtons.get(0)) //add butotn on medicine panel
         {
             Prescription animalPrescription = new Prescription();
             switch (getZoo().getCages().get(index).getCageID().charAt(0) )

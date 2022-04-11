@@ -32,11 +32,11 @@ public class FeedingReportPanel extends JPanel
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public FeedingReportPanel()
+    public FeedingReportPanel(AnimalFeeder feeder)
     {
         this.setLayout(new BorderLayout() );
 
-        animalFeeder = new AnimalFeeder(ZooManager.getZoo().getCages() );
+        animalFeeder = feeder;
         titleLabel = new JLabel("Feeding Report");
         textArea = new JTextArea();
 
@@ -94,6 +94,11 @@ public class FeedingReportPanel extends JPanel
         }
 
     }//end appendReport
+
+    public JButton getFoodReportButton()
+    {
+        return printReportButton;
+    }//end getButton
 
 
     // This method will center the frame on the screen
