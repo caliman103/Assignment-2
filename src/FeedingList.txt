@@ -1,0 +1,34 @@
+Feeding List - Date
+(A) African Savanna
+Gary, Giraffe		1 Fruit
+Zoe, Zebra		1 Grain
+Henry, Hyena		1 Fish
+
+Food Summary
+1 Fruit
+1 Grain
+1 Fish
+
+
+(B) Amazonian Jungle
+Oliver, Ocelot		1 Meat
+
+Food Summary
+1 Meat
+
+
+(C) Eurasian Wild
+Fedora, Red Fox		1 Fish
+
+Food Summary
+1 Fish
+
+
+(D) Frozen Tundra
+Anton, Artic Fox		1 Fish
+Mikail, Musk Ox		1 Grain
+Suri, Harbour Seal		1 Fish
+
+Food Summary
+1 Grain
+2 Fish
