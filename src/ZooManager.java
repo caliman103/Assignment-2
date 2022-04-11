@@ -650,6 +650,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 foodTotalsButtons.get(0).setEnabled(false);
                 
+                animalPanel.getNextButton().setEnabled(true);
             }//end else
             if(isfed == true && isHealed == true)
             {
