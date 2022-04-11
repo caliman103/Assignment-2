@@ -69,10 +69,6 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     static private AnimalFeeder animalFeeder;
     static private AnimalHealer animalHealer;
 
-    
-
-    
-    
 
     public static void main(String[] args) throws Exception
     {
@@ -138,7 +134,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
         animalPanel = new AnimalPanel();
         
-        index = animalPanel.getIndex() +1;
+        index = animalPanel.getIndex();
         editedFoodTextField = -1;
         editedMedTextField = -1;
 
@@ -253,15 +249,18 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     {
         if(e.getSource() == animalPanel.getNextButton() )
         {
-            while(getZoo().getCages().get(index).getHungerStatus() == 5 && getZoo().getCages().get(index).getHealthStatus() == 10 )
+            int currentIndex = index;
+            while( (getZoo().getCages().get(index).getHungerStatus() == 5 && getZoo().getCages().get(index).getHealthStatus() == 10) )
             {
                 index++;
             }//end while
 
             if(index < (ZooManager.getZoo().getCages().size() - 1) )
             {
-                
-
+                if(currentIndex == index)
+                {
+                    index++;
+                }
                 animalPanel.getLabelList().get(6).setText(getZoo().getCages().get(index).getCageID() );
                 animalPanel.getLabelList().get(7).setText(getZoo().getCages().get(index).getName() );
                 animalPanel.getLabelList().get(8).setText(getZoo().getCages().get(index).getSpecies() );
@@ -280,8 +279,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 char letter = getZoo().getCages().get(index).getCageID().charAt(0); 
                 animalPanel.getZoneIMageLabel().setIcon(animalPanel.selectZoneImage(letter) ); 
 
-                enableFoodTextFields(); 
-                enableMedtextFields();
+                enableTextFields(); 
 
                 disableMedTextFields();
                 disableFoodTextFields();
@@ -306,7 +304,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 {
                     medicineTotalsTextFields.get(i).setText("0");
                 }
-                index++;
+                
                 
             }//end if
             
@@ -1113,47 +1111,49 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 foodTotalsTextFields.get(4).setEditable(false);
                 break;
         }//end switch
-    }//end disaableFoodTextFelds
+    }//end disableFoodTextFelds
 
+    
     private void disableMedTextFields()
     {
         switch (getZoo().getCages().get(index).getCategory() )
         {
             case "Herbivore":
-                medicineTotalsTextFields.get(1).setEnabled(false);
-                medicineTotalsTextFields.get(2).setEnabled(false);
-                break;
-
-            case "Omnivore":
-                medicineTotalsTextFields.get(0).setEnabled(false);
-                medicineTotalsTextFields.get(2).setEnabled(false);
+                medicineTotalsTextFields.get(1).setEditable(false);
+                medicineTotalsTextFields.get(2).setEditable(false);
                 break;
 
             case "Carnivore":
-                medicineTotalsTextFields.get(0).setEnabled(false);
-                medicineTotalsTextFields.get(1).setEnabled(false);
+                medicineTotalsTextFields.get(0).setEditable(false);
+                medicineTotalsTextFields.get(1).setEditable(false);
                 break;
-        }//end switch
 
+            default:
+                medicineTotalsTextFields.get(0).setEditable(false);
+                medicineTotalsTextFields.get(2).setEditable(false);
+                break;
+
+            
+        }//end switch
     }//end disable med textfields
 
-    private void enableFoodTextFields()
+    
+    private void enableTextFields()
     {
         for(int i = 0; i < foodTotalsTextFields.size(); i++)
         {
             foodTotalsTextFields.get(i).setEditable(true);
+            
         }
-    }
 
-    private void enableMedtextFields()
-    {
-        for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+        for(int i = 0; i < 3; i++)
         {
             medicineTotalsTextFields.get(i).setEditable(true);
         }
-    }
+    }//end enable text fields
+    
 
-     //This function will maximise the frame
+    //This function will maximise the frame
     private static void maximiseFrame(JFrame fr)
     {
 
