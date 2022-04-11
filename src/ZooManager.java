@@ -688,7 +688,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                     }//end switch for zone A
             }//end switch
-
+        }//end if
     }// actionPerformed
 
 
