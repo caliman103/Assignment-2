@@ -1,5 +1,6 @@
 Date
-Animals Healed: 8
+Animals Healed: 9
 OK: 8
-Deaths: 0
+Deaths: 1
 Overdosed: 
+A-12 - Zoe, Zebra
