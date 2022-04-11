@@ -34,7 +34,7 @@ public class FeedingReportPanel extends JPanel
     //========================================================================================//
     public FeedingReportPanel()
     {
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS) );
+        this.setLayout(new BorderLayout() );
 
         animalFeeder = new AnimalFeeder(ZooManager.getZoo().getCages() );
         titleLabel = new JLabel("Feeding Report");
@@ -64,12 +64,15 @@ public class FeedingReportPanel extends JPanel
         //========================================================================================//
         scrollPane = new JScrollPane(textArea);
 
-        this.add(titleLabel);
-        this.add(Box.createRigidArea(new Dimension(0,20) ) );  
-        this.add(scrollPane);
-        this.add(Box.createRigidArea(new Dimension(0,20) ) ); 
-        this.add(printReportButton);
-        this.add(Box.createRigidArea(new Dimension(0,20) ) ); 
+        
+
+        this.add("North",titleLabel);
+          
+        this.add("Center",scrollPane);
+         
+
+        this.add("South",printReportButton);
+         
 
 
         //========================================================================================//

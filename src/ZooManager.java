@@ -728,7 +728,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                             //====================Set Meal Information ===================//
                             animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setMedType("Omnicine");
                             animalPrescription.setUnitsOfMed(omniAddAmountA);
 
                             //==================Add meal to animal Feeder=================//
@@ -743,7 +743,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                             //====================Set Meal Information ===================//
                             animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setMedType("Carnicine");
                             animalPrescription.setUnitsOfMed(carniAddAmountA);
 
                             //==================Add meal to animal Feeder=================//
@@ -777,7 +777,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                             //====================Set Meal Information ===================//
                             animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setMedType("Omnicine");
                             animalPrescription.setUnitsOfMed(omniAddAmountB);
 
                             //==================Add meal to animal Feeder=================//
@@ -786,13 +786,13 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                         case 2:
                             int carniAddAmountB = Integer.valueOf(medicineTotalsTextFields.get(2).getText()); 
-                            int carniCurrentAmountB = (Integer) medicineTotalTable.get(0).getValueAt(1, 2);
+                            int carniCurrentAmountB = (Integer) medicineTotalTable.get(0).getValueAt(2, 1);
                             int carniTotalB = carniAddAmountB + carniCurrentAmountB;
-                            medicineTotalTable.get(0).setValueAt(carniTotalB,1, 2);
+                            medicineTotalTable.get(0).setValueAt(carniTotalB,2, 1);
 
                             //====================Set Meal Information ===================//
                             animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                            animalPrescription.setMedType("Herbicine");
+                            animalPrescription.setMedType("Carnicine");
                             animalPrescription.setUnitsOfMed(carniAddAmountB);
 
                             //==================Add meal to animal Feeder=================//
@@ -827,7 +827,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                                 //====================Set Meal Information ===================//
                                 animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                                animalPrescription.setMedType("Herbicine");
+                                animalPrescription.setMedType("Omnicine");
                                 animalPrescription.setUnitsOfMed(omniAddAmountC);
 
                                 //==================Add meal to animal Feeder=================//
@@ -842,7 +842,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                                 //====================Set Meal Information ===================//
                                 animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                                animalPrescription.setMedType("Herbicine");
+                                animalPrescription.setMedType("Carnicine");
                                 animalPrescription.setUnitsOfMed(carniAddAmountC);
 
                                 //==================Add meal to animal Feeder=================//
@@ -877,7 +877,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                                     //====================Set Meal Information ===================//
                                     animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                                    animalPrescription.setMedType("Herbicine");
+                                    animalPrescription.setMedType("Omnicine");
                                     animalPrescription.setUnitsOfMed(omniAddAmountD);
 
                                     //==================Add meal to animal Feeder=================//
@@ -892,13 +892,13 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                                     //====================Set Meal Information ===================//
                                     animalPrescription.setCageID(getZoo().getCages().get(index).getCageID() );
-                                    animalPrescription.setMedType("Herbicine");
+                                    animalPrescription.setMedType("Carnicine");
                                     animalPrescription.setUnitsOfMed(carniAddAmountD);
 
                                     //==================Add meal to animal Feeder=================//
                                     animalHealer.addPrescription(animalPrescription); //LOOK AT CONSTRUCTOR FOR ANIMAL FEEDER   
                                     break;
-                            }//end switch for zone C
+                            }//end switch for zone D
                         break;
             }//end switch
             isHealed = true;
@@ -907,6 +907,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 medicineTotalsButtons.get(1).setEnabled(true); //enable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
+                
                 medicineTotalsButtons.get(2).setEnabled(true); //enable feed button
             }
             else
@@ -1134,7 +1135,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                             medicineTotalsTextFields.get(i).setEditable(false);
                         }
                     }//end for
-                    editedMedTextField = 2;
+                    editedMedTextField = 1;
                     medicineTotalsButtons.get(0).setEnabled(true);
                 }//end if
 
@@ -1145,7 +1146,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 medicineTotalsTextFields.get(2).setText("0");
                 medicineTotalsButtons.get(0).setEnabled(false);
             }
-        }//end carnicine text field
+        }//end omnicine text field
 
         if(e.getSource() == medicineTotalsTextFields.get(2))
         {
@@ -1160,7 +1161,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                             medicineTotalsTextFields.get(i).setEditable(false);
                         }
                     }//end for
-                    editedMedTextField = 1;
+                    editedMedTextField = 2;
                     medicineTotalsButtons.get(0).setEnabled(true);
                 }//end if
             }
@@ -1170,7 +1171,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 medicineTotalsTextFields.get(1).setText("0");
                 medicineTotalsButtons.get(0).setEnabled(false);
             }
-        }//end herbicine text field
+        }//end carnicine text field
     }//end FocusLost
 
     //========================================================================================//
