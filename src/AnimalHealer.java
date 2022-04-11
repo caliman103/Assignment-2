@@ -295,9 +295,9 @@ public class AnimalHealer
 
     public void simHealing() throws Exception
     {
-        //for each element i in the feeding list search the cages list for the animal that matches i's cage ID
-        //when the animal has been found and if it isnt dead, feed it
-        //if it is overfed, throw the exception
+        //for each element i in the healing list search the cages list for the animal that matches i's cage ID
+        //when the animal has been found and if it isnt dead, heal it
+        //if it is overdosed, throw the exception
         for (int i = 0; i < healingList.size(); i++) 
         {
             for (int j = 0; j < cages.size(); j++) 
@@ -305,6 +305,7 @@ public class AnimalHealer
                 if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && ((cages.get(j).getHealthStatus()) > 0) &&(!cages.get(j).getHealed()))
                 {
                     cages.get(j).takeMedicine(healingList.get(i).getUnitsOfMed());
+                    System.out.println(healingList.get(i).getUnitsOfMed());
 
                     if(cages.get(j).getOverDosed())
                     {
