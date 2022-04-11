@@ -83,7 +83,7 @@ public class AnimalFeeder
             {
                 if((feedingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'A'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
 
                     switch (feedingList.get(i).getFoodType()) 
                     {
@@ -115,7 +115,7 @@ public class AnimalFeeder
 
         if(hayAmt != 0)
         {
-            fileWriter.write(hayAmt + " Hay");
+            fileWriter.write(hayAmt + " Hay\n");
         }
 
         if(fruitAmt != 0)
@@ -141,7 +141,7 @@ public class AnimalFeeder
         hayAmt = fruitAmt = grainAmt = fishAmt = meatAmt = 0;
 
 
-        fileWriter.write("(B) Amazonian Jungle\n");
+        fileWriter.write("\n\n(B) Amazonian Jungle\n");
 
         for (int i = 0; i < feedingList.size(); i++) 
         {
@@ -149,7 +149,7 @@ public class AnimalFeeder
             {
                 if((feedingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'B'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
 
                     switch (feedingList.get(i).getFoodType()) 
                     {
@@ -181,7 +181,7 @@ public class AnimalFeeder
 
         if(hayAmt != 0)
         {
-            fileWriter.write(hayAmt + " Hay");
+            fileWriter.write(hayAmt + " Hay\n");
         }
 
         if(fruitAmt != 0)
@@ -207,7 +207,7 @@ public class AnimalFeeder
         hayAmt = fruitAmt = grainAmt = fishAmt = meatAmt = 0;
 
         
-        fileWriter.write("(C) Eurasian Wild\n");
+        fileWriter.write("\n\n(C) Eurasian Wild\n");
 
         for (int i = 0; i < feedingList.size(); i++) 
         {
@@ -215,7 +215,7 @@ public class AnimalFeeder
             {
                 if((feedingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'C'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
 
                     switch (feedingList.get(i).getFoodType()) 
                     {
@@ -247,7 +247,7 @@ public class AnimalFeeder
 
         if(hayAmt != 0)
         {
-            fileWriter.write(hayAmt + " Hay");
+            fileWriter.write(hayAmt + " Hay\n");
         }
 
         if(fruitAmt != 0)
@@ -273,7 +273,7 @@ public class AnimalFeeder
         hayAmt = fruitAmt = grainAmt = fishAmt = meatAmt = 0;
 
 
-        fileWriter.write("(D) Frozen Tundra\n");
+        fileWriter.write("\n\n(D) Frozen Tundra\n");
 
         for (int i = 0; i < feedingList.size(); i++) 
         {
@@ -281,7 +281,7 @@ public class AnimalFeeder
             {
                 if((feedingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'D'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + feedingList.get(i).getFoodAmt() + " " + feedingList.get(i).getFoodType() + "\n");
 
                     switch (feedingList.get(i).getFoodType()) 
                     {
@@ -313,7 +313,7 @@ public class AnimalFeeder
 
         if(hayAmt != 0)
         {
-            fileWriter.write(hayAmt + " Hay");
+            fileWriter.write(hayAmt + " Hay\n");
         }
 
         if(fruitAmt != 0)
@@ -371,7 +371,7 @@ public class AnimalFeeder
         {
             for (int j = 0; j < cages.size(); j++) 
             {
-                if((feedingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getHealthStatus()) > 0)
+                if((feedingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getHealthStatus() > 0) && (!cages.get(j).getFed()))
                 {
                     cages.get(j).eatFood(feedingList.get(i).getFoodAmt());
 
