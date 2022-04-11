@@ -250,7 +250,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         if(e.getSource() == animalPanel.getNextButton() )
         {
             int currentIndex = index;
-            while( (getZoo().getCages().get(index).getHungerStatus() == 5 && getZoo().getCages().get(index).getHealthStatus() == 10) )
+            while( (getZoo().getCages().get(index).getHungerStatus() == 5 || getZoo().getCages().get(index).getHealthStatus() == 10) )
             {
                 index++;
             }//end while
@@ -919,6 +919,39 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 animalPanel.getNextButton().setEnabled(true);
             }
         }//end if
+    
+        if(e.getSource() == medicineTotalsButtons.get(1))
+        {
+            try 
+            {
+                animalHealer.printHealingList();
+            }
+            catch (Exception f) 
+            {
+
+            }
+        }
+
+        if(e.getSource() == medicineTotalsButtons.get(2))
+        {
+            boolean works = false;
+            while(!works)
+            {
+                try
+                {
+                    animalHealer.simHealing();
+                    works = true;
+                }
+                catch(OverdosingException f)
+                {
+                    System.out.print(f.toString() + " " + works + "\n");
+                }
+                catch(Exception f)
+                {
+
+                }
+            }
+        }
     }// actionPerformed
 
 

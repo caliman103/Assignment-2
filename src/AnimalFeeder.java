@@ -347,7 +347,7 @@ public class AnimalFeeder
         fileWriter.close();
     }// printFeedingList
 
-    private void printFeedingReport() throws Exception
+    public void printFeedingReport() throws Exception
     {
         File outFile = new File("FeedingReport.txt");
         FileWriter fileWriter = new FileWriter(outFile);
@@ -391,7 +391,7 @@ public class AnimalFeeder
             }// end for
         }//end for
 
-        printFeedingReport();
+        //printFeedingReport();
         
     }// simFeeding
 
