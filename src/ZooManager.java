@@ -30,6 +30,7 @@ public class ZooManager extends JFrame implements ActionListener
 
     AnimalPanel animalPanel;
     FoodTotalPanel foodTotalPanel = new FoodTotalPanel();
+    MedicineTotalPanel medicineTotalPanel = new MedicineTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
     JPanel medicineTotalsFiller = new JPanel();
@@ -140,7 +141,7 @@ public class ZooManager extends JFrame implements ActionListener
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
         centerPanel.add(foodTotalPanel);
-        centerPanel.add(medicineTotalsFiller);
+        centerPanel.add(medicineTotalPanel);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
         westPanel.add(animalPanel);
