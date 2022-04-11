@@ -24,31 +24,31 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     //                                    DATA MEMBERS                                        //
     //========================================================================================//   
     //Panels
-    JPanel westPanel = new JPanel();
-    JPanel centerPanel = new JPanel();
-    JPanel eastPanel = new JPanel();
+    private JPanel westPanel = new JPanel();
+    private JPanel centerPanel = new JPanel();
+    private JPanel eastPanel = new JPanel();
     
 
-    AnimalPanel animalPanel;
-    FoodTotalPanel foodTotals = new FoodTotalPanel();
-    FeedingReportPanel reportPanel = new FeedingReportPanel();
-    WelcomePanel welcomePanel = new WelcomePanel();
-    MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
-    JPanel healingReportsFiller = new JPanel();
+    private AnimalPanel animalPanel;
+    private FoodTotalPanel foodTotals = new FoodTotalPanel();
+    private FeedingReportPanel foodReport = new FeedingReportPanel();
+    private WelcomePanel welcomePanel = new WelcomePanel();
+    private MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
+    private HealingReportPanel healingReport = new HealingReportPanel();
 
     
     //C0mponents from FoodTotals
-    ArrayList<JButton> foodTotalsButtons = foodTotals.getButtonList();
-    ArrayList<JTable> foodTotalTable = foodTotals.getTableList();
-    ArrayList<JTextField> foodTotalsTextFields = foodTotals.getTextFieldList();
+    private ArrayList<JButton> foodTotalsButtons = foodTotals.getButtonList();
+    private ArrayList<JTable> foodTotalTable = foodTotals.getTableList();
+    private ArrayList<JTextField> foodTotalsTextFields = foodTotals.getTextFieldList();
 
     //Components from medicine Totals
-    ArrayList<JButton> medicineTotalsButtons = medicineTotals.getButtonList();
-    ArrayList<JTable> medicineTotalTable = medicineTotals.getTableList();
-    ArrayList<JTextField> medicineTotalsTextFields = medicineTotals.getTextFieldList();
+    private ArrayList<JButton> medicineTotalsButtons = medicineTotals.getButtonList();
+    private ArrayList<JTable> medicineTotalTable = medicineTotals.getTableList();
+    private ArrayList<JTextField> medicineTotalsTextFields = medicineTotals.getTextFieldList();
 
     //=================Images=====================//
-    ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
+    private ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
 
 
     private int index;
@@ -153,7 +153,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         //foodTotalPanel.setBackground(Color.BLACK);
         //feedingReportsFiller.setBackground(Color.BLUE);
         
-        healingReportsFiller.setBackground(Color.GREEN);
+        
         
         westPanel.setPreferredSize(new Dimension(320,100) );
         //welcomePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE,6));
@@ -175,8 +175,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         westPanel.add(welcomePanel);
 
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS) );
-        eastPanel.add(reportPanel);
-        eastPanel.add(healingReportsFiller);
+        eastPanel.add(foodReport);
+        eastPanel.add(healingReport);
         
         this.add("West",westPanel);
         this.add("Center",centerPanel);
@@ -907,7 +907,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             {
                 medicineTotalsButtons.get(1).setEnabled(true); //enable printlist button
                 animalPanel.getNextButton().setEnabled(false); //disable next button for the rest of program since all animals have been fed
-                
+
                 medicineTotalsButtons.get(2).setEnabled(true); //enable feed button
             }
             else
