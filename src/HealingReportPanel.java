@@ -94,6 +94,10 @@ public class HealingReportPanel extends JPanel
 
     }//end appendReport
 
+    public JButton getHealReportButton()
+    {
+        return printReportButton;
+    }//end getHealReportButton
 
     // This method will center the frame on the screen
     private static void centerFrame(JFrame fr)

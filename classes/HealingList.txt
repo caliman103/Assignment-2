@@ -1,0 +1,34 @@
+Healing List - Date
+(A) African Savanna
+Gary, Giraffe		3 Herbicine
+Zoe, Zebra		3 Herbicine
+Henry, Hyena		3 Carnicine
+
+Medicine Summary
+6 Herbicine
+3 Carnicine
+
+
+(B) Amazonian Jungle
+Oliver, Ocelot		3 Carnicine
+
+Medicine Summary
+3 Carnicine
+
+
+(C) Eurasian Wild
+Fedora, Red Fox		3 Omnicine
+
+Medicine Summary
+3 Omnicine
+
+
+(D) Frozen Tundra
+Anton, Artic Fox		3 Omnicine
+Mikail, Musk Ox		3 Herbicine
+Suri, Harbour Seal		3 Carnicine
+
+Medicine Summary
+3 Herbicine
+3 Omnicine
+3 Carnicine

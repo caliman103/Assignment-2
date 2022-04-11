@@ -1,0 +1,33 @@
+Feeding List - Date
+(A) African Savanna
+Gary, Giraffe		3 Hay
+Zoe, Zebra		3 Hay
+Henry, Hyena		3 Fish
+
+Food Summary
+6 Hay
+3 Fish
+
+
+(B) Amazonian Jungle
+Oliver, Ocelot		3 Fish
+
+Food Summary
+3 Fish
+
+
+(C) Eurasian Wild
+Fedora, Red Fox		3 Hay
+
+Food Summary
+3 Hay
+
+
+(D) Frozen Tundra
+Anton, Artic Fox		30 Hay
+Mikail, Musk Ox		3 Hay
+Suri, Harbour Seal		3 Fish
+
+Food Summary
+33 Hay
+3 Fish
