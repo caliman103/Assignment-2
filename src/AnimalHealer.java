@@ -105,7 +105,7 @@ public class AnimalHealer
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -121,7 +121,7 @@ public class AnimalHealer
         herbicineAmt = omnicineAmt = carnicineAmt = 0;
 
 
-        fileWriter.write("(B) Amazonian Jungle\n");
+        fileWriter.write("\n\n(B) Amazonian Jungle\n");
 
         for (int i = 0; i < healingList.size(); i++) 
         {
@@ -153,7 +153,7 @@ public class AnimalHealer
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -169,7 +169,7 @@ public class AnimalHealer
         herbicineAmt = omnicineAmt = carnicineAmt = 0;
 
         
-        fileWriter.write("(C) Eurasian Wild\n");
+        fileWriter.write("\n\n(C) Eurasian Wild\n");
 
         for (int i = 0; i < healingList.size(); i++) 
         {
@@ -201,7 +201,7 @@ public class AnimalHealer
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -217,7 +217,7 @@ public class AnimalHealer
         herbicineAmt = omnicineAmt = carnicineAmt = 0;
 
 
-        fileWriter.write("(D) Frozen Tundra\n");
+        fileWriter.write("\n\n(D) Frozen Tundra\n");
 
         for (int i = 0; i < healingList.size(); i++) 
         {
@@ -249,7 +249,7 @@ public class AnimalHealer
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -299,7 +299,7 @@ public class AnimalHealer
             {
                 if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && ((cages.get(j).getHealthStatus()) > 0) &&(!cages.get(j).getHealed()))
                 {
-                    cages.get(j).eatFood(healingList.get(i).getUnitsOfMed());
+                    cages.get(j).takeMedicine(healingList.get(i).getUnitsOfMed());
 
                     if(cages.get(j).getOverDosed())
                     {

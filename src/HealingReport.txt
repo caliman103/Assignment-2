@@ -1,0 +1,5 @@
+Date
+Animals Healed: 8
+OK: 8
+Deaths: 0
+Overdosed: 
