@@ -33,7 +33,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     FoodTotalPanel foodTotals = new FoodTotalPanel();
     JPanel feedingReportsFiller = new JPanel();
     WelcomePanel welcomePanel = new WelcomePanel();
-    JPanel medicineTotalsFiller = new JPanel();
+    MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
     JPanel healingReportsFiller = new JPanel();
 
     
@@ -42,12 +42,18 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     ArrayList<JTable> foodTotalTable = foodTotals.getTableList();
     ArrayList<JTextField> foodTotalsTextFields = foodTotals.getTextFieldList();
 
+    //Components from medicine Totals
+    ArrayList<JButton> medicineTotalsButtons = medicineTotals.getButtonList();
+    ArrayList<JTable> medicineTotalTable = medicineTotals.getTableList();
+    ArrayList<JTextField> medicineTotalsTextFields = medicineTotals.getTextFieldList();
+
     //=================Images=====================//
     ImageIcon zooLogo = new ImageIcon("../Images/Logo.png");
 
 
     int index;
-   
+    int editedFoodTextField;
+    int editedMedTextFields; 
 
 
     //Object for zookeeper
@@ -118,8 +124,9 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         animalPanel = new AnimalPanel();
         
         index = 0;
-        
-        medicineTotalsFiller.setPreferredSize(new Dimension(500,450));
+        editedFoodTextField = -1;
+
+        medicineTotals.setPreferredSize(new Dimension(500,450));
        
         //setSize(150,400 );
         this.setTitle("Main Screen");
@@ -130,7 +137,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
        
         //foodTotalPanel.setBackground(Color.BLACK);
         feedingReportsFiller.setBackground(Color.BLUE);
-        medicineTotalsFiller.setBackground(Color.CYAN);
+        
         healingReportsFiller.setBackground(Color.GREEN);
         
         westPanel.setPreferredSize(new Dimension(320,100) );
@@ -146,7 +153,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         //========================================================================================//
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS) );
         centerPanel.add(foodTotals);
-        centerPanel.add(medicineTotalsFiller);
+        centerPanel.add(medicineTotals);
         
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.PAGE_AXIS) );
         westPanel.add(animalPanel);
@@ -172,6 +179,11 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         {
             foodTotalsButtons.get(i).addActionListener(this);
         }
+
+        for(int i = 0; i < medicineTotalsButtons.size(); i++)
+        {
+            medicineTotalsButtons.get(i).addActionListener(this);
+        }
         
 
         //========================================================================================//
@@ -180,10 +192,21 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         for(int i = 0; i < foodTotalsTextFields.size(); i++)
         {
             foodTotalsTextFields.get(i).addFocusListener(this);
+            
         }
 
-        //foodTotalsTextFields.get(0).setFocusable(false);
+        for(int i = 0; i < medicineTotalsTextFields.size(); i++)
+        {
+            medicineTotalsTextFields.get(i).addFocusListener(this);
+            
+        }
+
+        
         disableFoodTextFields();
+        foodTotalsButtons.get(0).setEnabled(false);
+        foodTotalsButtons.get(1).setEnabled(false);
+        animalPanel.getNextButton().setEnabled(false);
+
 
         maximiseFrame(this);
         
@@ -234,6 +257,15 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
 
                 enebleAllTextFields();
                 disableFoodTextFields();
+                
+                //Disble add and next button until condition are satisfied to make then enabled agaib
+                foodTotalsButtons.get(0).setEnabled(false);
+                animalPanel.getNextButton().setEnabled(false);
+
+                for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                {
+                    foodTotalsTextFields.get(i).setText("0");
+                }
             }//end if
 
 
@@ -241,11 +273,186 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         
 
 
-        if(e.getSource() == foodTotalsButtons.get(0) )  //next button from foodtotal panel
+        if(e.getSource() == foodTotalsButtons.get(0) )  //add button from foodtotal panel
         {
-            //foodTotalTable.get(0).setValueAt(2, 0, 0);
+            if(editedFoodTextField != -1)
+            {
+                //foodTotalTable.get(0).setValueAt(2, 0, 0);
+                switch (getZoo().getCages().get(index).getCageID().charAt(0) )
+                {
+                    case 'A':
+                        switch (editedFoodTextField)
+                        {
+                            case 0:
+                                int hayAddAmountA = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                                int hayCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(0, 0);
+                                int hayTotalA = hayAddAmountA + hayCurrentAmountA;
+                                foodTotalTable.get(0).setValueAt(hayTotalA,0, 0);
+                                break;
 
-        }
+                            case 1:
+                                int fruitAddAmountA = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                                int fruitCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(1, 0);
+                                int fruitTotalA = fruitAddAmountA + fruitCurrentAmountA;
+                                foodTotalTable.get(0).setValueAt(fruitTotalA,1, 0);
+                                break;
+
+                            case 2:
+                                int grainAddAmountA = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                                int grainCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(2, 0);
+                                int grainTotalA = grainAddAmountA + grainCurrentAmountA;
+                                foodTotalTable.get(0).setValueAt(grainTotalA,2, 0);
+                                break;
+
+                            case 3:
+                                int fishAddAmountA = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                                int fishCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(3, 0);
+                                int fishTotalA = fishAddAmountA + fishCurrentAmountA;
+                                foodTotalTable.get(0).setValueAt(fishTotalA,3, 0);
+                                break;
+
+                            case 4:
+                                int meatAddAmountA = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                                int meatCurrentAmountA = (Integer) foodTotalTable.get(0).getValueAt(4, 0);
+                                int meatTotalA = meatAddAmountA + meatCurrentAmountA;
+                                foodTotalTable.get(0).setValueAt(meatTotalA,4, 0);
+                                break;
+                            }//end switch for zone A
+                        break;
+
+                    case 'B':
+                        switch (editedFoodTextField)
+                        {
+                            case 0:
+                                int hayAddAmountB = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                                int hayCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(0, 1);
+                                int hayTotalB = hayAddAmountB + hayCurrentAmountB;
+                                foodTotalTable.get(0).setValueAt(hayTotalB,0, 1);
+                                break;
+
+                            case 1:
+                                int fruitAddAmountB = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                                int fruitCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(1, 1);
+                                int fruitTotalB = fruitAddAmountB + fruitCurrentAmountB;
+                                foodTotalTable.get(0).setValueAt(fruitTotalB,1, 1);
+                                break;
+
+                            case 2:
+                                int grainAddAmountB = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                                int grainCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(2, 1);
+                                int grainTotalB = grainAddAmountB + grainCurrentAmountB;
+                                foodTotalTable.get(0).setValueAt(grainTotalB,2, 1);
+                                break;
+
+                            case 3:
+                                int fishAddAmountB = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                                int fishCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(3, 1);
+                                int fishTotalB = fishAddAmountB + fishCurrentAmountB;
+                                foodTotalTable.get(0).setValueAt(fishTotalB,3, 1);
+                                break;
+
+                            case 4:
+                                int meatAddAmountB = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                                int meatCurrentAmountB = (Integer) foodTotalTable.get(0).getValueAt(4, 1);
+                                int meatTotalB = meatAddAmountB + meatCurrentAmountB;
+                                foodTotalTable.get(0).setValueAt(meatTotalB,4, 1);
+                                break;
+                        }//end switch for zone B
+                        break;
+
+                    case 'C':
+                        switch (editedFoodTextField)
+                        {
+                            case 0:
+                                int hayAddAmountC = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                                int hayCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(0, 2);
+                                int hayTotalC = hayAddAmountC + hayCurrentAmountC;
+                                foodTotalTable.get(0).setValueAt(hayTotalC,0, 2);
+                                break;
+
+                            case 1:
+                                int fruitAddAmountC = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                                int fruitCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(1, 2);
+                                int fruitTotalC = fruitAddAmountC + fruitCurrentAmountC;
+                                foodTotalTable.get(0).setValueAt(fruitTotalC,1, 2);
+                                break;
+
+                            case 2:
+                                int grainAddAmountC = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                                int grainCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(2, 2);
+                                int grainTotalC = grainAddAmountC + grainCurrentAmountC;
+                                foodTotalTable.get(0).setValueAt(grainTotalC,2, 2);
+                                break;
+
+                            case 3:
+                                int fishAddAmountC = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                                int fishCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(3, 2);
+                                int fishTotalC = fishAddAmountC + fishCurrentAmountC;
+                                foodTotalTable.get(0).setValueAt(fishTotalC,3, 2);
+                                break;
+
+                            case 4:
+                                int meatAddAmountC = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                                int meatCurrentAmountC = (Integer) foodTotalTable.get(0).getValueAt(4, 2);
+                                int meatTotalC = meatAddAmountC + meatCurrentAmountC;
+                                foodTotalTable.get(0).setValueAt(meatTotalC,4, 2);
+                                break;
+                        }//end switch for zone C
+                    break;
+
+                    case 'D':
+                        switch (editedFoodTextField)
+                        {
+                            case 0:
+                                int hayAddAmountD = Integer.valueOf(foodTotalsTextFields.get(0).getText()); 
+                                int hayCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(0, 3);
+                                int hayTotalD = hayAddAmountD + hayCurrentAmountD;
+                                foodTotalTable.get(0).setValueAt(hayTotalD,0, 3);
+                                break;
+
+                            case 1:
+                                int fruitAddAmountD = Integer.valueOf(foodTotalsTextFields.get(1).getText()); 
+                                int fruitCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(1, 3);
+                                int fruitTotalD = fruitAddAmountD + fruitCurrentAmountD;
+                                foodTotalTable.get(0).setValueAt(fruitTotalD,1, 3);
+                                break;
+
+                            case 2:
+                                int grainAddAmountD = Integer.valueOf(foodTotalsTextFields.get(2).getText()); 
+                                int grainCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(2, 3);
+                                int grainTotalD = grainAddAmountD + grainCurrentAmountD;
+                                foodTotalTable.get(0).setValueAt(grainTotalD,2, 3);
+                                break;
+
+                            case 3:
+                                int fishAddAmountD = Integer.valueOf(foodTotalsTextFields.get(3).getText()); 
+                                int fishCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(3, 3);
+                                int fishTotalD = fishAddAmountD + fishCurrentAmountD;
+                                foodTotalTable.get(0).setValueAt(fishTotalD,3, 3);
+                                break;
+
+                            case 4:
+                                int meatAddAmountD = Integer.valueOf(foodTotalsTextFields.get(4).getText()); 
+                                int meatCurrentAmountD = (Integer) foodTotalTable.get(0).getValueAt(4, 3);
+                                int meatTotalD = meatAddAmountD + meatCurrentAmountD;
+                                foodTotalTable.get(0).setValueAt(meatTotalD,4, 3);
+                                break;
+                        }//end switch for zone D
+                    break;
+                }//end switch
+            }//end if
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Please enter an amount of food in one of the textfields", "WARNING", JOptionPane.WARNING_MESSAGE);;
+            }
+
+            if(index == getZoo().getCages().size() -1)
+            {
+                foodTotalsButtons.get(1).setEnabled(true);
+            }
+
+            animalPanel.getNextButton().setEnabled(true);
+        } //end add button
     }// actionPerformed
 
 
@@ -254,25 +461,134 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     //========================================================================================//
     public void focusGained(FocusEvent e)
     {
-        if(e.getSource() == foodTotalsTextFields.get(0) )
-        {
-           
-        }//and hay textfleid
+        
     }//end focusGained
 
     public void focusLost(FocusEvent e)
     {
         if(e.getSource() == foodTotalsTextFields.get(0) )
         {
-           if(Integer.valueOf( foodTotalsTextFields.get(0).getText() ) > 0 )
-           {
-                foodTotalsTextFields.get(1).setEditable(false);
-                foodTotalsTextFields.get(2).setEditable(false);
-                foodTotalsTextFields.get(3).setEditable(false);
-                foodTotalsTextFields.get(4).setEditable(false);
-           }
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(0).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 0)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 0;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(0).setText("0");
+            }
         }//and hay textfleid
+
+        if(e.getSource() == foodTotalsTextFields.get(1) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(1).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 1)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 1;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(1).setText("0");
+            }
+          
+        }//end fruit textfleid
+
+        if(e.getSource() == foodTotalsTextFields.get(2) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(2).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 2)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 2;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(2).setText("0");
+            }
+        }//end grain textfleid
+
+        if(e.getSource() == foodTotalsTextFields.get(3) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(3).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 3)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 3;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(3).setText("0");
+            }
+           
+        }//end fish textfleid
         
+
+        if(e.getSource() == foodTotalsTextFields.get(4) )
+        {
+            try
+            {
+                if(Integer.valueOf( foodTotalsTextFields.get(4).getText() ) > 0 )
+                {
+                    for(int i = 0; i < foodTotalsTextFields.size(); i++)
+                    {
+                        if(i != 4)
+                        {
+                            foodTotalsTextFields.get(i).setEditable(false);
+                        }
+                    }//end for
+                    editedFoodTextField = 4;
+                    foodTotalsButtons.get(0).setEnabled(true);
+                }//end if
+            }
+            catch(NumberFormatException exception)
+            {
+                JOptionPane.showMessageDialog(null, "Value must be a number", "WARNING", JOptionPane.WARNING_MESSAGE);
+                foodTotalsTextFields.get(4).setText("0");
+            }
+           
+        }//and meat textfleid
     }//end FocusLost
 
     //========================================================================================//
