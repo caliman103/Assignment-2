@@ -79,7 +79,7 @@ public class MedicineTotalPanel extends JPanel
     //========================================================================================//
     public MedicineTotalPanel()
     {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); 
         setVisible(true);
 
         //Initializing components
@@ -103,7 +103,7 @@ public class MedicineTotalPanel extends JPanel
         printListButton = new JButton("Print List");
         healButton = new JButton("Heal");
 
-        foodBorder = BorderFactory.createTitledBorder("Food");
+        foodBorder = BorderFactory.createTitledBorder("Medicine");
         totalsBorder = BorderFactory.createTitledBorder("Totals");
 
         this.setBorder(BorderFactory.createLineBorder(Color.gray));
