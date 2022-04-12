@@ -44,7 +44,7 @@ public class HealingReportPanel extends JPanel
         titleLabel = new JLabel("Healing Report");
         textArea = new JTextArea();
 
-        printReportButton = new JButton("Print Report");
+        printReportButton = new JButton("Print Healing Report");
 
         //========================================================================================//
         //                                  ADDING COMPONENTS                                     //
