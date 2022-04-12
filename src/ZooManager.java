@@ -34,7 +34,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
     private FeedingReportPanel foodReport;
     private WelcomePanel welcomePanel = new WelcomePanel();
     private MedicineTotalPanel medicineTotals = new MedicineTotalPanel();
-    private HealingReportPanel healingReport = new HealingReportPanel();
+    private HealingReportPanel healingReport;
 
     
     //Components from FoodTotals
@@ -142,6 +142,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         isHealed= false;
 
         foodReport = new FeedingReportPanel(animalFeeder);
+        healingReport = new HealingReportPanel(animalHealer);
 
         medicineTotals.setPreferredSize(new Dimension(500,450));
        
@@ -235,6 +236,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         }
         animalPanel.getNextButton().setEnabled(false);
 
+        foodReport.getFoodReportButton().setEnabled(false);
+        healingReport.getHealReportButton().setEnabled(false);
 
         maximiseFrame(this);
         
@@ -690,6 +693,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                     animalFeeder.simFeeding();
                     works = true;
                     foodReport.appendReport();
+                    foodReport.getFoodReportButton().setEnabled(true);
                 }
                 catch(OverFeedingException f)
                 {
@@ -702,7 +706,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             }
         }
 
-        if(e.getSource() == foodReport.getFoodReportButton() )
+        if(e.getSource() == foodReport.getFoodReportButton() ) //feeding report print
         {
             try
             {
@@ -710,9 +714,9 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
             }
             catch(Exception f)
             {
-
+                System.out.println("SOMETHING THROWN");
             }
-        }
+        }//end print report action
 
         if(e.getSource() == medicineTotalsButtons.get(0)) //add butotn on medicine panel
         {
@@ -959,6 +963,8 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 {
                     animalHealer.simHealing();
                     works = true;
+                    healingReport.appendReport();
+                    healingReport.getHealReportButton().setEnabled(true);
                 }
                 catch(OverdosingException f)
                 {
@@ -970,6 +976,19 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
                 }
             }
         }
+
+
+        if(e.getSource() == healingReport.getHealReportButton() )
+        {
+            try
+            {
+                animalHealer.printHealingReport();
+            }
+            catch(Exception f)
+            {
+                System.out.println("SOMETHING THROWN");
+            }
+        }//
     }// actionPerformed
 
 
