@@ -1,11 +1,11 @@
 Feeding List - Date
 (A) African Savanna
 Gary, Giraffe		1 Hay
-Zoe, Zebra		1 Hay
+Zoe, Zebra		10 Hay
 Henry, Hyena		1 Fish
 
 Food Summary
-2 Hay
+11 Hay
 1 Fish
 
 
@@ -24,10 +24,10 @@ Food Summary
 
 
 (D) Frozen Tundra
-Anton, Artic Fox		1 Fish
-Mikail, Musk Ox		1 Fruit
+Anton, Artic Fox		2 Fruit
+Mikail, Musk Ox		2 Fruit
 Suri, Harbour Seal		1 Fish
 
 Food Summary
-1 Fruit
-2 Fish
+4 Fruit
+1 Fish

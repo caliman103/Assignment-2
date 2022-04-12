@@ -706,7 +706,7 @@ public class ZooManager extends JFrame implements ActionListener, FocusListener
         {
             try
             {
-                animalFeeder.printFeedingList();
+                animalFeeder.printFeedingReport();
             }
             catch(Exception f)
             {

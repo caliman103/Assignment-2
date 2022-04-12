@@ -1,19 +1,19 @@
 Healing List - Date
 (A) African Savanna
-Gary, Giraffe		2 Herbicine
-Zoe, Zebra		7 Herbicine
-Henry, Hyena		2 Carnicine
+Gary, Giraffe		1 Herbicine
+Zoe, Zebra		10 Herbicine
+Henry, Hyena		1 Carnicine
 
 Medicine Summary
-9 Herbicine
-2 Carnicine
+11 Herbicine
+1 Carnicine
 
 
 (B) Amazonian Jungle
-Oliver, Ocelot		2 Carnicine
+Oliver, Ocelot		1 Carnicine
 
 Medicine Summary
-2 Carnicine
+1 Carnicine
 
 
 (C) Eurasian Wild
@@ -25,11 +25,10 @@ Medicine Summary
 
 (D) Frozen Tundra
 Anton, Artic Fox		1 Omnicine
-Mikail, Musk Ox		2 Herbicine
-Suri, Harbour Seal		2 Carnicine
-Suri, Harbour Seal		2 Carnicine
+Mikail, Musk Ox		1 Herbicine
+Suri, Harbour Seal		1 Carnicine
 
 Medicine Summary
-2 Herbicine
+1 Herbicine
 1 Omnicine
-4 Carnicine
+1 Carnicine
