@@ -317,7 +317,7 @@ public class AnimalHealer
             }// end for
         }//end for
 
-       // printHealingReport();
+        //printHealingReport();
         
     }// simHealing
 
