@@ -273,7 +273,7 @@ public class AnimalHealer
         fileWriter.close();
     }// printHealingList
 
-    private void printHealingReport() throws Exception
+    public void printHealingReport() throws Exception
     {
         File outFile = new File("HealingReport.txt");
         FileWriter fileWriter = new FileWriter(outFile);

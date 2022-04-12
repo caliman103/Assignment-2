@@ -1,33 +1,33 @@
 Feeding List - Date
 (A) African Savanna
-Gary, Giraffe		3 Hay
-Zoe, Zebra		3 Hay
-Henry, Hyena		3 Fish
+Gary, Giraffe		2 Hay
+Zoe, Zebra		2 Hay
+Henry, Hyena		2 Fish
 
 Food Summary
-6 Hay
-3 Fish
+4 Hay
+2 Fish
 
 
 (B) Amazonian Jungle
-Oliver, Ocelot		3 Fish
+Oliver, Ocelot		2 Fish
 
 Food Summary
-3 Fish
+2 Fish
 
 
 (C) Eurasian Wild
-Fedora, Red Fox		3 Hay
+Fedora, Red Fox		2 Hay
 
 Food Summary
-3 Hay
+2 Hay
 
 
 (D) Frozen Tundra
-Anton, Artic Fox		30 Hay
-Mikail, Musk Ox		3 Hay
-Suri, Harbour Seal		3 Fish
+Anton, Artic Fox		2 Hay
+Mikail, Musk Ox		2 Hay
+Suri, Harbour Seal		2 Fish
 
 Food Summary
-33 Hay
-3 Fish
+4 Hay
+2 Fish
