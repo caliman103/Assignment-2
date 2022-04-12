@@ -26,6 +26,10 @@ public class HealingReportPanel extends JPanel
 
     private JButton printReportButton;
 
+    private JPanel top = new JPanel();
+    private JPanel bot = new JPanel();
+
+
     //Object for animal Feeder
     AnimalHealer animalHealer;
 
@@ -48,13 +52,15 @@ public class HealingReportPanel extends JPanel
 
         scrollPane = new JScrollPane(textArea);
 
+        top.add(titleLabel);
+        bot.add(printReportButton);
         
 
-        this.add("North",titleLabel);
+        this.add("North",top);
           
         this.add("Center",scrollPane);
          
-        this.add("South",printReportButton);
+        this.add("South",bot);
 
 
 
