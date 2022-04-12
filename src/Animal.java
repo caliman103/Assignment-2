@@ -16,7 +16,8 @@ public class Animal
     //                                    DATA MEMBERS                                        //
     //========================================================================================//
     
-
+    private boolean fed;
+    private boolean healed;
     private boolean overFed;
     private boolean overDosed;
 
@@ -49,6 +50,8 @@ public class Animal
         cageID = "";
         hungerStatus = 0;
         healthStatus = 0;
+        fed = false;
+        healed = false;
         overFed = false;
         overDosed = false;
 
@@ -101,6 +104,16 @@ public class Animal
     {
         return healthStatus;
     }// getHealthStatus
+
+    public boolean getFed()
+    {
+        return fed;
+    }
+
+    public boolean getHealed()
+    {
+        return healed;
+    }
 
     public boolean getOverFed()
     {
@@ -169,6 +182,7 @@ public class Animal
         if(healthStatus != 0)
         {
             setHungerStatus(hungerStatus + amountOfFood);
+            fed = true;
 
             if(hungerStatus > MAX_HUNGER)
             {
@@ -185,7 +199,7 @@ public class Animal
     {
         if(healthStatus != 0)
         {
-            setHealthStatus(hungerStatus + amountOfMedicine);
+            setHealthStatus(healthStatus + amountOfMedicine);
 
             if(healthStatus > MAX_HEALTH)
             {
