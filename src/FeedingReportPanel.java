@@ -25,6 +25,9 @@ public class FeedingReportPanel extends JPanel
     private JScrollPane scrollPane;
 
     private JButton printReportButton;
+    
+    JPanel top = new JPanel();
+    JPanel bot = new JPanel();
 
     //Object for animal Feeder
     AnimalFeeder animalFeeder;
@@ -40,7 +43,7 @@ public class FeedingReportPanel extends JPanel
         titleLabel = new JLabel("Feeding Report");
         textArea = new JTextArea();
 
-        printReportButton = new JButton();
+        printReportButton = new JButton("Print Report");
         
         
         
@@ -50,12 +53,15 @@ public class FeedingReportPanel extends JPanel
         //========================================================================================//
         scrollPane = new JScrollPane(textArea);
 
-        this.add("North",titleLabel);
+        top.add(titleLabel);
+        bot.add(printReportButton);
+
+        this.add("North",top);
           
         this.add("Center",scrollPane);
          
 
-        this.add("South",printReportButton);
+        this.add("South",bot);
          
 
 

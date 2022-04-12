@@ -32,15 +32,15 @@ public class HealingReportPanel extends JPanel
     //========================================================================================//
     //                                    CONSTRUCTOR                                         //
     //========================================================================================//
-    public HealingReportPanel()
+    public HealingReportPanel(AnimalHealer healer)
     {
         this.setLayout(new BorderLayout() );
 
-        animalHealer = new AnimalHealer(ZooManager.getZoo().getCages() );
+        animalHealer = healer;
         titleLabel = new JLabel("Healing Report");
         textArea = new JTextArea();
 
-        printReportButton = new JButton();
+        printReportButton = new JButton("Print Report");
 
         //========================================================================================//
         //                                  ADDING COMPONENTS                                     //
