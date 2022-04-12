@@ -1,7 +1,0 @@
-Date
-Animals Fed: 8
-OK: 6
-Deaths: 2
-Overfed: 
-A-12 - Zoe, Zebra
-B-1 - Oliver, Ocelot
