@@ -49,6 +49,11 @@ public class AnimalHealer
         return cages;
     } //end getHealingList
 
+    public ArrayList<Integer> getDeadAnimals()
+    {
+        return deadAnimals;
+    }
+
     //========================================================================================//
     //                                      MUTATORS                                          //
     //========================================================================================//
@@ -81,7 +86,7 @@ public class AnimalHealer
             {
                 if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'A'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
 
                     switch (healingList.get(i).getMedType()) 
                     {
@@ -105,7 +110,7 @@ public class AnimalHealer
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -121,7 +126,7 @@ public class AnimalHealer
         herbicineAmt = omnicineAmt = carnicineAmt = 0;
 
 
-        fileWriter.write("(B) Amazonian Jungle\n");
+        fileWriter.write("\n\n(B) Amazonian Jungle\n");
 
         for (int i = 0; i < healingList.size(); i++) 
         {
@@ -129,7 +134,7 @@ public class AnimalHealer
             {
                 if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'B'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
 
                     switch (healingList.get(i).getMedType()) 
                     {
@@ -149,11 +154,11 @@ public class AnimalHealer
             }// end for
         }//end for
 
-        fileWriter.write("\nFood Summary\n");
+        fileWriter.write("\nMedicine Summary\n");
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -169,7 +174,7 @@ public class AnimalHealer
         herbicineAmt = omnicineAmt = carnicineAmt = 0;
 
         
-        fileWriter.write("(C) Eurasian Wild\n");
+        fileWriter.write("\n\n(C) Eurasian Wild\n");
 
         for (int i = 0; i < healingList.size(); i++) 
         {
@@ -177,55 +182,7 @@ public class AnimalHealer
             {
                 if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'C'))
                 {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
-
-                    switch (healingList.get(i).getMedType()) 
-                    {
-                        case "Herbicine":
-                            herbicineAmt += healingList.get(i).getUnitsOfMed();
-                            break;
-
-                        case "Omnicine":
-                            omnicineAmt += healingList.get(i).getUnitsOfMed();
-                            break;
-
-                        case "Carnicine":
-                            carnicineAmt += healingList.get(i).getUnitsOfMed();
-                            break;
-                    }
-                }
-            }// end for
-        }//end for
-
-        fileWriter.write("\nFood Summary\n");
-
-        if(herbicineAmt != 0)
-        {
-            fileWriter.write(herbicineAmt + " Herbicine");
-        }
-
-        if(omnicineAmt != 0)
-        {
-            fileWriter.write(omnicineAmt + " Omnicine\n");
-        }
-
-        if(carnicineAmt != 0)
-        {
-            fileWriter.write(carnicineAmt + " Carnicine\n");
-        }
-
-        herbicineAmt = omnicineAmt = carnicineAmt = 0;
-
-
-        fileWriter.write("(D) Frozen Tundra\n");
-
-        for (int i = 0; i < healingList.size(); i++) 
-        {
-            for (int j = 0; j < cages.size(); j++) 
-            {
-                if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'D'))
-                {
-                    fileWriter.write(cages.get(j) + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
 
                     switch (healingList.get(i).getMedType()) 
                     {
@@ -249,7 +206,55 @@ public class AnimalHealer
 
         if(herbicineAmt != 0)
         {
-            fileWriter.write(herbicineAmt + " Herbicine");
+            fileWriter.write(herbicineAmt + " Herbicine\n");
+        }
+
+        if(omnicineAmt != 0)
+        {
+            fileWriter.write(omnicineAmt + " Omnicine\n");
+        }
+
+        if(carnicineAmt != 0)
+        {
+            fileWriter.write(carnicineAmt + " Carnicine\n");
+        }
+
+        herbicineAmt = omnicineAmt = carnicineAmt = 0;
+
+
+        fileWriter.write("\n\n(D) Frozen Tundra\n");
+
+        for (int i = 0; i < healingList.size(); i++) 
+        {
+            for (int j = 0; j < cages.size(); j++) 
+            {
+                if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getCageID().charAt(0) == 'D'))
+                {
+                    fileWriter.write(cages.get(j).getName() + ", " + cages.get(j).getSpecies() + "\t\t" + healingList.get(i).getUnitsOfMed() + " " + healingList.get(i).getMedType() + "\n");
+
+                    switch (healingList.get(i).getMedType()) 
+                    {
+                        case "Herbicine":
+                            herbicineAmt += healingList.get(i).getUnitsOfMed();
+                            break;
+
+                        case "Omnicine":
+                            omnicineAmt += healingList.get(i).getUnitsOfMed();
+                            break;
+
+                        case "Carnicine":
+                            carnicineAmt += healingList.get(i).getUnitsOfMed();
+                            break;
+                    }
+                }
+            }// end for
+        }//end for
+
+        fileWriter.write("\nMedicine Summary\n");
+
+        if(herbicineAmt != 0)
+        {
+            fileWriter.write(herbicineAmt + " Herbicine\n");
         }
 
         if(omnicineAmt != 0)
@@ -268,16 +273,16 @@ public class AnimalHealer
         fileWriter.close();
     }// printHealingList
 
-    private void printHealingingReport() throws Exception
+    public void printHealingReport() throws Exception
     {
-        File outFile = new File("FeedingReport.txt");
+        File outFile = new File("HealingReport.txt");
         FileWriter fileWriter = new FileWriter(outFile);
 
         fileWriter.write("Date\n");
-        fileWriter.write("Animals Fed: " + healingList.size() + "\n");
+        fileWriter.write("Animals Healed: " + healingList.size() + "\n");
         fileWriter.write("OK: " + (healingList.size() - deadAnimals.size()) + "\n");
         fileWriter.write("Deaths: " + deadAnimals.size() + "\n");
-        fileWriter.write("Overfed: \n");
+        fileWriter.write("Overdosed: \n");
 
         for (int i = 0; i < deadAnimals.size(); i++) 
         {
@@ -290,16 +295,16 @@ public class AnimalHealer
 
     public void simHealing() throws Exception
     {
-        //for each element i in the feeding list search the cages list for the animal that matches i's cage ID
-        //when the animal has been found and if it isnt dead, feed it
-        //if it is overfed, throw the exception
+        //for each element i in the healing list search the cages list for the animal that matches i's cage ID
+        //when the animal has been found and if it isnt dead, heal it
+        //if it is overdosed, throw the exception
         for (int i = 0; i < healingList.size(); i++) 
         {
             for (int j = 0; j < cages.size(); j++) 
             {
-                if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && (cages.get(j).getHealthStatus()) > 0)
+                if((healingList.get(i).getCageID().equals(cages.get(j).getCageID())) && ((cages.get(j).getHealthStatus()) > 0) &&(!cages.get(j).getHealed()))
                 {
-                    cages.get(j).eatFood(healingList.get(i).getUnitsOfMed());
+                    cages.get(j).takeMedicine(healingList.get(i).getUnitsOfMed());
 
                     if(cages.get(j).getOverDosed())
                     {
@@ -312,7 +317,7 @@ public class AnimalHealer
             }// end for
         }//end for
 
-        printHealingingReport();
+        //printHealingReport();
         
     }// simHealing
 
