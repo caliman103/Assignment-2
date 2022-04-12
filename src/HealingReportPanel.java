@@ -89,7 +89,7 @@ public class HealingReportPanel extends JPanel
     {
         textArea.setText("Date\n");
         textArea.append("Animals Fed: " + animalHealer.getHealingList().size() + "\n");
-        textArea.append("OK: " + (animalHealer.getHealingList().size() - animalHealer.getHealingList().size()) + "\n");
+        textArea.append("OK: " + (animalHealer.getHealingList().size() - animalHealer.getDeadAnimals().size()) + "\n");
         textArea.append("Deaths: " + animalHealer.getDeadAnimals().size() + "\n");
         textArea.append("Overfed: \n");
 
