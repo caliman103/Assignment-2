@@ -40,7 +40,7 @@ public class FeedingReportPanel extends JPanel
         titleLabel = new JLabel("Feeding Report");
         textArea = new JTextArea();
 
-        printReportButton = new JButton("Print Report");
+        printReportButton = new JButton("Print Feeding Report");
         
         
         
